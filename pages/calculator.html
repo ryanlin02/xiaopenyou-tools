@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=400, user-scalable=no">
 
@@ -10,7 +9,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>小朋友計算機 - 計算頁面</title>
+    <title>小朋友計算機</title>
 
     <style>
 
@@ -124,161 +123,48 @@
             font-family: "Microsoft JhengHei", Arial, sans-serif; /* 設定字體 */
             box-sizing: border-box;               /* 盒模型計算包含邊框和內邊距 */
 
-            padding-top: 5px;                        /* 調整頂部間距適配iframe顯示 */
+            padding-top: 0px;                       /* 為固定header預留空間 */
 
-        }
-
-        /* 頁面標題樣式 - 已移除動畫效果以提升效能 */
-        h1 {
-            color: var(--text-color);             /* 使用主題文字色 */
-            font-size: 22px;                      /* 設定字體大小 */
-            margin-bottom: 0px;                   /* 移除底部邊距 */
-            border-bottom: 2px solid var(--accent-color); /* 底部邊框 */
-            padding: 0 24px 5px;                  /* 添加內邊距 */
-            /* 移除 position: relative 和 transition 以提升效能 */
-        }
-
-        /* 標題容器 - 添加獨立的z-index確保正確的層疊關係 */
-        /* iframe模式下隱藏原header - 避免與主頁面header重複 */
-        .header-container {
-            display: none;                        /* 隱藏原本的header */
-        }
-
-        /* 標題樣式 - 確保懸停效果不會影響按鈕 */
-        h1 {
-            color: var(--text-color);             /* 使用主題文字色 */
-            font-size: 22px;                      /* 設定字體大小 */
-            margin-bottom: 0px;                   /* 移除底部邊距 */
-            border-bottom: 2px solid var(--accent-color); /* 底部邊框 */
-            padding-bottom: 5px;                  /* 底部內邊距 */
-            position: relative;                   /* 相對定位 */
-            z-index: 1;                           /* 設置層級 */
-        }
-
-        /* 移除h1懸停時的變形效果，防止影響按鈕 */
-        h1:hover {
-            text-shadow: 0 2px 4px rgba(255, 156, 51, 0.3);
-        }
-
-        /* 標題下方橙色線條效果 - 已移除動畫以提升效能 */
-        h1::after {
-            display: none;
-        }
-
-        /* 簡化標題懸停效果 - 只保留文字陰影 */
-        h1:hover {
-            text-shadow: 0 2px 4px rgba(255, 156, 51, 0.3);
-        }
-
-        /* 標題按鈕樣式 */
-        .header-btn {
-            position: absolute;                   /* 絕對定位 */
-            top: 50%;                             /* 垂直置中 */
-            transform: translateY(-50%);          /* 精確垂直置中 */
-            background-color: transparent;        /* 透明背景 */
-            color: #666666;                       /* 設置文字顏色 */
-            border: none;                         /* 移除邊框 */
-            width: 20px;                          /* 設置寬度 */
-            height: 20px;                         /* 設置高度 */
-            font-size: 14px;                      /* 設置字體大小 */
-            display: flex;                        /* 使用flex佈局 */
-            align-items: center;                  /* 垂直居中 */
-            justify-content: center;              /* 水平居中 */
-            cursor: pointer;                      /* 設置游標樣式 */
-            z-index: 10;                          /* 確保按鈕在最上層 */
-            padding: 0;                           /* 移除內邊距 */
-            transition: color 0.2s ease;          /* 平滑過渡效果 */
-            outline: none;                        /* 移除點擊輪廓 */
-            
-            /* 禁止所有變形和動畫 */
-            transform: translateY(-50%) !important; /* 強制保持垂直居中 */
-            animation: none !important;            /* 禁止動畫 */
-            box-shadow: none !important;           /* 禁止陰影 */
-        }
-
-        /* 增加按鈕的可點擊區域 */
-        .header-btn::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            bottom: -15px;
-            left: -15px;
-            right: -15px;
-        }
-
-        /* 標題按鈕懸停效果 */
-        .header-btn:hover {
-            color: #999999;                       /* 懸停時改變顏色 */
-            /* 禁止任何位置或大小變化 */
-            transform: translateY(-50%) !important; /* 強制保持垂直居中 */
-        }
-
-        /* 標題按鈕點擊效果 */
-        .header-btn:active {
-            color: var(--button-orange);          /* 點擊時變為強調色 */
-            /* 禁止任何位置或大小變化 */
-            transform: translateY(-50%) !important; /* 強制保持垂直居中 */
-        }
-
-        /* 左右按鈕位置 */
-        .header-btn-left {
-            left: 5px;                           /* 左邊按鈕位置 */
-        }
-
-        .header-btn-right {
-            right: 5px;                          /* 右邊按鈕位置 */
-        }
-
-        /* 增加左右按鈕的可點擊區域不同程度 */
-        .header-btn-left::before {
-            left: -20px;                         /* 左側更大的可點擊區域 */
-        }
-
-        .header-btn-right::before {
-            right: -20px;                       /* 右側更大的可點擊區域 */
-        }
-
-        /* 清除可能影響按鈕的其他樣式規則 */
-        .header-btn * {
-            transition: none !important;          /* 禁止過渡效果 */
-            animation: none !important;           /* 禁止動畫 */
-            transform: none !important;           /* 禁止變形 */
-        }
-
-        /* 防止全局懸停效果影響按鈕 */
-        *:hover .header-btn {
-            transform: translateY(-50%) !important; /* 強制保持垂直居中 */
-            position: absolute !important;         /* 強制保持絕對定位 */
         }
 
         /* ============================================
         * 3. 佈局與容器
         * ============================================ */
 
-        /* 行容器樣式 - 已移除動畫效果以提升效能 */
+        /* 行容器樣式 - 用於資料輸入區域 */
         .row {
-            margin: 4px 0;                        /* 上下外邊距 */
-            display: flex;                         /* 彈性布局，讓子元素水平排列 */
-            align-items: center;                   /* 垂直置中對齊 */
-            background: var(--secondary-color);   /* 使用主題次要背景色 */
-            padding: 3px;                         /* 內邊距 */
-            border-radius: 4px;                   /* 圓角效果 */
-            box-shadow: 0 4px 8px var(--shadow-color); /* 陰影效果 */
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
+            background: var(--secondary-color);
+            padding: 3px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            /* 移除 transition 以去除動畫效果 */
+            position: relative;
+            transform-origin: left;
+            /* 移除 will-change 因為不再需要動畫優化 */
         }
 
         /* ============================================
-        * 可編輯欄位設計 - 已簡化移除動畫
+        * 現代化可編輯欄位設計
         * ============================================ */
 
-        /* 可編輯欄位的簡化設計 - 移除所有動畫效果 */
+        /* 可編輯欄位的現代化設計 - 採用簡潔的左側邊框 + 微妙背景效果 */
         .editable-field {
-            border-left: 3px solid var(--accent-color);  /* 左側邊框標記 */
-            background: rgba(var(--accent-color-rgb), 0.02); /* 極淡的背景色 */
+            position: relative;                                    /* 相對定位，為內部元素提供定位基準 */
+            border-left: 3px solid var(--accent-color);           /* 左側3像素寬的實心邊框，使用主題強調色 */
+            background: linear-gradient(135deg,                    /* 135度角的漸變背景 */
+                rgba(var(--accent-color-rgb), 0.03) 0%,           /* 起始：極淡的主題色（透明度3%） */
+                rgba(var(--accent-color-rgb), 0.01) 100%);        /* 結束：更淡的主題色（透明度1%） */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);   /* 使用現代化的緩動函數，提供流暢的過渡效果 */
+            box-shadow: 0 0 0 0 rgba(var(--accent-color-rgb), 0); /* 初始時無陰影，用於懸停動畫 */
         }
 
-        /* 簡化聚焦效果 */
+        /* 聚焦狀態 - 簡化版本 */
         .editable-field:focus-within {
-            border-left-width: 4px; /* 稍微加寬邊框 */
+            border-left-width: 4px;                /* 保留邊框加寬表示聚焦 */
+            /* 已移除背景漸變、陰影和位移效果以提升效能 */
         }
 
         /* 確保內部元素保持正常的定位和顯示 */
@@ -452,6 +338,12 @@
             color: var(--accent-color);            /* 使用強調色 */
         }
 
+        /* 淡入動畫 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); } /* 開始時透明且下移 */
+            to { opacity: 1; transform: translateY(0); }      /* 結束時不透明且回到原位 */
+        }
+
         /* 1. 流光分隔線 */
         .divider-flow {
             position: relative;                    /* 相對定位 */
@@ -529,15 +421,23 @@
             border-color: var(--accent-color);    /* 使用強調色邊框 */
         }
 
-        /* 強調欄位懸停效果 - 移除右移效果 */
-        .emphasized-row:hover {
-            transform: scale(1.02); /* 只保留放大效果，移除右移 */
-            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.25); /* 增強陰影 */
+        /* 修正精簡顯示模式下的間距問題 */
+        /* 當分隔線被隱藏時，確保不佔用任何空間 */
+        .divider-flow.hidden-element {
+            display: none !important;     /* 完全不顯示 */
+            margin: 0 !important;         /* 移除所有邊距 */
+            padding: 0 !important;        /* 移除所有內距 */
+            height: 0 !important;         /* 高度設為0 */
         }
 
         /* 確保行與行之間的間距一致 */
         .row + .row {
             margin-top: 4px;              /* 統一行與行之間的間距 */
+        }
+
+        /* 當分隔線被隱藏時，下一個元素不需要額外的頂部間距 */
+        .divider-flow + .row {
+            margin-top: 4px !important;   /* 保持與其他行相同的間距 */
         }
 
         /* 頁腳訊息 */
@@ -546,7 +446,7 @@
             color: var(--text-color);              /* 使用文字色 */
             padding: 15px;                         /* 內邊距 */
             text-align: center;                    /* 文字居中 */
-            margin-top: 15px;                      /* 頂部邊距 */
+            margin-top: 10px;                      /* 頂部邊距 */
             border-radius: 4px;                    /* 圓角 */
             transform: scale(1.05);                /* 稍微放大 */
             text-shadow: 0 0 10px var(--accent-color); /* 文字陰影 */
@@ -578,7 +478,7 @@
         * 4. 輸入元素與表單
         * ============================================ */
 
-        /* 輸入框基本樣式 - 已移除動畫效果以提升效能 */
+        /* 輸入框基本樣式 */
         input {
             width: 95px;                           /* 固定寬度 */
             padding: 5px var(--input-padding-lr);  /* 內邊距 - 使用變數控制左右間距 */
@@ -588,19 +488,39 @@
             border: 1px solid var(--border-color); /* 邊框 */
             border-radius: 4px;                    /* 圓角 */
             font-size: var(--input-font-size);     /* 使用變數控制字體大小 */
+            transition: all 0.3s ease;             /* 過渡效果 */
             text-align: right;                     /* 文字靠右對齊 */
         }
 
-        /* 輸入框聚焦效果 - 已移除動畫以提升效能 */
+        /* 輸入框聚焦效果 - 簡化版本 */
         input:focus {
             outline: none;                         /* 移除預設焦點外框 */
-            border-color: var(--accent-color);     /* 使用強調色邊框 */
-            box-shadow: 0 0 0 2px var(--accent-color-light); /* 添加亮色邊框（減少模糊半徑） */
+            border-color: var(--accent-color);     /* 保留強調色邊框以表示聚焦狀態 */
+            /* 已移除 box-shadow 和 transform 以提升效能 */
         }
 
         /* 只讀輸入框樣式 */
         .readonly {
             background-color: var(--input-bg);     /* 使用主題輸入框背景色 */
+            animation: breathe 4s ease-in-out infinite; /* 呼吸動畫 */
+        }
+
+        /* 值變化動畫 */
+        .value-changed {
+            animation: valueChange 0.5s ease-out;  /* 值變化動畫 */
+            will-change: background-color;         /* 優化渲染性能 */
+        }
+
+        /* 值變化動畫 - 背景色和大小變化 */
+        @keyframes valueChange {
+            0% { 
+                background-color: var(--accent-color-light); /* 初始用強調色 */
+                transform: scale(1.02);            /* 稍微放大 */
+            }
+            100% { 
+                background-color: transparent;     /* 恢復透明背景 */
+                transform: scale(1);               /* 恢復原始大小 */
+            }
         }
 
         /* 警告文字樣式 */
@@ -624,26 +544,29 @@
             50% { opacity: 1; transform: scale(1.1); }        /* 中間狀態：完全不透明和放大10% */
         }
 
-        /* 按鈕基本樣式 - 簡化版本 */
+        /* 按鈕基本樣式 - 所有基本按鈕的共同樣式 */
         button {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 3px 8px;
-            margin: 0 5px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
+            background-color: var(--secondary-color);    /* 使用次要背景色 */
+            color: var(--text-color);                   /* 使用主要文字顏色 */
+            border: 1px solid var(--border-color);      /* 使用標準邊框色 */
+            padding: 3px 8px;                          /* 內部間距 */
+            margin: 0 5px;                             /* 左右外部間距 */
+            border-radius: 4px;                        /* 圓角效果 */
+            cursor: pointer;                           /* 滑鼠指標變為手型 */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 平滑過渡效果 */
+            font-size: 16px;                           /* 文字大小 */
         }
 
         /* 按鈕懸停效果 - 簡化版本 */
         button:hover {
-            background-color: var(--hover-color);
+            background-color: var(--hover-color);      /* 保留顏色變化表示可點擊 */
+            /* 已移除 transform 和 box-shadow 以提升效能 */
         }
 
-        /* 按鈕點擊效果 - 簡化版本 */
+        /* 按鈕點擊效果 - 點擊按鈕時的視覺反饋 */
         button:active {
-            background-color: var(--secondary-color); /* 只改變顏色 */
+            transform: scale(0.95) translateY(1px);    /* 縮小並輕微下移 */
+            transition: transform 0.1s;                /* 僅對變形應用快速過渡 */
         }
 
         /* 行容器中的按鈕樣式 - 調整在行容器內的按鈕外觀 */
@@ -685,10 +608,10 @@
         /* 針對按鈕數量多的兩個組別進行特殊調整 - 確保布局美觀 */
         #periodButtons button, 
         #rateButtons button {
-            min-width: 30px;      /* 進一步減小最小寬度，因為稅前利率現在有8個按鍵 */
-            max-width: 45px;      /* 進一步減小最大寬度，確保8個按鍵能排成一列 */
-            padding: 0 2px;       /* 進一步減小內部間距 */
-            font-size: 14px;      /* 稍微減小字體大小，讓按鍵更緊湊 */
+            min-width: 35px;      /* 減小最小寬度 */
+            max-width: 50px;      /* 減小最大寬度 */
+            padding: 0 3px;       /* 減小內部間距 */
+            font-size: 15px;      /* 稍微減小字體大小 */
         }
 
         /* 減小這兩個按鈕組的按鈕間距 - 使更多按鈕能適應寬度 */
@@ -710,6 +633,26 @@
             background-color: var(--secondary-color);  /* 恢復原本背景顏色 */
             color: var(--text-color);                 /* 恢復原本文字顏色 */
             border-color: var(--button-grey);         /* 使用灰色按鈕邊框 */
+        }
+
+        /* 行容器中按鈕點擊後的波紋效果 - 創建點擊漣漪效果 */
+        .row button::after {
+            content: '';                             /* 創建空內容 */
+            position: absolute;                      /* 絕對定位 */
+            top: 50%;                               /* 從中間開始 */
+            left: 50%;                              /* 從中間開始 */
+            width: 0;                               /* 初始寬度為0 */
+            height: 0;                              /* 初始高度為0 */
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%); /* 漸變背景 */
+            transition: width 0.3s ease-out, height 0.3s ease-out; /* 平滑過渡效果 */
+            transform: translate(-50%, -50%);       /* 確保居中 */
+            border-radius: 50%;                     /* 圓形效果 */
+        }
+
+        /* 行容器中按鈕點擊時的波紋動畫 - 擴展漣漪效果 */
+        .row button:active::after {
+            width: 150px;                          /* 擴展寬度 */
+            height: 150px;                         /* 擴展高度 */
         }
 
         /* 將組內的按鍵輕微突出顯示 - 增加視覺層次感 */
@@ -860,22 +803,18 @@
             margin: 0;                              /* 移除外部間距 */
         }
 
-        /* 簡化按鈕樣式 - 移除複雜偽元素 */
-        .function-buttons button {
-            background-color: var(--secondary-color); /* 次要背景色 */
-            color: #ffffff;                         /* 白色文字 */
-            border: 1px solid var(--accent-color);  /* 強調色邊框 */
-            border-radius: 6px;                     /* 圓角效果 */
-            padding: 8px 0;                         /* 上下內邊距 */
-            font-size: 16px;                        /* 文字大小 */
-            font-weight: 600;                       /* 文字粗細 */
-            cursor: pointer;                        /* 滑鼠指標 */
-            transition: all 0.2s ease;              /* 簡化過渡效果 */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 陰影效果 */
-            text-align: center;                     /* 文字居中 */
-            flex: 1;                                /* 平均分配空間 */
-            min-width: 0;                           /* 允許按鈕變窄 */
-            margin: 0;                              /* 移除外邊距 */
+        /* 功能按鈕偽元素 - 創建懸停時的漸變效果 */
+        .function-buttons button::before {
+            content: '';                            /* 創建空內容 */
+            position: absolute;                     /* 絕對定位 */
+            top: 0;                                /* 從頂部開始 */
+            left: 0;                               /* 從左側開始 */
+            width: 100%;                           /* 寬度100% */
+            height: 100%;                          /* 高度100% */
+            background: linear-gradient(to right, rgba(255, 156, 51, 0.1), transparent); /* 漸變背景 */
+            z-index: -1;                           /* 置於按鈕下層 */
+            transform: translateX(-100%);          /* 初始位置在左側外 */
+            transition: transform 0.6s ease;       /* 平滑過渡效果 */
         }
 
         /* 統一所有按鈕的懸停效果 - 鼠標懸停時的視覺變化 */
@@ -924,6 +863,108 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 輕微陰影 */
         }
 
+        /* 報價表格樣式 - 顯示計算結果的表格 */
+        .quote-table {
+            width: 100%;                           /* 占滿容器寬度 */
+            border-collapse: separate;             /* 分離邊框模型 */
+            border-spacing: 0;                     /* 單元格間距 */
+            margin: 10px 0;                        /* 上下外部間距 */
+            background: var(--primary-color);      /* 使用主背景色 */
+            border-radius: 12px;                   /* 圓角效果 */
+            overflow: hidden;                      /* 隱藏溢出內容 */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* 深色陰影 */
+        }
+
+        /* 報價表格行樣式 - 表格行的背景與過渡效果 */
+        .quote-table tr {
+            background: var(--secondary-color);    /* 使用次要背景色 */
+            transition: background-color 0.3s ease; /* 背景色過渡效果 */
+        }
+
+        /* 報價表格行懸停效果 - 鼠標懸停時的背景變化 */
+        .quote-table tr:hover {
+            background: var(--hover-color);        /* 使用懸停背景色 */
+        }
+
+        /* 報價表格單元格樣式 - 調整單元格內部間距與外觀 */
+        .quote-table td {
+            padding: 10px 10px;                    /* 內部間距 */
+            border-bottom: 1px solid var(--border-color); /* 底部邊框 */
+            color: var(--text-color);              /* 使用文字顏色 */
+            font-size: 16px;                       /* 文字大小 */
+            line-height: 1.2;                      /* 行高 */
+        }
+
+        /* 報價表格第一列單元格樣式 - 標籤列的格式 */
+        .quote-table td:first-child {
+            width: 140px;                          /* 固定寬度 */
+            white-space: nowrap;                   /* 禁止換行 */
+            color: var(--button-orange);           /* 橙色文字 */
+            font-weight: 700;                      /* 文字粗細 */
+            text-align: right;                     /* 文字右對齊 */
+            padding-right: 10px;                   /* 右側內部間距 */
+            font-size: 16px;                       /* 文字大小 */
+        }
+
+        /* 報價表格最後一列單元格樣式 - 數值列的格式 */
+        .quote-table td:last-child {
+            text-align: right;                     /* 文字右對齊 */
+            font-family: monospace;                /* 等寬字體 */
+            font-size: 16px;                       /* 文字大小 */
+            letter-spacing: 0px;                   /* 字符間距 */
+        }
+
+        /* 報價容器樣式 - 包含報價表格的容器 */
+        #quoteContainer {
+            padding: 24px;                         /* 內部間距 */
+            background: #333333;                   /* 深灰背景 */
+            border-radius: 16px;                   /* 圓角效果 */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); /* 深色陰影 */
+            margin: 20px;                          /* 外部間距 */
+        }
+
+        /* 功能按鈕偽元素 - 創建發光邊框效果 */
+        .function-buttons button::before {
+            content: '';                           /* 創建空內容 */
+            position: absolute;                    /* 絕對定位 */
+            top: -2px;                            /* 向上延伸 */
+            left: -2px;                           /* 向左延伸 */
+            right: -2px;                          /* 向右延伸 */
+            bottom: -2px;                         /* 向下延伸 */
+            background: var(--button-orange);      /* 橙色背景 */
+            z-index: -1;                          /* 置於按鈕下層 */
+            border-radius: 6px;                   /* 圓角效果 */
+            opacity: 0;                           /* 初始透明 */
+            transition: opacity 0.3s;             /* 透明度過渡效果 */
+        }
+
+        /* 功能按鈕懸停時偽元素效果 - 顯示脈動發光 */
+        .function-buttons button:hover::before {
+            opacity: 0.2;                         /* 半透明效果 */
+            animation: pulseGlow 1.5s infinite;   /* 脈動發光動畫 */
+        }
+
+        /* 脈動發光動畫 - 定義按鈕背景的脈動效果 */
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 0.2; }     /* 初始狀態 */
+            50% { transform: scale(1.05); opacity: 0.3; } /* 放大並增加不透明度 */
+            100% { transform: scale(1); opacity: 0.2; }   /* 返回初始狀態 */
+        }
+
+        /* 功能按鈕點擊後效果 - 創建點擊波紋效果 */
+        .function-buttons button::after {
+            content: '';                          /* 創建空內容 */
+            position: absolute;                   /* 絕對定位 */
+            top: 50%;                            /* 從中心開始 */
+            left: 50%;                           /* 從中心開始 */
+            width: 100%;                         /* 初始寬度 */
+            height: 100%;                        /* 初始高度 */
+            background: rgba(255, 255, 255, 0.1); /* 白色半透明背景 */
+            transform: translate(-50%, -50%) scale(0); /* 初始縮放為0 */
+            border-radius: 50%;                  /* 圓形效果 */
+            transition: transform 0.5s;          /* 變形過渡效果 */
+        }
+
         /* 功能按鈕懸停效果 - 改變按鈕顏色和文字 */
         .function-buttons button:hover {
             background-color: var(--button-orange); /* 橙色背景 */
@@ -931,11 +972,22 @@
             border-color: var(--button-orange);     /* 橙色邊框 */
         }
 
+        /* 功能按鈕懸停時後效果的動畫 - 擴大波紋效果 */
+        .function-buttons button:hover::after {
+            transform: translate(-50%, -50%) scale(2); /* 放大波紋至2倍 */
+        }
+
         /* 功能按鈕點擊效果 - 點擊時的顏色變化 */
         .function-buttons button:active {
             background-color: var(--secondary-color); /* 恢復次要背景色 */
             color: var(--button-orange);             /* 橙色文字 */
             border-color: var(--button-orange);      /* 橙色邊框 */
+        }
+
+        /* 發光邊框動畫 - 創建脈動的發光邊框效果 */
+        @keyframes glowBorder {
+            0%, 100% { box-shadow: 0 0 5px var(--accent-color); }        /* 初始和結束狀態的陰影 */
+            50% { box-shadow: 0 0 15px var(--accent-color), 0 0 30px rgba(var(--accent-color-rgb), 0.3); } /* 中間狀態的增強陰影 */
         }
 
         /* 發光效果動畫 - 控制分隔線中的流光效果 */
@@ -949,6 +1001,329 @@
             100% {
                 left: 100%;       /* 結束於右側 */
             }
+        }
+
+        /* 歷史記錄面板樣式 - 顯示保存的貸款記錄 */
+        .history-panel {
+            display: none;                                        /* 初始隱藏 */
+            position: fixed;                                      /* 固定定位 */
+            top: 0;                                              /* 貼齊頂部 */
+            left: 0;                                             /* 貼齊左側 */
+            width: 100%;                                         /* 寬度100% */
+            height: 100%;                                        /* 高度100% */
+            background-color: rgba(var(--primary-color-rgb), 0.95); /* 半透明背景 */
+            z-index: 1200;                                       /* 提高層級，高於header */
+            overflow-y: auto;                                    /* 垂直滾動 */
+            animation: fadeIn 0.3s ease-out;                     /* 淡入動畫 */
+            padding-top: 0;                                      /* 移除頂部內邊距 */
+        }
+
+        /* 歷史記錄面板頭部樣式 - 包含標題和按鈕的頂部區域 */
+        .history-header {
+            display: flex;                                       /* 彈性布局 */
+            justify-content: space-between;                      /* 兩端對齊 */
+            align-items: center;                                 /* 垂直居中 */
+            padding: 15px;                                       /* 內部間距 */
+            background-color: var(--primary-color);              /* 主背景色 */
+            position: sticky;                                    /* 粘性定位 */
+            top: 0;                                             /* 貼齊頂部 */
+            z-index: 1201;                                      /* 提高層級 */
+            border-bottom: 2px solid var(--accent-color);        /* 底部邊框 */
+            box-shadow: 0 2px 10px var(--shadow_color);          /* 陰影效果 */
+            margin-top: 0;                                       /* 確保貼齊頂部 */
+        }
+
+        /* 歷史記錄面板頭部左側區域 - 用於標題 */
+        .header-left {
+            flex: 1;                                            /* 佔用剩餘空間 */
+        }
+
+        /* 歷史記錄面板頭部右側區域 - 用於功能按鈕 */
+        .header-right {
+            margin-right: 10px;                                 /* 右側外部間距 */
+        }
+
+        /* 歷史記錄面板標題樣式 - 頂部標題文字 */
+        .history-header h2 {
+            margin: 0;                                          /* 移除外部間距 */
+            color: var(--accent-color);                         /* 強調色文字 */
+            font-size: 20px;                                    /* 文字大小 */
+            text-shadow: 0 1px 2px var(--shadow-color);         /* 文字陰影 */
+        }
+
+        /* 關閉按鈕樣式 - 用於關閉模態框 */
+        .close-btn {
+            background: none;                                   /* 無背景 */
+            border: none;                                       /* 無邊框 */
+            color: var(--text-color);                           /* 文字顏色 */
+            font-size: 28px;                                    /* 文字大小 */
+            cursor: pointer;                                    /* 滑鼠指標變為手型 */
+            transition: color 0.3s ease;                        /* 只過渡顏色 */
+            padding: 0;                                         /* 移除內部間距 */
+            margin-left: 10px;                                  /* 左側外部間距 */
+            line-height: 1;                                     /* 行高設為1 */
+            width: auto;                                        /* 自動寬度 */
+            height: auto;                                       /* 自動高度 */
+        }
+
+        /* 關閉按鈕懸停效果 - 鼠標懸停時的視覺變化 */
+        .close-btn:hover {
+            color: var(--accent-color);                         /* 強調色文字 */
+        }
+
+        /* 歷史記錄內容區域 - 顯示歷史記錄列表的容器 */
+        .history-content {
+            padding: 8px;                                       /* 內部間距 */
+            max-width: 400px;                                   /* 最大寬度 */
+            margin: 0 auto;                                     /* 水平居中 */
+            padding-top: 20px;                                  /* 增加頂部間距 */
+        }
+
+        /* 歷史記錄列表樣式 - 所有歷史記錄項目的容器 */
+        .history-list {
+            display: flex;                                      /* 彈性布局 */
+            flex-direction: column;                             /* 垂直排列 */
+            gap: 10px;                                          /* 項目間距 */
+            padding: 3px;                                       /* 內部間距 */
+            margin-bottom: 10px;                                /* 底部外部間距 */
+        }
+
+        /* 歷史記錄項目樣式 - 單個歷史記錄的卡片 */
+        .history-item {
+            background-color: var(--secondary-color);           /* 次要背景色 */
+            padding: 8px;                                       /* 內部間距 */
+            border-radius: 8px;                                 /* 圓角效果 */
+            position: relative;                                 /* 相對定位 */
+            transition: all 0.3s ease;                          /* 過渡效果 */
+            border-left: 3px solid var(--accent-color);         /* 左側邊框 */
+            display: flex;                                      /* 彈性布局 */
+            flex-direction: column;                             /* 垂直排列 */
+            gap: 6px;                                           /* 項目間距 */
+            box-shadow: 0 2px 4px var(--shadow-color);          /* 陰影效果 */
+            margin-bottom: 10px;                                /* 底部外部間距 */
+        }
+
+        /* 歷史記錄項目懸停效果 - 移除右移效果 */
+        .history-item:hover {
+            /* transform: translateX(5px); 已移除右移效果 */
+            box-shadow: 0 5px 15px var(--shadow-color);         /* 增強陰影 */
+        }
+
+        /* 歷史記錄項目頭部區域 - 顯示日期和稅佣後利率 */
+        .history-item-header {
+            display: flex;                                      /* 彈性布局 */
+            justify-content: space-between;                     /* 兩端對齊 */
+            align-items: center;                                /* 垂直居中 */
+            width: 100%;                                        /* 寬度100% */
+            padding-bottom: 2px;                                /* 底部內部間距 */
+        }
+
+        /* 歷史記錄日期樣式 - 顯示記錄保存的日期 */
+        .history-date {
+            font-weight: normal;                                  /* 文字粗細 */
+            color: var(--accent-color);                         /* 強調色文字 */
+            font-size: 14px;                                    /* 文字大小 */
+            padding: 2px 0;                                     /* 上下內部間距 */
+            margin-left: 5px;                                   /* 添加左側間距，進一步分隔勾選框和日期 */
+        }
+
+        /* 稅佣後利率樣式 - 在歷史記錄頭部顯示的利率 */
+        .history-header-rate {
+            font-weight: bold;                                  /* 文字粗細 */
+            color: var(--text-color);                           /* 文字顏色 */
+            font-size: 16px;                                    /* 文字大小 */
+            background-color: var(--accent-color-light);        /* 淡色強調背景 */
+            padding: 2px 6px;                                   /* 內部間距 */
+            border-radius: 4px;                                 /* 圓角效果 */
+        }
+
+        /* 歷史詳情顯示區 - 顯示貸款參數的網格布局 */
+        .history-details {
+            display: grid;                                      /* 網格布局 */
+            grid-template-columns: repeat(2, 1fr);              /* 兩列等寬 */
+            gap: 6px;                                           /* 網格間距 */
+            background-color: rgba(var(--primary-color-rgb), 0.15); /* 半透明背景 */
+            padding: 6px;                                       /* 內部間距 */
+            border-radius: 4px;                                 /* 圓角效果 */
+        }
+
+        /* 歷史詳情項目樣式 - 單個參數的顯示 */
+        .history-detail-item {
+            display: flex;                                      /* 彈性布局 */
+            flex-direction: column;                             /* 垂直排列 */
+            gap: 1px;                                           /* 項目間距 */
+        }
+
+        /* 詳情標籤樣式 - 參數名稱的顯示 */
+        .detail-label {
+            font-size: 12px;                                    /* 文字大小 */
+            color: var(--text-muted);                           /* 淡色文字 */
+        }
+
+        /* 詳情數值樣式 - 參數值的顯示 */
+        .detail-value {
+            font-size: 18px;                                    /* 文字大小 */
+            font-weight: bold;                                  /* 文字粗細 */
+            color: var(--text-color);                           /* 文字顏色 */
+            line-height: 1.2;                                   /* 行高 */
+        }
+
+        /* 移動設備適配 - 調整小屏幕下的顯示效果 */
+        @media screen and (max-width: 360px) {
+            .history-item {
+                padding: 6px;                                   /* 減少內部間距 */
+                gap: 4px;                                       /* 減少項目間距 */
+            }
+            
+            .history-header-rate {
+                font-size: 13px;                                /* 減小文字大小 */
+                padding: 2px 5px;                               /* 減少內部間距 */
+            }
+            
+            .history-date {
+                font-size: 13px;                                /* 減小文字大小 */
+            }
+            
+            .detail-value {
+                font-size: 15px;                                /* 減小文字大小 */
+            }
+            
+            .history-details {
+                padding: 5px;                                   /* 減少內部間距 */
+                gap: 5px;                                       /* 減少網格間距 */
+            }
+            
+            .delete-btn, .detail-btn {
+                padding: 5px 10px;                              /* 減少按鈕內部間距 */
+                font-size: 12px;                                /* 減小按鈕文字大小 */
+                min-width: 65px;                                /* 設置最小寬度 */
+            }
+        }
+
+        /* 按鈕區域 - 歷史記錄項目底部的操作按鈕 */
+        .history-actions {
+            display: flex;                                      /* 彈性布局 */
+            justify-content: flex-end;                          /* 右對齊 */
+            gap: 8px;                                           /* 按鈕間距 */
+            margin-top: 3px;                                    /* 頂部外部間距 */
+        }
+
+        /* 刪除按鈕和詳情按鈕共用樣式 - 操作按鈕的基本樣式 */
+        .delete-btn, .detail-btn {
+            padding: 6px 12px;                                  /* 內部間距 */
+            border-radius: 4px;                                 /* 圓角效果 */
+            font-size: 13px;                                    /* 文字大小 */
+            font-weight: bold;                                  /* 文字粗細 */
+            transition: all 0.25s ease;                         /* 過渡效果 */
+            display: flex;                                      /* 彈性布局 */
+            align-items: center;                                /* 垂直居中 */
+            justify-content: center;                            /* 水平居中 */
+            border: none;                                       /* 無邊框 */
+            min-width: 70px;                                    /* 最小寬度 */
+        }
+
+        /* 刪除按鈕樣式 - 用紅色系表示刪除操作 */
+        .delete-btn {
+            background-color: rgba(var(--error-color-rgb), 0.15); /* 更淡的半透明紅色背景 */
+            color: var(--text-muted);                            /* 使用淡色文字 */
+            border: 1px solid rgba(var(--error-color-rgb), 0.3); /* 更淡的紅色邊框 */
+            opacity: 0.7;                                        /* 降低透明度 */
+            transform: scale(0.9);                               /* 縮小按鈕 */
+        }
+
+        /* 刪除按鈕懸停效果 - 鼠標懸停時的視覺變化 */
+        .delete-btn:hover {
+            background-color: var(--error-color);               /* 錯誤色背景 */
+            color: white;                                       /* 白色文字 */
+            transform: translateY(-2px);                        /* 上移效果 */
+            box-shadow: 0 3px 5px rgba(var(--error-color-rgb), 0.4); /* 紅色陰影 */
+        }
+
+        /* 刪除按鈕點擊效果 - 點擊時的視覺反饋 */
+        .delete-btn:active {
+            transform: translateY(1px);                         /* 下移效果 */
+        }
+
+        /* 詳情按鈕樣式 - 用藍色系表示信息操作 */
+        .detail-btn {
+            background-color: rgba(var(--info-color-rgb), 0.25); /* 半透明藍色背景 */
+            color: var(--text-color);                          /* 文字顏色 */
+            border: 1px solid rgba(var(--info-color-rgb), 0.5); /* 藍色邊框 */
+        }
+
+        /* 詳情按鈕懸停效果 - 鼠標懸停時的視覺變化 */
+        .detail-btn:hover {
+            background-color: var(--info-color);               /* 信息色背景 */
+            color: white;                                      /* 白色文字 */
+            transform: translateY(-2px);                       /* 上移效果 */
+            box-shadow: 0 3px 5px rgba(var(--info-color-rgb), 0.4); /* 藍色陰影 */
+        }
+
+        /* 詳情按鈕點擊效果 - 點擊時的視覺反饋 */
+        .detail-btn:active {
+            transform: translateY(1px);                        /* 下移效果 */
+        }
+
+        /* 無數據提示樣式 - 當沒有歷史記錄時顯示 */
+        .no-data {
+            text-align: center;                                /* 文字居中 */
+            color: var(--text-muted);                          /* 淡色文字 */
+            font-style: italic;                                /* 斜體文字 */
+            padding: 30px 0;                                   /* 上下內部間距 */
+            font-size: 16px;                                   /* 文字大小 */
+        }
+
+        /* 全部刪除按鈕改進 - 刪除所有歷史記錄的按鈕 */
+        .delete-all-btn {
+            background: rgba(var(--error-color-rgb), 0.15);    /* 淡紅色背景 */
+            border: 1px solid var(--error-color);             /* 紅色邊框 */
+            color: var(--error-color);                        /* 紅色文字 */
+            font-size: 14px;                                  /* 文字大小 */
+            padding: 6px 14px;                                /* 內部間距 */
+            border-radius: 6px;                               /* 圓角效果 */
+            cursor: pointer;                                  /* 滑鼠指標變為手型 */
+            transition: all 0.3s ease;                        /* 過渡效果 */
+            font-weight: bold;                                /* 文字粗細 */
+        }
+
+        /* 全部刪除按鈕懸停效果 - 鼠標懸停時的視覺變化 */
+        .delete-all-btn:hover {
+            background-color: var(--error-color);             /* 紅色背景 */
+            color: white;                                     /* 白色文字 */
+            transform: translateY(-2px);                      /* 上移效果 */
+            box-shadow: 0 3px 5px rgba(var(--error-color-rgb), 0.4); /* 紅色陰影 */
+        }
+
+        /* 全部刪除按鈕點擊效果 - 點擊時的視覺反饋 */
+        .delete-all-btn:active {
+            transform: translateY(1px);                       /* 下移效果 */
+            box-shadow: none;                                 /* 移除陰影 */
+        }
+
+        /* 同步按鈕樣式 */
+        .sync-btn {
+            background: rgba(var(--info-color-rgb), 0.15);
+            border: 1px solid var(--info-color);
+            color: var(--info-color);
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .sync-btn:hover {
+            background-color: var(--info-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 5px rgba(var(--info-color-rgb), 0.4);
+        }
+
+        .sync-btn:active {
+            transform: translateY(1px);
+            box-shadow: none;
         }
 
         /* 模態框背景樣式 - 覆蓋整個頁面的半透明背景 */
@@ -1310,6 +1685,38 @@
             font-weight: bold;                               /* 文字粗細 */
         }
 
+        /* 按鈕點擊波紋效果 - 創建點擊時的擴散效果 */
+        .calculator-buttons button::after {
+            content: '';                                     /* 創建空內容 */
+            position: absolute;                              /* 絕對定位 */
+            top: 50%;                                        /* 從中心開始 */
+            left: 50%;                                       /* 從中心開始 */
+            width: 5px;                                      /* 初始寬度 */
+            height: 5px;                                     /* 初始高度 */
+            background: rgba(255, 255, 255, 0.5);            /* 半透明白色背景 */
+            opacity: 0;                                      /* 初始透明 */
+            border-radius: 100%;                             /* 圓形效果 */
+            transform: scale(1, 1) translate(-50%, -50%);    /* 初始變形 */
+            transform-origin: 50% 50%;                       /* 變形原點 */
+        }
+
+        /* 按鈕點擊時的波紋動畫 - 點擊時觸發波紋擴散 */
+        .calculator-buttons button:active::after {
+            animation: ripple 0.4s ease-out;                 /* 波紋動畫 */
+        }
+
+        /* 波紋動畫定義 - 控制點擊波紋的擴散效果 */
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0) translate(-50%, -50%); /* 初始為點 */
+                opacity: 0.5;                                /* 半透明 */
+            }
+            100% {
+                transform: scale(20, 20) translate(-50%, -50%); /* 擴散為大圓 */
+                opacity: 0;                                  /* 完全透明 */
+            }
+        }
+
         /* 功能鍵樣式 - 特殊功能按鈕的顏色 */
         .calculator-buttons .function {
             background-color: #4d4d4d;                       /* 中灰色背景 */
@@ -1373,51 +1780,140 @@
             opacity: 1;                                     /* 完全不透明 */
         }
 
-        /* 響應式設計 - 平板及以上設備的適配 */
-        @media screen and (min-width: 768px) {
-            .menu-content, .submenu-content {
-                width: 320px;                                /* 固定寬度 */
-            }
+        /* 歷史記錄備註容器 - 包含備註的區域 */
+        .history-note-container {
+            background-color: rgba(var(--primary-color-rgb), 0.1); /* 半透明背景 */
+            border-radius: 4px;                             /* 圓角效果 */
+            margin: 6px 0;                                  /* 上下外部間距 */
+            padding: 6px;                                   /* 內部間距 */
         }
 
-        /* 響應式設計 - 桌面設備的適配 */
-        @media screen and (min-width: 1024px) {
-            .menu-btn {
-                width: 24px;                                 /* 按鈕寬度 */
-                height: 24px;                                /* 按鈕高度 */
-                font-size: 18px;                             /* 文字大小 */
-                left: 12px;                                  /* 距左側距離 */
-            }
-            
-            .menu-item, .submenu-item {
-                padding: 14px 18px;                          /* 內部間距 */
-            }
-            
-            .menu-header h3, .submenu-header h3 {
-                font-size: 20px;                             /* 文字大小 */
-            }
+        /* 歷史記錄項目底部 - 包含備註和按鈕的底部區域 */
+        .history-item-footer {
+            display: flex;                                  /* 彈性布局 */
+            align-items: center;                            /* 垂直居中 */
+            gap: 8px;                                       /* 項目間距 */
         }
 
-        /* 響應式設計 - 小型手機的適配 */
-        @media screen and (max-width: 480px) {
-            .menu-content, .submenu-content {
-                width: 85%;                                  /* 更寬的比例 */
-            }
+        /* 歷史記錄備註預覽 - 顯示備註內容的預覽 */
+        .history-note-preview {
+            color: var(--note-text-color);         /* 使用專門的備註文字顏色變數 */
+            font-size: 14px;                       /* 文字大小 */
+            min-height: 20px;                      /* 最小高度 */
+            padding: 6px 8px;                      /* 增加內邊距讓文字更易讀 */
+            border: 1px solid transparent;         /* 透明邊框 */
+            border-radius: 6px;                    /* 圓角效果 */
+            background-color: rgba(var(--primary-color-rgb), 0.3); /* 半透明背景 */
+            transition: all 0.3s ease;             /* 過渡效果 */
+            cursor: pointer;                       /* 滑鼠指標變為手型 */
+            white-space: nowrap;                   /* 禁止換行 */
+            overflow: hidden;                      /* 隱藏溢出內容 */
+            text-overflow: ellipsis;               /* 文字溢出顯示省略號 */
+            flex-grow: 1;                          /* 佔用剩餘空間 */
+            max-width: 170px;                      /* 最大寬度 */
+            line-height: 1.4;                      /* 行高，讓文字更易讀 */
         }
 
-        /* 行容器基礎樣式 - 統一的資料輸入區域外觀 */
+        /* 空備註的特殊樣式 */
+        .history-note-preview.empty-note {
+            color: var(--note-text-empty);         /* 使用較淡的顏色 */
+            font-style: italic;                    /* 斜體字 */
+            background-color: transparent;         /* 透明背景 */
+        }
+
+        /* 歷史記錄操作按鈕區域 - 置於右側的按鈕組 */
+        .history-actions {
+            display: flex;                                  /* 彈性布局 */
+            gap: 4px;                                       /* 按鈕間距 */
+            margin-left: auto;                              /* 推到右側 */
+        }
+
+        /* 歷史記錄備註預覽懸停效果 - 鼠標懸停時的視覺變化 */
+        .history-note-preview:hover {
+            background-color: var(--accent-color-light);    /* 淡色強調背景 */
+            border-color: rgba(var(--accent-color-rgb), 0.3); /* 半透明強調色邊框 */
+        }
+
+        /* 備註編輯器模態框 - 編輯備註的彈出窗口 */
+        .note-editor-modal {
+            display: none;                                  /* 初始隱藏 */
+            position: fixed;                                /* 固定定位 */
+            top: 0;                                         /* 貼齊頂部 */
+            left: 0;                                        /* 貼齊左側 */
+            width: 100%;                                    /* 寬度100% */
+            height: 100%;                                   /* 高度100% */
+            background-color: rgba(var(--primary-color-rgb), 0.7); /* 半透明背景 */
+            z-index: 2000;                                  /* 層級 */
+            justify-content: center;                        /* 水平居中 */
+            align-items: flex-start;                        /* 頂部對齊 */
+            padding-top: 160px;                             /* 頂部內部間距 */
+        }
+
+        /* 備註編輯器內容區域 - 包含輸入框和按鈕的主體 */
+        .note-editor-content {
+            background-color: var(--primary-color);         /* 主背景色 */
+            border-radius: 12px;                            /* 圓角效果 */
+            width: 80%;                                     /* 容器寬度 */
+            max-width: 320px;                               /* 最大寬度 */
+            padding: 15px;                                  /* 內部間距 */
+            box-shadow: 0 10px 25px var(--shadow-color);    /* 陰影效果 */
+            border: 1px solid var(--accent-color);          /* 強調色邊框 */
+            animation: slideDown 0.3s ease-out;             /* 滑入動畫 */
+            margin: 0 auto;                                 /* 水平居中 */
+        }
+
+        /* 向下滑入動畫 - 定義模態框進入畫面的效果 */
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; } /* 初始在上方且透明 */
+            to { transform: translateY(0); opacity: 1; }       /* 最終在正常位置且不透明 */
+        }
+
+        /* 備註編輯器輸入框 - 多行文本輸入區域 */
+        .note-editor-input {
+            width: calc(100% - 24px);                       /* 計算寬度 */
+            padding: 12px;                                  /* 內部間距 */
+            margin: 12px 0;                                 /* 上下外部間距 */
+            background-color: var(--input-bg);              /* 輸入框背景色 */
+            color: var(--text-color);                       /* 文字顏色 */
+            border: 1px solid var(--border-color);          /* 邊框 */
+            border-radius: 8px;                             /* 圓角效果 */
+            min-height: 100px;                              /* 最小高度 */
+            resize: none;                                   /* 禁止調整大小 */
+            font-size: 16px;                                /* 文字大小 */
+            box-shadow: inset 0 2px 4px var(--shadow-color); /* 內陰影效果 */
+            transition: all 0.3s ease;                      /* 過渡效果 */
+            box-sizing: border-box;                         /* 盒模型計算方式 */
+        }
+
+        /* 備註編輯器輸入框聚焦效果 - 輸入時的視覺反饋 */
+        .note-editor-input:focus {
+            border-color: var(--accent-color);              /* 強調色邊框 */
+            box-shadow: 0 0 0 2px var(--accent-color-light); /* 強調色陰影 */
+            outline: none;                                  /* 移除默認輪廓 */
+        }
+
+        /* 備註編輯器按鈕區域 - 底部操作按鈕的容器 */
+        .note-editor-buttons {
+            display: flex;                                  /* 彈性布局 */
+            justify-content: flex-end;                      /* 右對齊 */
+            gap: 8px;                                       /* 按鈕間距 */
+            margin-top: 8px;                                /* 頂部外部間距 */
+        }
+
+        /* 備註編輯器標題 - 頂部標題樣式 */
+        .note-editor-content h3 {
+            color: var(--accent-color);                     /* 強調色文字 */
+            font-size: 18px;                                /* 文字大小 */
+            margin: 0 0 8px 0;                              /* 外部間距 */
+            padding-bottom: 8px;                            /* 底部內部間距 */
+            border-bottom: 1px solid rgba(var(--accent-color-rgb), 0.3); /* 半透明強調色底部邊框 */
+        }
+
+        /* 主題相關元素樣式調整 - 確保元素使用主題變量 */
         .row {
-            margin: 4px 0;                               /* 上下外邊距 */
-            display: flex;                               /* 彈性布局，讓子元素水平排列 */
-            align-items: center;                         /* 垂直置中對齊 */
-            background-color: var(--secondary-color);   /* 使用主題次要背景色 */
-            padding: 3px;                               /* 內邊距 */
-            border-radius: 4px;                         /* 圆角效果 */
-            box-shadow: 0 4px 8px var(--shadow-color);  /* 陰影效果 */
-            border-left: 3px solid transparent;         /* 透明左側邊框，為懸停效果預留 */
-            transition: all var(--transition-normal) ease; /* 平滑過渡動畫 */
-            position: relative;                          /* 相對定位，用於偽元素定位 */
-            transform-origin: left;                      /* 變形原點設在左側 */
+            background-color: var(--secondary-color);        /* 使用次要背景色 */
+            border-left: 3px solid transparent;              /* 透明左側邊框 */
+            transition: all var(--transition-normal) ease;   /* 使用主題過渡時間 */
         }
 
         /* 行標籤文字顏色 - 使用主題文字色 */
@@ -1503,10 +1999,404 @@
             color: var(--accent-color);                      /* 強調色文字 */
         }
 
-        /* 同步旋轉動畫 */
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* 添加到样式表的.history-item相关部分之后 */
+        .checkbox-date-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-item-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .history-item-checkbox:checked {
+            accent-color: var(--accent-color);
+        }
+
+        .history-item-checkbox:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .compare-selected-btn {
+            background: rgba(var(--accent-color-rgb), 0.15);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .compare-selected-btn:hover:not(:disabled) {
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 5px rgba(var(--accent-color-rgb), 0.4);
+        }
+
+        .compare-selected-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(150, 150, 150, 0.15);
+            border: 1px solid #999;
+            color: #999;
+        }
+
+        .comparison-highlight {
+            border-left: 3px solid #33b5e5 !important;
+            background: linear-gradient(90deg, rgba(51, 181, 229, 0.1), transparent) !important;
+        }
+
+        /* 提示視窗的背景遮罩 */
+        .install-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        /* 提示視窗 */
+        .install-modal {
+            width: 90%;
+            max-width: 350px;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 3px solid #ff0000; /* 紅色外框 */
+        }
+
+        /* 提示視窗標題 */
+        .install-modal-title {
+            background-color: #ff0000; /* 紅色背景 */
+            color: white;
+            padding: 12px 15px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* 提示視窗內容 */
+        .install-modal-content {
+            padding: 15px;
+            color: var(--text-color);
+            font-size: 13px;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        /* 提示視窗按鈕區域 */
+        .install-modal-buttons {
+            display: flex;
+            padding: 10px 15px 15px;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* 提示視窗按鈕 */
+        .install-modal-btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        /* 確認按鈕 */
+        .install-btn-confirm {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* 取消按鈕 */
+        .install-btn-cancel {
+            background-color: #666;
+            color: white;
+        }
+
+        /* 安裝提示區域 */
+        .install-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--secondary-color);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 9998;
+        }
+
+        /* 安裝提示文字 */
+        .install-banner-text {
+            flex: 1;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        /* 安裝按鈕 */
+        .install-banner-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* 關閉安裝提示按鈕 */
+        .install-banner-close {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            line-height: 1;
+            padding: 0;
+            margin-right: 5px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        /* 中文國字大寫欄位樣式 */
+        .chinese-amount-row {
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
+            background: var(--secondary-color);
+            padding: 3px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            transform-origin: left;
+            will-change: transform;
+        }
+
+        /* 中文大寫欄位懸停效果 - 移除右移效果 */
+        .chinese-amount-row:hover {
+            /* transform: translateX(5px); 已移除右移效果 */
+            box-shadow: 0 6px 12px var(--shadow-color); /* 增強陰影 */
+        }
+
+        .chinese-amount-result {
+            width: 100%;
+            padding: 6px 8px;
+            margin-bottom: 0;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            min-height: 42px;
+            max-height: 76px;
+            overflow-y: auto;
+            overflow-x: auto;
+            white-space: normal;
+            word-wrap: break-word;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            display: block;
+            text-align: right;
+            line-height: 1.2;
+            flex: 1;                              /* 讓輸入框佔用剩餘空間 */
+        }
+
+        .chinese-amount-result::after {
+            content: attr(data-placeholder);
+            opacity: 0.5;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #888888;
+            font-size: 16px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .chinese-amount-result:not(:empty)::after {
+            display: none;
+        }
+
+        /* 專門為中文國字大寫添加的樣式 */
+        .financial-digit {
+            color: #FFBE7A;
+            display: inline;
+        }
+
+        /* 總繳款中文國字大寫欄位樣式 */
+        .total-payment-chinese-row {
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
+            background: var(--secondary-color);
+            padding: 3px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            transform-origin: left;
+            will-change: transform;
+        }
+
+        /* 總繳款中文大寫欄位懸停效果 - 移除右移效果 */
+        .total-payment-chinese-row:hover {
+            /* transform: translateX(5px); 已移除右移效果 */
+            box-shadow: 0 6px 12px var(--shadow-color); /* 增強陰影 */
+        }
+
+        .total-payment-chinese-result {
+            width: 100%;
+            padding: 6px 8px;
+            margin-bottom: 0;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            min-height: 42px;
+            max-height: 76px;
+            overflow-y: auto;
+            overflow-x: auto;
+            white-space: normal;
+            word-wrap: break-word;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            display: block;
+            text-align: right;
+            line-height: 1.2;
+            flex: 1;                              /* 讓輸入框佔用剩餘空間 */
+        }
+
+        .total-payment-chinese-result::after {
+            content: attr(data-placeholder);
+            opacity: 0.5;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #888888;
+            font-size: 16px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .total-payment-chinese-result:not(:empty)::after {
+            display: none;
+        }
+
+        /* 中文大寫欄位的特殊標籤樣式 - 讓發票和總繳的標籤靠左對齊 */
+        .chinese-amount-row .label,
+        .total-payment-chinese-row .label {
+            margin-right: 3px;                  /* 標籤右側的間距 */
+            text-align: left;                   /* 文字靠左對齊 */
+            width: 35px;                        /* 縮小標籤寬度，讓輸入框有更多空間 */
+            flex-shrink: 0;                     /* 防止標籤被壓縮 */
+        }
+
+        /* 全螢幕比較貸款樣式 */
+        #multiLoanComparisonModal {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            background-color: var(--primary-color) !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #multiLoanComparisonModal .modal-container {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        #multiLoanComparisonModal .modal-header {
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            background-color: var(--secondary-color);
+            z-index: 100;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        #multiLoanComparisonModal .modal-content {
+            flex: 1;
+            overflow-y: auto;
+            background-color: var(--primary-color);
+            padding-bottom: 20px; /* 底部留一點空間 */
+        }
+
+        /* 貸款選擇對話框全螢幕樣式 */
+        #loanSelectionModal {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            background-color: var(--primary-color) !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #loanSelectionModal .modal-container {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        #loanSelectionModal .modal-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
         }
 
         /* ============================================
@@ -1521,7 +2411,7 @@
             right: 0;                                     /* 貼齊右側 */
             background-color: var(--primary-color);     /* 使用次要背景色 */
             border-top: 2px solid var(--accent-color);    /* 頂部邊框使用強調色 */
-            padding: 6px 10px 15px 10px;                   /* 內部間距 */
+            padding: 8px 10px 18px 10px;                   /* 內部間距 */
             display: flex;                                /* 使用彈性布局 */
             align-items: center;                          /* 垂直居中 */
             justify-content: center;                      /* 水平居中 */
@@ -1576,14 +2466,34 @@
             opacity: 0.7;                                 /* 新增透明度讓分隔線不會太突兀 */
         }
 
-        /* 當頁面有底部 footer 時，調整主要內容的底部間距 */
-        body.has-rate-footer {
-            padding-bottom: 20px;                         /* 為 footer 預留空間 */
+        /* 調整主要內容的底部間距 */
+        body {
+            padding-bottom: 20px;  /* 為 footer 預留空間 */
         }
 
         /* 隱藏 footer 的樣式類別 */
         .fixed-rate-footer.hidden {
             display: none !important;                     /* 強制隱藏 */
+        }
+
+        /* 加油卡計算器 iframe 響應式樣式 */
+        @media screen and (max-height: 700px) {
+            /* 在較矮的手機螢幕上減少 iframe 高度 */
+            #gasPriceIframe {
+                height: 300px !important;
+            }
+        }
+
+        @media screen and (min-height: 800px) {
+            /* 在較高的手機螢幕上增加 iframe 高度 */
+            #gasPriceIframe {
+                height: 500px !important;
+            }
+        }
+
+        /* iframe 載入動畫 */
+        #gasIframeLoader {
+            animation: pulse 1.5s infinite;
         }
 
         /* 合併的每年/每月利息欄位的特殊樣式 */
@@ -1668,15 +2578,44 @@
             width: 76px !important;          /* 稍微縮小標籤寬度（原本是75px） */
         }
 
+        /* ============================================
+        * 顯示模式切換按鈕樣式
+        * ============================================ */
+
+        /* 模式圖標基礎樣式 */
+        .mode-icon {
+            font-size: 20px;                    /* 圖標大小 */
+            line-height: 1;                     /* 行高 */
+            display: inline-block;              /* 行內塊顯示 */
+            transition: none;                   /* 無過渡效果 */
+        }
+
+        /* 圓形圖標 - 完整模式 */
+        .mode-circle {
+            font-size: 18px;                    /* 圓形稍小一點 */
+        }
+
+        /* 正方形圖標 - 計算模式 */
+        .mode-square {
+            font-size: 16px;                    /* 正方形適中大小 */
+        }
+
+        /* 三角形圖標 - 精簡模式 */
+        .mode-triangle {
+            font-size: 18px;                    /* 三角形稍小一點 */
+        }
+
+        /* 隱藏元素樣式 - 簡化版本 */
+        .mode-hidden {
+            display: none !important;           /* 強制隱藏 */
+        }
+
     </style>
 
-</head>
-<body class="has-rate-footer">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-	<!-- header在iframe模式下被隱藏，由主頁面提供統一的header -->
-    <div class="header-container" style="display: none;">
-        <h1>小朋友專用計算機</h1>
-    </div>
+</head>
+<body>
 	
     <div class="time-display-wrapper">
         <div id="timeDisplay" class="sticky-header">
@@ -1714,28 +2653,28 @@
         </div>
 
         <div id="rateButtons">
-            <!-- 調整利率減少0.2的按鍵，顯示文字改為-.2 -->
+            <!-- 減少0.2的按鍵，文字改為 -.2 -->
             <button onclick="adjustRate(-0.2)">-.2</button>
             
-            <!-- 直接設定利率為4%的按鍵 -->
+            <!-- 設定利率為 4% 的按鍵 -->
             <button onclick="setRate(4)">4</button>
             
-            <!-- 直接設定利率為6%的按鍵 -->
+            <!-- 設定利率為 6% 的按鍵 -->
             <button onclick="setRate(6)">6</button>
             
-            <!-- 直接設定利率為8%的按鍵 -->
+            <!-- 設定利率為 8% 的按鍵 -->
             <button onclick="setRate(8)">8</button>
             
-            <!-- 直接設定利率為10%的按鍵 -->
+            <!-- 設定利率為 10% 的按鍵 -->
             <button onclick="setRate(10)">10</button>
             
-            <!-- 直接設定利率為12%的按鍵（原本是13，現改為12） -->
+            <!-- 設定利率為 12% 的按鍵（原本是13，現在改為12） -->
             <button onclick="setRate(12)">12</button>
             
-            <!-- 新增：直接設定利率為14%的按鍵 -->
+            <!-- 新增：設定利率為 14% 的按鍵 -->
             <button onclick="setRate(14)">14</button>
             
-            <!-- 調整利率增加0.2的按鍵，顯示文字改為+.2 -->
+            <!-- 增加0.2的按鍵，文字改為 +.2 -->
             <button onclick="adjustRate(0.2)">+.2</button>
         </div>
     </div>
@@ -1921,17 +2860,72 @@
 
     <div class="divider-flow"></div>
 
+    <!-- 新增：客戶發票、營業稅、未稅金額欄位 -->
+    <div class="row">
+        <span class="label">客戶發票</span>
+        <input type="text" id="customerInvoice" class="readonly" readonly>
+    </div>
+    <div class="row">
+        <span class="label">營業稅</span>
+        <input type="text" id="businessTax" class="readonly" readonly>
+    </div>
+    <div class="row">
+        <span class="label">未稅金額</span>
+        <input type="text" id="untaxedAmount" class="readonly" readonly>
+    </div>
+
+    <div class="row chinese-amount-row">
+        <span class="label">發票</span>
+        <div class="result chinese-amount-result" id="chineseAmount" data-placeholder="客戶發票金額的國字大寫"></div>
+    </div>
+
+    <div class="row total-payment-chinese-row">
+        <span class="label">總繳</span>
+        <div class="result total-payment-chinese-result" id="totalPaymentChinese" data-placeholder="總繳款金額的國字大寫"></div>
+    </div>
+    
+
+    <!-- 按鈕區域重新組織 -->
+    <div class="divider-flow"></div>
+
+    <div class="function-buttons top-buttons">
+        <div class="button-row">
+            <button onclick="saveLoanData()" >保存計算</button>
+            <button onclick="toggleHistoryPanel()" >歷史記錄</button>
+        </div>
+    </div>
+
+    <div class="divider-flow"></div>
+
     <div class="function-buttons bottom-buttons">
         <div class="button-row">
-            <!-- 保留：雞肉飯連結功能 -->
             <button onclick="window.open('https://travel.chiayi.gov.tw/Folder/TurkeyRice', '_blank')">雞肉飯</button>
-            <!-- 保留：清除功能 -->
             <button onclick="clearAllFieldsExceptMonthlyCost()">清除</button>
-            <!-- 移除：截圖功能已刪除 -->
         </div>
     </div>
 
     <div class="footer-message">報價後記得吃碗火雞肉飯唷！</div>
+
+    <!-- 添加歷史記錄面板 -->
+    <!-- 重新设计的历史记录面板 -->
+    <div id="historyPanel" class="history-panel">
+        <!-- 歷史記錄面板標題區域 -->
+        <!-- 說明：包含標題、比較按鈕和全部刪除按鈕 -->
+        <div class="history-header">
+            <div class="header-left">
+                <h2>歷史記錄</h2>
+            </div>
+            <div class="header-right">
+                <!-- 比較按鈕：選擇多個貸款記錄進行比較 -->
+                <button id="compareSelectedBtn" class="compare-selected-btn" onclick="compareSelectedLoans()" disabled>比較</button>
+                <!-- 全部刪除按鈕：清空所有歷史記錄 -->
+                <button class="delete-all-btn" onclick="confirmDeleteAll()">全刪</button>
+            </div>
+            <!-- 關閉按鈕 -->
+            <button class="close-btn" onclick="toggleHistoryPanel()">×</button>
+        </div>
+        <div id="historyContent" class="history-content"></div>
+    </div>
 
     <!-- 普通提示模態框 -->
     <div id="modalOverlay" class="modal-overlay">
@@ -1992,26 +2986,107 @@
         </div>
     </div>
 
+    <!-- 加入動畫樣式 -->
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+
 <script>
 
     window.onload = function() {
+
+        // ========== 清理舊的主題設定 ==========
+        // 說明：移除之前儲存的主題選擇，確保使用預設主題
+        localStorage.removeItem('selectedTheme');
+        // ========== 清理結束 ==========
+
         // 初始化時間顯示
         updateTime();
         
         // ========== 自動恢復上次的計算數據 ==========
         // 說明：頁面載入時，檢查是否有自動保存的數據，如果有就恢復
-        // 簡化的初始化函數
-        window.onload = function() {
-            // 初始化時間顯示
-            updateTime();
+        try {
+            // 從本地儲存讀取自動保存的數據
+            const savedDataStr = localStorage.getItem('loanCalculatorAutoSave');
             
-            // 設定預設的資金成本值
-            const monthlyCostElement = document.getElementById('monthlyCost');
-            if (monthlyCostElement && !monthlyCostElement.value) {
-                monthlyCostElement.value = '2.1904';
+            if (savedDataStr) {
+                // 解析保存的數據
+                const savedData = JSON.parse(savedDataStr);
+                
+                // 檢查數據是否是最近24小時內的（避免恢復太舊的數據）
+                const savedTime = new Date(savedData.timestamp);
+                const now = new Date();
+                const hoursDiff = (now - savedTime) / (1000 * 60 * 60); // 轉換為小時
+                
+                // 如果數據是24小時內的，則恢復
+                if (hoursDiff < 24) {
+                    // 恢復各個欄位的值
+                    if (savedData.period) document.getElementById('period').value = savedData.period;
+                    if (savedData.rate) document.getElementById('rate').value = savedData.rate;
+                    if (savedData.principal) document.getElementById('principal').value = savedData.principal;
+                    if (savedData.payment) document.getElementById('payment').value = savedData.payment;
+
+                    // ============================================
+                    // 推廣欄位的特殊處理
+                    // 說明：只有在有實際值且不為0時才恢復，否則保持空白
+                    // ============================================
+                    if (savedData.commission && savedData.commission !== '0' && savedData.commission !== 0) {
+                        document.getElementById('commission').value = savedData.commission;
+                    } else {
+                        // 如果保存的值是0或空，則清空欄位
+                        document.getElementById('commission').value = '';
+                    }
+
+                    if (savedData.monthlyCost) document.getElementById('monthlyCost').value = savedData.monthlyCost;
+                    
+                    // 更新所有相關計算
+                    updateAllFields();
+                    
+                    // 顯示恢復成功的提示
+                    showToast('已恢復上次的計算數據');
+                    
+                    console.log('成功恢復自動保存的數據:', savedData);
+                } else {
+                    // 如果數據太舊，清除它
+                    localStorage.removeItem('loanCalculatorAutoSave');
+                    console.log('自動保存的數據已過期，已清除');
+                }
             }
+        } catch (error) {
+            // 如果恢復失敗，記錄錯誤但不影響正常功能
+            console.error('恢復自動保存數據失敗:', error);
         }
         // ========== 自動恢復結束 ==========
+    }
+
+    // 獲取裝置類型
+    function getDeviceType() {
+        const ua = navigator.userAgent;
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+            return "tablet";
+        }
+        if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+            return "mobile";
+        }
+        return "desktop";
+    }
+
+    // 獲取瀏覽器資訊
+    function getBrowserInfo() {
+        const ua = navigator.userAgent;
+        let browser = "Unknown";
+        if (ua.indexOf("Chrome") > -1) browser = "Chrome";
+        else if (ua.indexOf("Safari") > -1) browser = "Safari";
+        else if (ua.indexOf("Firefox") > -1) browser = "Firefox";
+        else if (ua.indexOf("Edge") > -1) browser = "Edge";
+        else if (ua.indexOf("Opera") > -1) browser = "Opera";
+        else if (ua.indexOf("MSIE") > -1 || ua.indexOf("Trident/") > -1) browser = "Internet Explorer";
+        
+        return `${browser} ${navigator.platform}`;
     }
 
 	// 添加震動函數
@@ -2105,6 +3180,69 @@
     // 每秒更新一次時間
     setInterval(updateTime, 1000);
     updateTime(); // 初始化顯示
+
+    // ========== 頁面可見性檢測 ==========
+    // 說明：當使用者切換到其他應用或標籤頁時，自動保存數據
+    // 當使用者回到頁面時，檢查並提示是否有新版本
+    
+    // 添加頁面可見性變化的監聽器
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            // ===== 頁面被隱藏時（切換到其他應用） =====
+            console.log('頁面已隱藏，執行自動保存...');
+            
+            // 執行一次完整的欄位更新，這會觸發自動保存
+            updateAllFields();
+            
+            // 記錄頁面隱藏的時間
+            localStorage.setItem('pageHiddenTime', new Date().toISOString());
+            
+        } else {
+            // ===== 頁面重新顯示時（回到應用） =====
+            console.log('頁面已顯示');
+            
+            // 檢查頁面隱藏了多久
+            const hiddenTime = localStorage.getItem('pageHiddenTime');
+            if (hiddenTime) {
+                const hiddenDuration = new Date() - new Date(hiddenTime);
+                const minutesHidden = Math.floor(hiddenDuration / 60000);
+                
+                // 如果頁面隱藏超過5分鐘，重新載入資料以確保資料是最新的
+                if (minutesHidden >= 5) {
+                    console.log(`頁面已隱藏 ${minutesHidden} 分鐘，檢查資料狀態...`);
+                    
+                    // 檢查是否有自動保存的資料
+                    const savedData = localStorage.getItem('loanCalculatorAutoSave');
+                    if (savedData) {
+                        showToast('歡迎回來！您的計算資料已保存');
+                    }
+                }
+                
+                // 清除隱藏時間記錄
+                localStorage.removeItem('pageHiddenTime');
+            }
+        }
+    });
+    
+    // 監聽頁面即將關閉或重新整理的事件
+    window.addEventListener('beforeunload', function(event) {
+        // 在頁面即將關閉前，執行最後一次保存
+        updateAllFields();
+        console.log('頁面即將關閉，已執行自動保存');
+        
+        // 如果有未保存的重要資料，可以提示使用者
+        const hasUnsavedData = document.getElementById('period').value || 
+                              document.getElementById('rate').value || 
+                              document.getElementById('principal').value || 
+                              document.getElementById('payment').value;
+        
+        if (hasUnsavedData) {
+            // 註：現代瀏覽器會顯示標準的離開提示，而不是自定義訊息
+            event.preventDefault();
+            event.returnValue = '';
+        }
+    });
+    // ========== 頁面可見性檢測結束 ==========
 
     // 原始的JavaScript函數保持不變
     function PMT(rate, nper, pv) {
@@ -2213,32 +3351,38 @@
         const principal = parseFloat(document.getElementById('principal').value.replace(/,/g, ''));
         const payment = parseFloat(document.getElementById('payment').value.replace(/,/g, ''));
         
-        // 簡化的檢查邏輯
-        function calculateRate() {
-            const period = parseFloat(document.getElementById('period').value);
-            const principal = parseFloat(document.getElementById('principal').value.replace(/,/g, ''));
-            const payment = parseFloat(document.getElementById('payment').value.replace(/,/g, ''));
+        // 只有當至少三個欄位已填寫時才顯示警告
+        const filledFields = countFilledFields();
+        const shouldWarn = filledFields >= 3;
+        
+        // 輸入驗證
+        if (shouldWarn) {
+            if (isNaN(period) || period <= 0) {
+                showToast('請輸入有效的期數', true);
+                return;
+            }
             
-            // 基本驗證 - 如果任何值無效就直接返回
+            if (isNaN(principal) || principal <= 0) {
+                showToast('請輸入有效的本金', true);
+                return;
+            }
+            
+            if (isNaN(payment) || payment <= 0) {
+                showToast('請輸入有效的期繳金額', true);
+                return;
+            }
+            
+            // 基本財務檢查：總還款應超過本金
+            if (payment * period <= principal) {
+                showToast('期繳總額必須大於本金才能計算有效利率', true);
+                return;
+            }
+        } else {
+            // 如果欄位數不足，但輸入無效，直接返回
             if (isNaN(period) || isNaN(principal) || isNaN(payment) || 
                 period <= 0 || principal <= 0 || payment <= 0 ||
                 payment * period <= principal) {
                 return;
-            }
-            
-            try {
-                const rate = RATE(period, payment, principal);
-                
-                // 檢查結果有效性
-                if (isNaN(rate) || !isFinite(rate) || rate < 0) {
-                    return;
-                }
-                
-                // 更新結果
-                document.getElementById('rate').value = rate.toFixed(4);
-                updateAllFields();
-            } catch (error) {
-                console.error('利率計算錯誤:', error);
             }
         }
         
@@ -2424,7 +3568,7 @@
                 if (countFilledFields() >= 3) {
                     showToast('警告：稅後利率超過20%，可能不符合一般貸款條件', true);
                 }
-            } else if (afterTaxRate <= 2) {
+            } else if (afterTaxRate <= 2.5) {
                 afterTaxRateInput.classList.add('warning-text');
             } else {
                 afterTaxRateInput.classList.remove('warning-text');
@@ -2434,9 +3578,25 @@
             afterTaxRateInput.classList.remove('warning-text');
         }
 
-        // 佣金格式化為整數並帶千位分隔符
-        const commission = parseFloat(document.getElementById('commission').value.replace(/,/g, '')) || 0;
-        document.getElementById('commission').value = formatNumberWithCommas(Math.round(commission));
+        // ============================================
+        // 推廣費（佣金）欄位處理
+        // 說明：只有在欄位有實際輸入值時才格式化，空白時保持空白
+        // ============================================
+        const commissionField = document.getElementById('commission');
+        const commissionValue = commissionField.value.replace(/,/g, ''); // 移除千位分隔符
+
+        // 檢查欄位是否為空或只有空白
+        if (commissionValue === '' || commissionValue.trim() === '') {
+            // 如果欄位是空的，保持空白，不要顯示0
+            // 不做任何處理，保持原樣
+        } else {
+            // 如果欄位有值，才進行格式化
+            const commission = parseFloat(commissionValue) || 0;
+            commissionField.value = formatNumberWithCommas(Math.round(commission));
+        }
+
+        // 為了後續計算，需要取得推廣費的數值（如果為空則為0）
+        const commission = parseFloat(commissionField.value.replace(/,/g, '')) || 0;
         
         // 檢查佣金是否超過總利息的45%
         const commissionInput = document.getElementById('commission');
@@ -2484,7 +3644,7 @@
                 } else {
                     // 佣後利率不需要千位分隔符
                     afterCommissionOnlyRateInput.value = afterCommissionOnlyRate.toFixed(4);
-                    if (afterCommissionOnlyRate <= 2) {
+                    if (afterCommissionOnlyRate <= 2.5) {
                         afterCommissionOnlyRateInput.classList.add('warning-text');
                     } else {
                         afterCommissionOnlyRateInput.classList.remove('warning-text');
@@ -2530,7 +3690,7 @@
                     } else {
                         // 稅佣後利率不需要千位分隔符
                         afterCommissionRateInput.value = afterCommissionRate.toFixed(4);
-                        if (afterCommissionRate <= 2) {
+                        if (afterCommissionRate <= 2.5) {
                             afterCommissionRateInput.classList.add('warning-text');
                         } else {
                             afterCommissionRateInput.classList.remove('warning-text');
@@ -2614,6 +3774,75 @@
             fundingCostInput.classList.remove('warning-text');
         }
 
+        // 新增：自動更新三個新欄位
+        const principalValue = principal;
+        const customerInvoiceField = document.getElementById('customerInvoice');
+        const businessTaxField = document.getElementById('businessTax');
+        const untaxedAmountField = document.getElementById('untaxedAmount');
+        if (principalValue > 0) {
+            // 客戶發票 = 本金
+            customerInvoiceField.value = formatNumberWithCommas(Math.round(principalValue));
+            // 營業稅 = 客戶發票 / 21，四捨五入至整數
+            const businessTax = Math.round(principalValue / 21);
+            businessTaxField.value = formatNumberWithCommas(businessTax);
+            // 未稅金額 = 客戶發票 - 營業稅，顯示正整數
+            const untaxedAmount = Math.max(0, Math.round(principalValue - businessTax));
+            untaxedAmountField.value = formatNumberWithCommas(untaxedAmount);
+        } else {
+            customerInvoiceField.value = '';
+            businessTaxField.value = '';
+            untaxedAmountField.value = '';
+        }
+
+        // 新增：更新中文國字大寫欄位
+        const chineseAmountField = document.getElementById('chineseAmount');
+        if (principalValue > 0) {
+            try {
+                // 轉換客戶發票金額為中文國字大寫
+                const chineseAmount = arabicToChineseNumber(principalValue, 'financial') + ' 元整';
+                chineseAmountField.innerHTML = chineseAmount; // 使用 innerHTML 以支持HTML標籤
+            } catch (error) {
+                console.error('中文轉換錯誤:', error);
+                chineseAmountField.textContent = '轉換錯誤';
+            }
+        } else {
+            chineseAmountField.innerHTML = ''; // 清空顯示
+        }
+
+        // 新增：更新總繳款中文國字大寫欄位
+        const totalPaymentChineseField = document.getElementById('totalPaymentChinese');
+        if (hasAllRequiredValues) {
+            try {
+                // 計算總繳款
+                const totalPaymentValue = payment * period;
+                const roundedTotalPayment = Math.round(totalPaymentValue);
+                
+                // 轉換總繳款為中文國字大寫
+                const totalPaymentChinese = arabicToChineseNumber(roundedTotalPayment, 'financial') + ' 元整';
+                totalPaymentChineseField.innerHTML = totalPaymentChinese; // 使用 innerHTML 以支持HTML標籤
+            } catch (error) {
+                console.error('總繳款中文轉換錯誤:', error);
+                totalPaymentChineseField.textContent = '轉換錯誤';
+            }
+        } else {
+            totalPaymentChineseField.innerHTML = ''; // 清空顯示
+        }
+
+        // 在更新值之前保存舊值
+        const oldValues = {};
+        const fieldsToTrack = ['totalInterest', 'afterTaxRate', 'spread'];
+        fieldsToTrack.forEach(field => {
+            oldValues[field] = document.getElementById(field).value;
+        });
+
+        // 在更新後檢查變化
+        fieldsToTrack.forEach(field => {
+            const newValue = document.getElementById(field).value;
+            if (oldValues[field] !== newValue) {
+                animateValueChange(field);
+            }
+        });
+
         // 更新底部 footer 的利率顯示
         const footerAfterCommissionOnlyRate = document.getElementById('footerAfterCommissionOnlyRate');
         const footerAfterCommissionRate = document.getElementById('footerAfterCommissionRate');
@@ -2643,6 +3872,37 @@
                 footerAfterCommissionRate.classList.remove('warning-text');
             }
         }
+
+        // ========== 自動保存當前計算數據 ==========
+        // 說明：每次欄位更新時，自動將當前的計算數據保存到瀏覽器的本地儲存
+        // 這樣即使頁面意外重新整理，數據也不會丟失
+        try {
+            // 收集需要保存的數據
+            const autoSaveData = {
+                period: document.getElementById('period').value,                    // 期數
+                rate: document.getElementById('rate').value,                        // 稅前利率
+                principal: document.getElementById('principal').value,              // 本金
+                payment: document.getElementById('payment').value,                  // 期繳
+                commission: document.getElementById('commission').value,            // 推廣費
+                monthlyCost: document.getElementById('monthlyCost').value,          // 資金成本
+                timestamp: new Date().toISOString(),                                // 保存時間戳記
+                version: 'v1'                                                       // 版本號，方便未來升級
+            };
+            
+            // 只有在有實際數據時才保存（避免保存空白數據）
+            if (autoSaveData.period || autoSaveData.rate || autoSaveData.principal || autoSaveData.payment) {
+                // 將數據保存到瀏覽器的本地儲存
+                localStorage.setItem('loanCalculatorAutoSave', JSON.stringify(autoSaveData));
+                
+                // 在控制台記錄（方便除錯）
+                console.log('自動保存計算數據:', autoSaveData);
+            }
+        } catch (error) {
+            // 如果保存失敗，記錄錯誤但不影響正常功能
+            console.error('自動保存失敗:', error);
+        }
+        // ========== 自動保存結束 ==========
+
     }
 
     // 在 clearField 函數之前添加這個新函數
@@ -2741,14 +4001,33 @@
         vibrate();
         const commissionField = document.getElementById('commission');
         
-        // 獲取當前值，如果為空則預設為0，移除千位分隔符
-        const currentValue = parseFloat(commissionField.value.replace(/,/g, '')) || 0;
+        // ============================================
+        // 取得當前值的處理
+        // 說明：如果欄位為空，從0開始計算；如果有值，則基於現有值調整
+        // ============================================
+        let currentValue = 0;
+        
+        // 檢查欄位是否為空
+        if (commissionField.value && commissionField.value.trim() !== '') {
+            // 如果有值，解析該值
+            currentValue = parseFloat(commissionField.value.replace(/,/g, '')) || 0;
+        }
+        // 如果欄位為空，currentValue 保持為 0
         
         // 計算新值
         const newValue = Math.max(0, currentValue + delta);
         
-        // 更新輸入框的值，使用 Math.floor 取整數並添加千位分隔符
-        commissionField.value = formatNumberWithCommas(Math.floor(newValue));
+        // ============================================
+        // 更新輸入框的值
+        // 說明：如果新值為0且原本欄位是空的，保持空白
+        // ============================================
+        if (newValue === 0 && (!commissionField.value || commissionField.value.trim() === '')) {
+            // 如果計算結果是0且原本欄位是空的，保持空白
+            commissionField.value = '';
+        } else {
+            // 否則顯示格式化的數值
+            commissionField.value = formatNumberWithCommas(Math.floor(newValue));
+        }
         
         // 更新所有相關欄位的計算
         updateAllFields();
@@ -2823,6 +4102,18 @@
         calculateRate(); // 确保这个调用能正确计算税前利率
     }
 
+    function saveData() {
+        const dataToSave = {
+        period: document.getElementById('period').value,
+        rate: document.getElementById('rate').value,
+        principal: document.getElementById('principal').value,
+        payment: document.getElementById('payment').value,
+        commission: document.getElementById('commission').value
+        };
+        localStorage.setItem('loanCalculatorData', JSON.stringify(dataToSave));
+        alert('資料已暫存！');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         // 為相關輸入欄位添加事件監聽
         const inputIds = ['period', 'payment', 'principal', 'monthlyCost'];
@@ -2834,6 +4125,706 @@
             }
         });
     });
+
+    // 添加數值變化動畫
+        function animateValueChange(elementId) {
+        const element = document.getElementById(elementId);
+        element.classList.remove('value-changed');
+        void element.offsetWidth; // 觸發重繪
+        element.classList.add('value-changed');
+    }
+    
+
+    // 保存貸款計算結果
+    // 說明：將貸款計算結果儲存到瀏覽器的本地儲存空間
+    function saveLoanData() {
+        const period = document.getElementById('period').value;
+        const rate = document.getElementById('rate').value;
+        const principal = document.getElementById('principal').value.replace(/,/g, '');
+        const payment = document.getElementById('payment').value.replace(/,/g, '');
+        const afterTaxRate = document.getElementById('afterTaxRate').value;
+        const commission = document.getElementById('commission').value.replace(/,/g, '');
+        const afterCommissionRate = document.getElementById('afterCommissionRate').value;
+        
+        // 檢查必要字段是否填寫
+        if (!period || !rate || !principal || !payment) {
+            showToast('請先完成必要欄位（期數、利率、本金、期繳）的計算！');
+            return;
+        }
+        
+        // 取得當前日期時間
+        const loanDate = new Date();
+        const year = loanDate.getFullYear();
+        const month = String(loanDate.getMonth() + 1).padStart(2, '0');
+        const date = String(loanDate.getDate()).padStart(2, '0');
+        const hours = String(loanDate.getHours()).padStart(2, '0');
+        const minutes = String(loanDate.getMinutes()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${date} ${hours}:${minutes}`;
+        
+        const loanData = {
+            id: new Date().getTime(),
+            date: formattedDate,
+            period: period,
+            rate: rate,
+            principal: principal,
+            payment: payment,
+            afterTaxRate: afterTaxRate,
+            commission: commission || '0',
+            afterCommissionRate: afterCommissionRate,
+            totalInterest: document.getElementById('totalInterest').value.replace(/,/g, ''),
+            timestamp: new Date().toISOString(),
+            note: ''
+        };
+        
+        // 儲存到瀏覽器本地儲存空間
+        let loanHistory = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+        loanHistory.push(loanData);
+        localStorage.setItem('loanHistory', JSON.stringify(loanHistory));
+        
+        // 顯示儲存成功訊息
+        showToast('貸款計算結果已保存！');
+    }
+
+    // 顯示多貸款比較視圖
+    function showMultiLoanComparison(loans) {
+        vibrate();
+        
+        // 確保至少有2個貸款方案
+        if (loans.length < 2) {
+            showToast('至少需要2個貸款方案進行比較');
+            return;
+        }
+        
+        // 關閉歷史記錄面板
+        document.getElementById('historyPanel').style.display = 'none';
+        
+        // 生成表格HTML（已移除分頁標籤，直接顯示表格）
+        let tableHTML = `
+        <!-- 直接顯示比較表格，不需要分頁 -->
+        <div class="comparison-tab-content">
+            <table class="comparison-table">
+                <tr>
+                    <th>項目</th>
+                    ${loans.map((loan, index) => `<th>${loan.id === 'current' ? '目前計算' : '方案 ' + (index + 1)}</th>`).join('')}
+                </tr>
+                <tr>
+                    <td>日期</td>
+                    ${loans.map(loan => `<td>${loan.id === 'current' ? '目前計算' : formatDate(loan.date)}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>期數</td>
+                    ${loans.map(loan => `<td>${loan.period}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>稅前利率</td>
+                    ${loans.map(loan => `<td>${loan.rate}%</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>本金</td>
+                    ${loans.map(loan => `<td>${formatNumberWithCommas(loan.principal)}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>期繳</td>
+                    ${loans.map(loan => `<td>${formatNumberWithCommas(loan.payment)}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>總利息</td>
+                    ${loans.map(loan => `<td>${formatNumberWithCommas(loan.totalInterest)}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>稅後利率</td>
+                    ${loans.map(loan => `<td>${loan.afterTaxRate}%</td>`).join('')}
+                </tr>
+                <tr>
+                    <td>推廣費</td>
+                    ${loans.map(loan => `<td>${formatNumberWithCommas(loan.commission)}</td>`).join('')}
+                </tr>
+                <tr class="highlight-row">
+                    <td>稅佣後利率</td>
+                    ${loans.map(loan => `<td>${loan.afterCommissionRate}%</td>`).join('')}
+                </tr>
+                <tr class="highlight-row">
+                    <td>總還款</td>
+                    ${loans.map(loan => {
+                        const totalPayment = parseFloat(loan.payment) * parseFloat(loan.period);
+                        /* 修改為只顯示整數，不顯示小數 */
+                        return `<td>${formatNumberWithCommas(Math.round(totalPayment))}</td>`;
+                    }).join('')}
+                </tr>
+
+                <!-- 新增備註比較欄位 -->
+                <tr>
+                    <td style="vertical-align: top;">備註</td>
+                    ${loans.map(loan => {
+                        /* 顯示備註內容，如果沒有備註則顯示"無" */
+                        const noteContent = loan.note || '無';
+                        return `<td style="
+                            font-size: 13px;
+                            line-height: 1.4;
+                            padding: 10px;
+                            vertical-align: top;
+                        ">${noteContent}</td>`;
+                    }).join('')}
+                </tr>
+
+            </table>
+        </div>
+        `;
+        
+        // 創建模態框
+        const modalHTML = `
+        <!-- 貸款方案比較頁面標題區域 - 新增回上頁按鈕 -->
+        <div class="modal-header" style="position: relative;">
+            <!-- 左側：回上頁按鈕（修改為直接返回歷史記錄頁面） -->
+            <button onclick="backToHistoryPanel()" style="
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: var(--text-color);
+                padding: 6px 12px;
+                border-radius: 6px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            " onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.2)'; this.style.borderColor='var(--accent-color)';" 
+            onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.1)'; this.style.borderColor='rgba(255, 255, 255, 0.2)';">
+                <span style="font-size: 16px;">←</span>
+                <span>回上頁</span>
+            </button>
+            
+            <!-- 中間：標題 -->
+            <h3 style="margin: 0; flex: 1; text-align: center;">貸款方案比較</h3>
+            
+            <!-- 右側：關閉按鈕 -->
+            <button class="close-btn" onclick="closeCustomModal('multiLoanComparisonModal')">×</button>
+        </div>
+        <div class="modal-content" style="padding: 10px; flex: 1; overflow-y: auto; background-color: var(--primary-color);">
+            ${tableHTML}
+        </div>
+        `;
+        
+        // 創建並顯示全螢幕模態框
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.id = 'multiLoanComparisonModal';
+        modalOverlay.style.cssText = 'display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--primary-color); z-index: 9999;';
+        modalOverlay.innerHTML = `<div class="modal-container" style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; margin: 0; border-radius: 0; display: flex; flex-direction: column;">${modalHTML}</div>`;
+
+        // 添加到網頁
+        document.body.appendChild(modalOverlay);
+
+        // 點擊背景關閉（移除此功能以確保全螢幕）
+        // modalOverlay.addEventListener('click', function(event) {
+        //     if (event.target === this) {
+        //         closeCustomModal('multiLoanComparisonModal');
+        //     }
+        // });
+
+        vibrate();
+        
+        // 添加樣式
+        const style = document.createElement('style');
+        style.textContent = `
+            
+            .comparison-tab-content {
+                padding: 10px 0;
+            }
+            
+            /* 比較表格樣式 - 與整體設計風格統一 */
+            .comparison-table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                font-size: 14px;
+                background: var(--secondary-color);
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px var(--shadow-color);
+            }
+
+            /* 表格標題和單元格樣式 */
+            .comparison-table th, 
+            .comparison-table td {
+                padding: 12px 10px;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            /* 表格標題樣式 - 深色背景 */
+            .comparison-table th {
+                background: linear-gradient(135deg, 
+                    rgba(var(--accent-color-rgb), 0.2) 0%, 
+                    rgba(var(--accent-color-rgb), 0.1) 100%);
+                color: var(--text-color);
+                font-weight: 600;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                font-size: 15px;
+            }
+
+            /* 第一列（項目名稱）特殊樣式 */
+            .comparison-table td:first-child {
+                text-align: left;
+                font-weight: 600;
+                color: var(--accent-color);
+                background: rgba(255, 255, 255, 0.03);
+                padding-left: 15px;
+            }
+
+            /* 表格列懸停效果 */
+            .comparison-table tr:hover td {
+                background-color: rgba(255, 255, 255, 0.05);
+                transition: background-color 0.2s ease;
+            }
+
+            /* 強調列樣式 - 用於重要數據 */
+            .highlight-row td {
+                background-color: rgba(var(--accent-color-rgb), 0.08);
+                font-weight: 600;
+            }
+
+            /* 最後一列無底部邊框 */
+            .comparison-table tr:last-child td {
+                border-bottom: none;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // 顯示貸款比較模態框
+    function showLoanComparisonModal(loan1, loan2) {
+        // 創建比較模態框的HTML
+        const modalHTML = `
+        <div class="modal-header">
+            <h3>貸款方案比較</h3>
+            <button class="close-btn" onclick="closeLoanComparisonModal()">×</button>
+        </div>
+        <div class="modal-content" style="flex: 1; overflow-y: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">項目</th>
+                    <th style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">方案1</th>
+                    <th style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">方案2</th>
+                    <th style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">差異</th>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">期數</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan1.period}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.period}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.period - loan1.period}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">稅前利率</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan1.rate}%</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.rate}%</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${(parseFloat(loan2.rate) - parseFloat(loan1.rate)).toFixed(4)}%</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">本金</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan1.principal)}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.principal)}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.principal - loan1.principal)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">期繳</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan1.payment)}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.payment)}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.payment - loan1.payment)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">總利息</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan1.totalInterest)}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.totalInterest)}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.totalInterest - loan1.totalInterest)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">稅後利率</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan1.afterTaxRate}%</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.afterTaxRate}%</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${(parseFloat(loan2.afterTaxRate) - parseFloat(loan1.afterTaxRate)).toFixed(4)}%</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">推廣</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan1.commission)}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.commission)}</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.commission - loan1.commission)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">稅佣後利率</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan1.afterCommissionRate}%</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.afterCommissionRate}%</td>
+                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${(parseFloat(loan2.afterCommissionRate) - parseFloat(loan1.afterCommissionRate)).toFixed(4)}%</td>
+                </tr>
+            </table>
+            
+            <div style="margin-top: 20px; padding: 15px; background-color: var(--secondary-color); border-radius: 8px;">
+                <h4 style="margin-top: 0; color: var(--accent-color);">方案比較摘要</h4>
+                <p>總成本差異: ${formatNumberWithCommas(Math.round((parseFloat(loan2.totalInterest) + parseFloat(loan2.commission)) - (parseFloat(loan1.totalInterest) + parseFloat(loan1.commission))))} 元</p>
+                <p>月付款差異: ${formatNumberWithCommas(Math.round(loan2.payment - loan1.payment))} 元/月</p>
+                <p>實際利率差異: ${(parseFloat(loan2.afterCommissionRate) - parseFloat(loan1.afterCommissionRate)).toFixed(4)}%</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn modal-btn-secondary" onclick="clearComparisonData()">清除比較</button>
+            <button class="modal-btn modal-btn-primary" onclick="closeLoanComparisonModal()">關閉</button>
+        </div>
+        `;
+        
+        // 創建比較模態框
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.id = 'loanComparisonModal';
+        modalOverlay.style.display = 'flex';
+        modalOverlay.innerHTML = `<div class="modal-container">${modalHTML}</div>`;
+        
+        // 添加到網頁
+        document.body.appendChild(modalOverlay);
+        
+        // 添加背景點擊關閉功能
+        modalOverlay.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeLoanComparisonModal();
+            }
+        });
+        
+        // 添加震動反饋
+        vibrate();
+    }
+
+    // 關閉貸款比較模態框
+    function closeLoanComparisonModal() {
+        const modal = document.getElementById('loanComparisonModal');
+        if (modal) {
+            document.body.removeChild(modal);
+        }
+        
+        // 添加震動反饋
+        vibrate();
+    }
+
+    // 顯示/隱藏歷史記錄面板
+    function toggleHistoryPanel() {
+        const panel = document.getElementById('historyPanel');
+        if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
+            loadHistoryData();
+            
+            // 添加一次性背景点击关闭事件
+            panel.onclick = function(event) {
+                if (event.target === this) {
+                    this.style.display = 'none';
+                }
+            };
+        }
+    }
+
+    // 載入歷史記錄
+    // 修改 loadHistoryData 函数以使用新的设计
+    function loadHistoryData() {
+        const historyContent = document.getElementById('historyContent');
+        const loanHistory = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+        
+        if (loanHistory.length === 0) {
+            historyContent.innerHTML = '<p class="no-data">尚無貸款計算記錄</p>';
+            return;
+        }
+        
+        // 按日期排序，最新的在前面
+        loanHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        let html = '<div class="history-list">';
+        loanHistory.forEach(loan => {
+            // 确保数值正确显示，移除千位分隔符后再格式化
+            const principalDisplay = formatNumber(loan.principal);
+            const paymentDisplay = formatNumber(loan.payment);
+            const commissionDisplay = formatNumber(loan.commission);
+            
+            html += `
+                <div class="history-item" data-loan-id="${loan.id}">
+                    <div class="history-item-header">
+                        <div class="checkbox-date-container">
+                            <input type="checkbox" class="history-item-checkbox" data-loan-id="${loan.id}" onchange="updateCompareButton()">
+                            <div class="history-date">${formatDate(loan.date)}</div>
+                        </div>
+                        <div class="history-header-rate">稅佣後利率: ${parseFloat(loan.afterCommissionRate).toFixed(4)}%</div>
+                    </div>
+                    
+                    <div class="history-details">
+                        <div class="history-detail-item">
+                            <span class="detail-label">期數</span>
+                            <span class="detail-value">${loan.period}</span>
+                        </div>
+                        <div class="history-detail-item">
+                            <span class="detail-label">推廣</span>
+                            <span class="detail-value">${commissionDisplay}</span>
+                        </div>
+                        <div class="history-detail-item">
+                            <span class="detail-label">本金</span>
+                            <span class="detail-value">${principalDisplay}</span>
+                        </div>
+                        <div class="history-detail-item">
+                            <span class="detail-label">期繳</span>
+                            <span class="detail-value">${paymentDisplay}</span>
+                        </div>
+                    </div>
+
+                    <div class="history-note-container">
+                        <div class="history-item-footer">
+                            <div class="history-note-preview ${loan.note ? '' : 'empty-note'}" onclick="openNoteEditor(${loan.id}, '${loan.note || ''}')">
+                                ${loan.note ? loan.note : '點擊添加備註'}
+                            </div>
+                            <div class="history-actions">
+                                <button class="detail-btn" onclick="loadLoanToForm(${loan.id})">載入計算</button>
+                                <button class="delete-btn" onclick="deleteLoan(${loan.id})">刪除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+        historyContent.innerHTML = html;
+    }
+
+    // 更新比較按鈕狀態
+    function updateCompareButton() {
+        const checkboxes = document.querySelectorAll('.history-item-checkbox:checked');
+        const compareButton = document.getElementById('compareSelectedBtn');
+        
+        // 如果有2個或以上選中的項目，啟用比較按鈕
+        if (checkboxes.length >= 2) {
+            compareButton.disabled = false;
+        } else {
+            compareButton.disabled = true;
+        }
+    }
+
+    // 比較選中的貸款
+    function compareSelectedLoans() {
+        const checkboxes = document.querySelectorAll('.history-item-checkbox:checked');
+        if (checkboxes.length < 2) {
+            showToast('請至少選擇2個貸款方案進行比較');
+            return;
+        }
+        
+        // 獲取所有選中的貸款ID
+        const selectedIds = Array.from(checkboxes).map(checkbox => 
+            parseInt(checkbox.getAttribute('data-loan-id'))
+        );
+        
+        // 從歷史記錄中獲取選中的貸款數據
+        const loanHistory = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+        const selectedLoans = loanHistory.filter(loan => selectedIds.includes(loan.id));
+        
+        // 顯示比較視圖
+        showMultiLoanComparison(selectedLoans);
+    }
+
+    function openNoteEditor(loanId, existingNote = '') {
+        // 創建備註編輯器模態框
+        const noteEditorModal = document.createElement('div');
+        noteEditorModal.className = 'note-editor-modal';
+        noteEditorModal.id = 'noteEditorModal';
+        noteEditorModal.innerHTML = `
+            <div class="note-editor-content">
+                <h3>備註編輯</h3>
+                <textarea id="noteEditorInput" class="note-editor-input" placeholder="請輸入備註內容...">${existingNote}</textarea>
+                <div class="note-editor-buttons">
+                    <button onclick="closeNoteEditor(false)" class="modal-btn modal-btn-secondary">取消</button>
+                    <button onclick="saveNote(${loanId})" class="modal-btn modal-btn-primary">儲存</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(noteEditorModal);
+        
+        // 顯示模態框
+        noteEditorModal.style.display = 'flex';
+        
+        // 自動聚焦到輸入框並調出鍵盤
+        const noteInput = document.getElementById('noteEditorInput');
+        noteInput.focus();
+        
+        // 添加點擊空白處關閉功能
+        noteEditorModal.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeNoteEditor();
+            }
+        });
+        
+        // 監聽鍵盤彈出事件，進一步調整位置
+        window.addEventListener('resize', adjustNoteEditorPosition);
+        
+        // 初始調整位置
+        adjustNoteEditorPosition();
+    }
+
+    // 新增函數：調整備註編輯器位置
+    function adjustNoteEditorPosition() {
+        const modal = document.getElementById('noteEditorModal');
+        if (!modal) return;
+        
+        // 偵測視窗高度變化來推測鍵盤是否彈出
+        const windowHeight = window.innerHeight;
+        const viewportHeight = window.visualViewport ? window.visualViewport.height : windowHeight;
+        
+        // 鍵盤彈出時會減少視口高度
+        if (viewportHeight < windowHeight * 0.8) {
+            // 鍵盤已彈出，將編輯器移至更靠頂部的位置
+            modal.style.paddingTop = '180px';
+            modal.style.justifyContent = 'center'; // 保持水平置中
+        } else {
+            // 鍵盤收起，恢復原本位置
+            modal.style.paddingTop = '180px';
+            modal.style.justifyContent = 'center'; // 保持水平置中
+        }
+    }
+
+    function closeNoteEditor(isCancelled = true) {
+        const noteEditorModal = document.getElementById('noteEditorModal');
+        if (noteEditorModal) {
+            document.body.removeChild(noteEditorModal);
+        }
+        
+        // 移除事件監聽器
+        window.removeEventListener('resize', adjustNoteEditorPosition);
+    }
+
+    // 儲存備註
+    // 說明：將備註內容儲存到本地的歷史記錄中
+    function saveNote(loanId) {
+        const noteInput = document.getElementById('noteEditorInput');
+        const newNote = noteInput.value.trim();
+        
+        // 獲取當前的歷史記錄
+        let loanHistory = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+        
+        // 找到對應的貸款記錄並更新備註
+        const updatedHistory = loanHistory.map(loan => {
+            if (loan.id === loanId) {
+                return { ...loan, note: newNote };
+            }
+            return loan;
+        });
+        
+        // 儲存更新後的歷史記錄
+        localStorage.setItem('loanHistory', JSON.stringify(updatedHistory));
+        
+        // 關閉備註編輯器
+        closeNoteEditor();
+        
+        // 重新載入歷史記錄
+        loadHistoryData();
+        
+        // 顯示成功提示
+        showToast('備註已儲存');
+    }
+
+    // 格式化日期顯示（包含時間）
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');     // 小時（24小時制）
+        const minutes = String(date.getMinutes()).padStart(2, '0'); // 分鐘
+        
+        // 返回格式：2024/03/15 14:30
+        return `${year}/${month}/${day} ${hours}:${minutes}`;
+    }
+
+    // 修改 formatNumber 函数
+    function formatNumber(num) {
+        if (!num) return '0';
+        
+        // 如果是字符串且包含逗号，先去除千位分隔符
+        if (typeof num === 'string') {
+            num = num.replace(/,/g, '');
+        }
+        
+        // 确保是数字，然后格式化
+        return parseFloat(num).toLocaleString();
+    }
+
+    // 載入貸款記錄到表單
+    function loadLoanToForm(id) {
+        const loanHistory = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+        const loan = loanHistory.find(item => item.id === id);
+        
+        if (loan) {
+            // 除了原有的載入邏輯外，不要重置備註
+            document.getElementById('period').value = loan.period;
+            document.getElementById('rate').value = loan.rate;
+            
+            document.getElementById('principal').value = formatNumberWithCommas(Math.round(parseFloat(loan.principal)));
+            document.getElementById('payment').value = formatNumberWithCommas(Math.round(parseFloat(loan.payment)));
+            document.getElementById('commission').value = formatNumberWithCommas(Math.round(parseFloat(loan.commission)));
+            
+            calculatePayment();
+            updateAllFields();
+            
+            document.getElementById('historyPanel').style.display = 'none';
+            
+            showToast('已載入貸款計算資料');
+            
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+    }
+
+    // 刪除貸款記錄（增加確認步驟）
+    // 說明：從本地儲存中刪除指定的貸款記錄
+    function deleteLoan(id) {
+        // 先顯示確認對話框
+        showConfirmModal(
+            '確認刪除', 
+            '您確定要刪除這筆貸款記錄嗎？<br><br>此操作無法復原。', 
+            function() {
+                // 用戶確認後才執行刪除
+                let loanHistory = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+                loanHistory = loanHistory.filter(loan => loan.id !== id);
+                localStorage.setItem('loanHistory', JSON.stringify(loanHistory));
+                
+                loadHistoryData(); // 重新載入歷史記錄
+                showToast('貸款記錄已刪除！');
+                
+                // 觸覺反饋
+                if (navigator.vibrate) {
+                    navigator.vibrate([30, 20, 30]);
+                }
+            }
+        );
+    }
+
+    // 確認是否刪除所有貸款記錄
+    function confirmDeleteAll() {
+        showConfirmModal('確認刪除', '確定要刪除所有貸款計算記錄嗎？此操作無法撤銷。', deleteAllLoans);
+    }
+
+    // 刪除所有貸款記錄
+    // 說明：清空本地儲存中的所有貸款記錄
+    function deleteAllLoans() {
+        localStorage.removeItem('loanHistory');
+        
+        loadHistoryData(); // 重新載入歷史記錄（會顯示無記錄）
+        showToast('所有貸款記錄已刪除！');
+        
+        // 觸覺反饋
+        if (navigator.vibrate) {
+            navigator.vibrate([50, 30, 50, 30, 50]);
+        }
+    }
 
     // 顯示一般模態框
     function showModal(title, content) {
@@ -2888,15 +4879,15 @@
         document.getElementById('confirmModalOverlay').style.display = 'none';
     }
 
-    // 簡化的提示函數
+    // 顯示輕量級的提示訊息
     function showToast(message, isError = false, duration = 2000) {
-        // 移除現有的 toast
+        // 檢查是否已有 toast 存在
         const existingToast = document.querySelector('.toast-message');
         if (existingToast) {
             document.body.removeChild(existingToast);
         }
         
-        // 創建新的 toast
+        // 創建一個新的 toast 元素
         const toast = document.createElement('div');
         toast.className = 'toast-message';
         if (isError) {
@@ -2905,11 +4896,14 @@
         toast.textContent = message;
         document.body.appendChild(toast);
         
-        // 自動消失
+        // 指定時間後自動消失
         setTimeout(() => {
-            if (document.body.contains(toast)) {
-                document.body.removeChild(toast);
-            }
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                if (document.body.contains(toast)) {
+                    document.body.removeChild(toast);
+                }
+            }, 500);
         }, duration);
     }
 
@@ -2918,7 +4912,7 @@
         // 震動效果
         vibrate();
         
-        // 將資金成本設為預設值 2.1904
+        // 將資金成本設為預設值 2.2165
         document.getElementById('monthlyCost').value = '2.1904';
         
         // 更新所有相關計算
@@ -2933,7 +4927,7 @@
         // 震動效果
         vibrate();
         
-        // 要清空的欄位ID列表 - 已移除客戶發票、營業稅、未稅金額、發票大寫、總繳大寫相關欄位
+        // 要清空的欄位ID列表
         const fieldsToReset = [
             'period', 'rate', 'principal', 'payment', 
             'totalPayment', 'totalInterest', 'tax', 'afterTaxRate', 
@@ -2941,15 +4935,27 @@
             'afterCommissionOnlyRate',     // 佣後利率
             'annualMillionInterest', 'monthlyMillionInterest',
             'annualTenThousandInterest', 'monthlyTenThousandInterest',
-            'spread', 'fundingCost', 'monthlyInterest', 'yearlyInterest'
+            'spread', 'fundingCost', 'monthlyInterest', 'yearlyInterest',
+            'customerInvoice',             // 客戶發票
+            'businessTax',                 // 營業稅
+            'untaxedAmount',               // 未稅金額
+            'chineseAmount',               // 中文國字大寫
+            'totalPaymentChinese'          // 總繳大寫 
+
         ];
         
         // 清空每個欄位
         fieldsToReset.forEach(fieldId => {
             const element = document.getElementById(fieldId);
             if (element) {  // 檢查元素是否存在，避免錯誤
-                // 對於一般 input 元素，使用 value 來清空
-                element.value = '';
+                // 檢查是否為特殊的 div 元素（中文大寫欄位）
+                if (fieldId === 'chineseAmount' || fieldId === 'totalPaymentChinese') {
+                    // 對於 div 元素，使用 innerHTML 來清空內容
+                    element.innerHTML = '';
+                } else {
+                    // 對於一般 input 元素，使用 value 來清空
+                    element.value = '';
+                }
                 // 移除任何警告樣式
                 element.classList.remove('warning-text');
             }
@@ -2958,7 +4964,7 @@
         // 將資金成本重置為預設值，而不是清空
         const monthlyCostElement = document.getElementById('monthlyCost');
         if (monthlyCostElement) {
-            monthlyCostElement.value = '2.1904';
+            monthlyCostElement.value = '2.2165';
         }
         
         // 顯示提示訊息
@@ -2977,6 +4983,10 @@
             footerAfterCommissionRate.value = '';
             footerAfterCommissionRate.classList.remove('warning-text');
         }
+
+        // 清除自動保存的數據
+        localStorage.removeItem('loanCalculatorAutoSave');
+        console.log('已清除自動保存的數據');
 
     }
 
@@ -3370,6 +5380,213 @@
         return count;
     }
 
+    // 通用的模態框顯示函數
+    function showCustomModal(id, html) {
+        // 創建模態框
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.id = id;
+        modalOverlay.style.display = 'flex';
+        
+        // ============================================
+        // 已移除期數方案對比的特殊處理
+        // 現在所有模態框都使用標準樣式
+        // ============================================
+        modalOverlay.innerHTML = `<div class="modal-container">${html}</div>`;
+        
+        // 添加到網頁
+        document.body.appendChild(modalOverlay);
+        
+        // 點擊背景關閉
+        modalOverlay.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeCustomModal(id);
+            }
+        });
+        
+        vibrate();
+    }
+
+    // 通用的模態框關閉函數
+    function closeCustomModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            document.body.removeChild(modal);
+        }
+        vibrate();
+    }
+
+    // ============================================
+    // 從貸款比較頁面返回歷史記錄頁面
+    // 說明：關閉比較頁面並重新顯示歷史記錄面板
+    // ============================================
+    function backToHistoryPanel() {
+        // 觸發震動反饋
+        vibrate();
+        
+        // 關閉當前的比較頁面
+        closeCustomModal('multiLoanComparisonModal');
+        
+        // 延遲一點時間後顯示歷史記錄頁面，確保動畫流暢
+        setTimeout(() => {
+            // 顯示歷史記錄面板
+            const historyPanel = document.getElementById('historyPanel');
+            if (historyPanel) {
+                historyPanel.style.display = 'block';
+                // 重新載入歷史記錄數據
+                loadHistoryData();
+            } else {
+                // 如果找不到歷史記錄面板，顯示錯誤提示
+                showToast('無法返回歷史記錄頁面');
+            }
+        }, 300); // 300毫秒的延遲，確保關閉動畫完成
+    }
+
+    // 关闭子选单
+    function closeSubmenu(submenuId) {
+        const submenu = document.getElementById(submenuId);
+        if (submenu) {
+            const submenuContent = submenu.querySelector('.submenu-content');
+            
+            // 添加关闭动画
+            submenuContent.classList.add('submenu-closing');
+            
+            // 动画结束后隐藏子选单
+            setTimeout(function() {
+                submenu.style.display = 'none';
+                submenuContent.classList.remove('submenu-closing');
+            }, 200); // 与动画时长相匹配
+            
+            vibrate(); // 使用现有的震动函数
+        }
+    }
+
+    // 通用的模態框顯示函數
+    function showCustomModal(id, html) {
+        // 創建模態框
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.id = id;
+        modalOverlay.style.display = 'flex';
+        modalOverlay.innerHTML = `<div class="modal-container">${html}</div>`;
+        
+        // 添加到網頁
+        document.body.appendChild(modalOverlay);
+        
+        // 點擊背景關閉
+        modalOverlay.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeCustomModal(id);
+            }
+        });
+        
+        vibrate();
+    }
+
+    // 通用的模態框關閉函數
+    function closeCustomModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            document.body.removeChild(modal);
+        }
+        vibrate();
+    }
+
+    // 阿拉伯數字轉中文國字大寫函數
+    function arabicToChineseNumber(num, format) {
+        if (!num || num === '0' || num === 0) {
+            return format === 'financial' ? '<span class="financial-digit">零</span>' : '零';
+        }
+        
+        // 分割整數和小數部分
+        const parts = num.toString().split('.');
+        const integerPart = parts[0];
+        const decimalPart = parts.length > 1 ? parts[1] : '';
+        
+        // 根據格式選擇對應的字符
+        let digits, units;
+        if (format === 'traditional') {
+            digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+            units = ['', '十', '百', '千', '萬', '十', '百', '千', '億', '十', '百', '千', '兆'];
+        } else if (format === 'financial') {
+            digits = ['零', '壹', '貳', '參', '肆', '伍', '陸', '柒', '捌', '玖'];
+            units = ['', '拾', '佰', '仟', '萬', '拾', '佰', '仟', '億', '拾', '佰', '仟', '兆'];
+        }
+        
+        // 處理整數部分
+        let intResult = '';
+        if (integerPart === '0') {
+            intResult = format === 'financial' ? '<span class="financial-digit">零</span>' : digits[0];
+        } else {
+            const len = integerPart.length;
+            
+            // 特殊處理10-19的數字
+            if (format !== 'financial' && len === 2 && integerPart.charAt(0) === '1') {
+                intResult = units[1];
+                if (integerPart.charAt(1) !== '0') {
+                    intResult += digits[parseInt(integerPart.charAt(1))];
+                }
+            } else {
+                // 新增變量來追蹤上一個處理過的字符是否為零，以及是否已經添加了單位
+                let lastWasZero = false;
+                let hasAddedUnit = false;
+                
+                for (let i = 0; i < len; i++) {
+                    const digit = parseInt(integerPart.charAt(i));
+                    const pos = len - i - 1;
+                    
+                    if (digit !== 0) {
+                        // 非零數字直接轉換並加上單位
+                        lastWasZero = false;
+                        hasAddedUnit = false;
+                        
+                        // 在 financial 格式中為數字添加特殊標籤
+                        if (format === 'financial') {
+                            intResult += `<span class="financial-digit">${digits[digit]}</span>${units[pos]}`;
+                        } else {
+                            intResult += digits[digit] + units[pos];
+                        }
+                    } else {
+                        // 處理零的特殊規則
+                        if (pos === 4 || pos === 8) {
+                            // 萬位或億位的零，需要加上對應的單位，但不需要加上"零"字
+                            if (intResult.length > 0) {
+                                // 確保沒有連續加入同一單位
+                                if (!intResult.endsWith(units[4]) && !intResult.endsWith(units[8])) {
+                                    intResult += units[pos];
+                                    hasAddedUnit = true;
+                                }
+                            }
+                        } else if (i < len - 1 && integerPart.charAt(i + 1) !== '0' && !lastWasZero) {
+                            // 當前數字是0，下一個不是0，且上一個不是0，加上零
+                            if (format === 'financial') {
+                                intResult += `<span class="financial-digit">${digits[0]}</span>`;
+                            } else {
+                                intResult += digits[0];
+                            }
+                            lastWasZero = true;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // 處理小數部分
+        let decResult = '';
+        if (decimalPart) {
+            decResult = '點';
+            for (let i = 0; i < decimalPart.length; i++) {
+                if (format === 'financial') {
+                    decResult += `<span class="financial-digit">${digits[parseInt(decimalPart.charAt(i))]}</span>`;
+                } else {
+                    decResult += digits[parseInt(decimalPart.charAt(i))];
+                }
+            }
+        }
+        
+        // 組合結果
+        return intResult + decResult;
+    }
 </script>
 	
 <script>
@@ -3404,6 +5621,18 @@
 </script>
 
 <script>
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./service-worker.js')
+            .then(registration => {
+                console.log('ServiceWorker registration successful');
+            })
+            .catch(err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+        }
+
         // 在所有 JavaScript 函數定義之後添加
         document.addEventListener('DOMContentLoaded', function() {
             // 設置輸入框點擊事件
@@ -3436,6 +5665,13 @@
             document.getElementById('numberInputModal').addEventListener('click', function(event) {
                 if (event.target === this) {
                     closeModal('numberInputModal');
+                }
+            });
+
+            // 在这里添加历史记录面板背景点击关闭功能
+            document.getElementById('historyPanel').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    this.style.display = 'none';
                 }
             });
             
@@ -3564,6 +5800,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>
