@@ -171,7 +171,7 @@
 
         /* header中的利率數值輸入框樣式 - 顯示利率數值的輸入框 */
         .rate-header-input {
-            width: 70px;                                  /* 固定寬度，比footer稍寬 */
+            width: 78px;                                  /* 固定寬度，比footer稍寬 */
             padding: 3px 5px;                             /* 內部間距，讓數字顯示更舒適 */
             background-color: var(--input-bg);            /* 使用輸入框背景色（深色） */
             color: var(--text-color);                     /* 使用文字顏色（白色或主題色） */
@@ -204,15 +204,11 @@
 
         /* 兩個利率顯示之間的分隔線樣式 - 佣後和稅佣後之間的視覺分隔 */
         .rate-header-separator {
-            width: 15px;                                  /* 分隔線寬度，比footer稍寬 */
-            height: 3px;                                  /* 分隔線高度，比footer稍高 */
-            background: linear-gradient(90deg,             /* 漸變分隔線，增加視覺效果 */
-                transparent,                              /* 左側透明 */
-                var(--accent-color),                      /* 中間使用強調色 */
-                transparent);                             /* 右側透明 */
+            width: 8px;                                  /* 分隔線寬度，比footer稍寬 */
+            height: 2px;                                  /* 分隔線高度，比footer稍高 */
+            background: var(--accent-color);                      /* 中間使用強調色 */
             margin: 0 5px;                               /* 左右間距，為分隔線留出空間 */
             border-radius: 2px;                           /* 圓角效果，讓分隔線更柔和 */
-            opacity: 0.8;                                 /* 透明度，讓分隔線不會太突兀 */
         }
 
         /* 警告樣式 - 當利率數值有問題時的視覺提示 */
