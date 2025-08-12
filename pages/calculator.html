@@ -3094,38 +3094,54 @@
         // 初始化時間顯示
         updateTime();
         
-        // ========== 自動恢復上次的計算數據 ==========
-        // 說明：頁面載入時，檢查是否有自動保存的數據，如果有就恢復
+        // ============================================
+        // 自動恢復計算數據（iframe優化版）
+        // 說明：頁面載入時恢復數據，針對iframe環境進行優化
+        // 在iframe中靜默恢復，減少不必要的提示訊息
+        // ============================================
         try {
-            // 從本地儲存讀取自動保存的數據
-            const savedDataStr = localStorage.getItem('loanCalculatorAutoSave');
+            // 檢測當前運行環境
+            const isInIframe = (window.self !== window.top);
+            
+            // 優先嘗試恢復主要的自動保存數據
+            let savedDataStr = localStorage.getItem('loanCalculatorAutoSave');
+            let dataSource = 'main';
+            
+            // 如果在iframe環境中且主要數據不存在，嘗試恢復備份數據
+            if (!savedDataStr && isInIframe) {
+                savedDataStr = localStorage.getItem('loanCalculatorIframeBackup');
+                dataSource = 'iframe-backup';
+            }
+            
+            // 如果還是沒有數據，嘗試緊急備份
+            if (!savedDataStr) {
+                savedDataStr = localStorage.getItem('loanCalculatorEmergencyBackup');
+                dataSource = 'emergency-backup';
+            }
             
             if (savedDataStr) {
                 // 解析保存的數據
                 const savedData = JSON.parse(savedDataStr);
                 
-                // 檢查數據是否是最近24小時內的（避免恢復太舊的數據）
+                // 檢查數據是否是最近的（iframe環境放寬到48小時，獨立環境保持24小時）
                 const savedTime = new Date(savedData.timestamp);
                 const now = new Date();
                 const hoursDiff = (now - savedTime) / (1000 * 60 * 60); // 轉換為小時
+                const maxHours = isInIframe ? 48 : 24; // iframe環境允許更長的保存時間
                 
-                // 如果數據是24小時內的，則恢復
-                if (hoursDiff < 24) {
+                // 如果數據在允許的時間範圍內，則恢復
+                if (hoursDiff < maxHours) {
                     // 恢復各個欄位的值
                     if (savedData.period) document.getElementById('period').value = savedData.period;
                     if (savedData.rate) document.getElementById('rate').value = savedData.rate;
                     if (savedData.principal) document.getElementById('principal').value = savedData.principal;
                     if (savedData.payment) document.getElementById('payment').value = savedData.payment;
 
-                    // ============================================
-                    // 推廣欄位的特殊處理
-                    // 說明：只有在有實際值且不為0時才恢復，否則保持空白
-                    // ============================================
+                    // 推廣欄位的特殊處理：只有在有實際值且不為0時才恢復
                     if (savedData.commission && savedData.commission !== '0' && savedData.commission !== 0) {
                         document.getElementById('commission').value = savedData.commission;
                     } else {
-                        // 如果保存的值是0或空，則清空欄位
-                        document.getElementById('commission').value = '';
+                        document.getElementById('commission').value = ''; // 清空欄位
                     }
 
                     if (savedData.monthlyCost) document.getElementById('monthlyCost').value = savedData.monthlyCost;
@@ -3133,21 +3149,47 @@
                     // 更新所有相關計算
                     updateAllFields();
                     
-                    // 顯示恢復成功的提示
-                    showToast('已恢復上次的計算數據');
+                    // 根據環境決定是否顯示恢復提示
+                    if (isInIframe) {
+                        // iframe環境：靜默恢復，只在控制台記錄
+                        console.log(`iframe環境：已靜默恢復計算數據 (來源: ${dataSource})`);
+                    } else {
+                        // 獨立環境：顯示恢復提示
+                        showToast('已恢復上次的計算數據');
+                        console.log(`獨立環境：成功恢復計算數據 (來源: ${dataSource})`, savedData);
+                    }
                     
-                    console.log('成功恢復自動保存的數據:', savedData);
                 } else {
-                    // 如果數據太舊，清除它
+                    // 數據太舊，清除相關的保存數據
                     localStorage.removeItem('loanCalculatorAutoSave');
-                    console.log('自動保存的數據已過期，已清除');
+                    if (isInIframe) {
+                        localStorage.removeItem('loanCalculatorIframeBackup');
+                    }
+                    localStorage.removeItem('loanCalculatorEmergencyBackup');
+                    
+                    console.log(`${isInIframe ? 'iframe' : '獨立'}環境：保存數據已過期，已清除 (${hoursDiff.toFixed(1)}小時前)`);
                 }
+            } else {
+                // 沒有找到任何保存的數據
+                console.log(`${isInIframe ? 'iframe' : '獨立'}環境：未找到自動保存的數據`);
             }
         } catch (error) {
             // 如果恢復失敗，記錄錯誤但不影響正常功能
             console.error('恢復自動保存數據失敗:', error);
+            
+            // 清理可能損壞的數據
+            try {
+                localStorage.removeItem('loanCalculatorAutoSave');
+                localStorage.removeItem('loanCalculatorIframeBackup');
+                localStorage.removeItem('loanCalculatorEmergencyBackup');
+                console.log('已清理可能損壞的保存數據');
+            } catch (cleanupError) {
+                console.error('清理數據時發生錯誤:', cleanupError);
+            }
         }
-        // ========== 自動恢復結束 ==========
+        // ============================================
+        // 自動恢復結束
+        // ============================================
     }
 
     // 獲取裝置類型
@@ -3272,61 +3314,124 @@
     // 說明：當使用者切換到其他應用或標籤頁時，自動保存數據
     // 當使用者回到頁面時，檢查並提示是否有新版本
     
+    // ============================================
+    // 頁面可見性變化監聽器（iframe優化版）
+    // 說明：優化在iframe環境中的自動保存行為
+    // 當iframe被切換或隱藏時，立即保存資料
+    // ============================================
+
     // 添加頁面可見性變化的監聽器
     document.addEventListener('visibilitychange', function() {
+        
+        // 檢測是否在iframe環境中
+        const isInIframe = (window.self !== window.top);
+        
         if (document.hidden) {
-            // ===== 頁面被隱藏時（切換到其他應用） =====
-            console.log('頁面已隱藏，執行自動保存...');
+            // ===== 頁面被隱藏時的處理 =====
             
-            // 執行一次完整的欄位更新，這會觸發自動保存
-            updateAllFields();
+            if (isInIframe) {
+                // iframe環境中的處理：立即自動保存，不顯示提示
+                console.log('iframe被切換，執行靜默自動保存...');
+                try {
+                    updateAllFields(); // 立即保存當前計算狀態
+                } catch (error) {
+                    console.error('iframe切換時自動保存失敗:', error);
+                }
+            } else {
+                // 非iframe環境中的處理：正常的隱藏處理
+                console.log('頁面已隱藏，執行自動保存...');
+                updateAllFields();
+            }
             
-            // 記錄頁面隱藏的時間
+            // 記錄頁面隱藏的時間（兩種環境都記錄）
             localStorage.setItem('pageHiddenTime', new Date().toISOString());
             
         } else {
-            // ===== 頁面重新顯示時（回到應用） =====
-            console.log('頁面已顯示');
+            // ===== 頁面重新顯示時的處理 =====
             
-            // 檢查頁面隱藏了多久
-            const hiddenTime = localStorage.getItem('pageHiddenTime');
-            if (hiddenTime) {
-                const hiddenDuration = new Date() - new Date(hiddenTime);
-                const minutesHidden = Math.floor(hiddenDuration / 60000);
+            if (isInIframe) {
+                // iframe環境中的處理：靜默恢復，減少不必要的提示
+                console.log('iframe重新顯示');
                 
-                // 如果頁面隱藏超過5分鐘，重新載入資料以確保資料是最新的
-                if (minutesHidden >= 5) {
-                    console.log(`頁面已隱藏 ${minutesHidden} 分鐘，檢查資料狀態...`);
+                // 檢查是否有自動保存的資料，但不顯示提示
+                const savedData = localStorage.getItem('loanCalculatorAutoSave');
+                if (savedData) {
+                    console.log('iframe中檢測到自動保存的資料');
+                }
+            } else {
+                // 非iframe環境中的處理：正常的顯示處理
+                console.log('頁面已顯示');
+                
+                // 檢查頁面隱藏了多久
+                const hiddenTime = localStorage.getItem('pageHiddenTime');
+                if (hiddenTime) {
+                    const hiddenDuration = new Date() - new Date(hiddenTime);
+                    const minutesHidden = Math.floor(hiddenDuration / 60000);
                     
-                    // 檢查是否有自動保存的資料
-                    const savedData = localStorage.getItem('loanCalculatorAutoSave');
-                    if (savedData) {
-                        showToast('歡迎回來！您的計算資料已保存');
+                    // 如果頁面隱藏超過5分鐘，提示使用者
+                    if (minutesHidden >= 5) {
+                        console.log(`頁面已隱藏 ${minutesHidden} 分鐘，檢查資料狀態...`);
+                        
+                        const savedData = localStorage.getItem('loanCalculatorAutoSave');
+                        if (savedData) {
+                            showToast('歡迎回來！您的計算資料已保存');
+                        }
                     }
                 }
-                
-                // 清除隱藏時間記錄
-                localStorage.removeItem('pageHiddenTime');
             }
+            
+            // 清除隱藏時間記錄（兩種環境都清除）
+            localStorage.removeItem('pageHiddenTime');
         }
     });
     
+    // ============================================
+    // 頁面離開前的處理（iframe優化版）
+    // 說明：在iframe環境中，移除離開提示以確保流暢切換
+    // 但保持自動保存功能，避免資料丟失
+    // ============================================
+
     // 監聽頁面即將關閉或重新整理的事件
     window.addEventListener('beforeunload', function(event) {
-        // 在頁面即將關閉前，執行最後一次保存
-        updateAllFields();
-        console.log('頁面即將關閉，已執行自動保存');
+        // 在頁面即將關閉前，執行最後一次自動保存
+        // 這確保即使在iframe中切換，資料也不會丟失
+        try {
+            updateAllFields(); // 觸發自動保存功能
+            console.log('iframe切換前已自動保存資料');
+        } catch (error) {
+            console.error('自動保存失敗:', error);
+        }
         
-        // 如果有未保存的重要資料，可以提示使用者
+        // ============================================
+        // iframe環境檢測與處理
+        // 說明：檢測是否在iframe中運行，如果是則不顯示離開提示
+        // ============================================
+        
+        // 檢測當前網頁是否在iframe中運行
+        const isInIframe = (window.self !== window.top);
+        
+        if (isInIframe) {
+            // 如果在iframe中，不顯示離開提示，直接允許切換
+            console.log('檢測到iframe環境，允許流暢切換');
+            return; // 直接返回，不執行下面的提示邏輯
+        }
+        
+        // ============================================
+        // 非iframe環境的離開提示（保留原有保護機制）
+        // 說明：只有在非iframe環境中才顯示離開提示
+        // ============================================
+        
+        // 檢查是否有未保存的重要資料（僅在非iframe環境中檢查）
         const hasUnsavedData = document.getElementById('period').value || 
-                              document.getElementById('rate').value || 
-                              document.getElementById('principal').value || 
-                              document.getElementById('payment').value;
+                            document.getElementById('rate').value || 
+                            document.getElementById('principal').value || 
+                            document.getElementById('payment').value;
         
         if (hasUnsavedData) {
-            // 註：現代瀏覽器會顯示標準的離開提示，而不是自定義訊息
-            event.preventDefault();
-            event.returnValue = '';
+            // 只有在非iframe環境且有未保存資料時才顯示離開提示
+            console.log('非iframe環境，有未保存資料，顯示離開確認');
+            event.preventDefault(); // 阻止預設的離開行為
+            event.returnValue = ''; // 設定返回值以觸發瀏覽器的離開確認對話框
         }
     });
     // ========== 頁面可見性檢測結束 ==========
@@ -3974,9 +4079,11 @@
             }
         }
 
-        // ========== 自動保存當前計算數據 ==========
-        // 說明：每次欄位更新時，自動將當前的計算數據保存到瀏覽器的本地儲存
-        // 這樣即使頁面意外重新整理，數據也不會丟失
+        // ============================================
+        // 自動保存當前計算數據（iframe優化版）
+        // 說明：增強在iframe環境中的自動保存可靠性
+        // 確保即使在快速切換iframe時也不會丟失數據
+        // ============================================
         try {
             // 收集需要保存的數據
             const autoSaveData = {
@@ -3987,22 +4094,53 @@
                 commission: document.getElementById('commission').value,            // 推廣費
                 monthlyCost: document.getElementById('monthlyCost').value,          // 資金成本
                 timestamp: new Date().toISOString(),                                // 保存時間戳記
-                version: 'v1'                                                       // 版本號，方便未來升級
+                version: 'v2',                                                      // 版本號升級，iframe優化版
+                environment: (window.self !== window.top) ? 'iframe' : 'standalone' // 環境標記
             };
             
             // 只有在有實際數據時才保存（避免保存空白數據）
             if (autoSaveData.period || autoSaveData.rate || autoSaveData.principal || autoSaveData.payment) {
-                // 將數據保存到瀏覽器的本地儲存
+                // 使用同步方式保存到瀏覽器的本地儲存，確保在iframe切換時不會丟失
                 localStorage.setItem('loanCalculatorAutoSave', JSON.stringify(autoSaveData));
                 
-                // 在控制台記錄（方便除錯）
-                console.log('自動保存計算數據:', autoSaveData);
+                // 額外的備份保存（針對iframe環境）
+                if (autoSaveData.environment === 'iframe') {
+                    // 在iframe環境中，額外保存一份備份
+                    localStorage.setItem('loanCalculatorIframeBackup', JSON.stringify(autoSaveData));
+                    console.log('iframe環境：已保存主要數據和備份數據');
+                } else {
+                    console.log('獨立環境：已保存計算數據');
+                }
+                
+                // 在控制台記錄（方便除錯），但在iframe中減少日誌輸出
+                if (autoSaveData.environment !== 'iframe' || Math.random() < 0.1) {
+                    // 獨立環境總是記錄，iframe環境僅10%的機率記錄以減少日誌量
+                    console.log('自動保存計算數據:', autoSaveData);
+                }
             }
         } catch (error) {
             // 如果保存失敗，記錄錯誤但不影響正常功能
             console.error('自動保存失敗:', error);
+            
+            // 嘗試使用備份保存方式
+            try {
+                const basicData = {
+                    period: document.getElementById('period').value || '',
+                    rate: document.getElementById('rate').value || '',
+                    principal: document.getElementById('principal').value || '',
+                    payment: document.getElementById('payment').value || '',
+                    timestamp: new Date().toISOString(),
+                    version: 'emergency'
+                };
+                localStorage.setItem('loanCalculatorEmergencyBackup', JSON.stringify(basicData));
+                console.log('使用緊急備份保存方式');
+            } catch (emergencyError) {
+                console.error('緊急備份也失敗:', emergencyError);
+            }
         }
-        // ========== 自動保存結束 ==========
+        // ============================================
+        // 自動保存結束
+        // ============================================
 
     }
 
