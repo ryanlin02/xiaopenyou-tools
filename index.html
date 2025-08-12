@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=400, user-scalable=no">
+    <title>小朋友工具</title>
+    
+    <!-- PWA 相關設定 -->
+    <meta name="theme-color" content="#ff9c33">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="小朋友工具">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon-192.png">
+    
+    <style>
+        /* ============================================
+         * CSS 變數定義區域 - 與原本計算機保持一致的外觀設計
+         * ============================================ */
+        
+        :root {
+            /* 主題色彩 - 沿用原本的暗夜橘焰主題 */
+            --primary-color: #333333;                      /* 主要背景色 */
+            --secondary-color: #4a4a4a;                    /* 次要背景色 */
+            --text-color: #ffffff;                         /* 文字顏色 */
+            --text-muted: #999999;                         /* 淡化文字顏色 */
+            --border-color: #555555;                       /* 邊框顏色 */
+            --hover-color: #666666;                        /* 懸停背景色 */
+            --shadow-color: rgba(0, 0, 0, 0.3);           /* 陰影顏色 */
+            
+            /* 橘色強調色系 */
+            --accent-color: #ff9c33;                       /* 強調色（橘色） */
+            --accent-color-light: rgba(255, 156, 51, 0.2); /* 淡強調色 */
+            --accent-color-dark: #e88a22;                  /* 深強調色 */
+            
+            /* 字體大小 */
+            --font-size-md: 16px;                          /* 中字體 */
+            --font-size-lg: 18px;                          /* 大字體 */
+            --font-size-xl: 22px;                          /* 特大字體（標題） */
+            
+            /* 動畫效果 */
+            --transition-fast: 0.2s;                       /* 快速過渡動畫 */
+
+            /* 新增尺寸相關變數 */
+            --border-radius-sm: 4px;                       /* 小圓角 */
+            --border-radius-md: 8px;                       /* 中圓角 */
+            --spacing-sm: 4px;                             /* 小間距 */
+            --spacing-md: 8px;                             /* 中間距 */
+            --spacing-lg: 15px;                            /* 大間距 */
+            --font-size-sm: 14px;                          /* 小字體 */
+
+            /* 陰影效果 */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);    /* 小陰影 */
+
+        }
+        
+        /* ============================================
+         * 基本頁面設定
+         * ============================================ */
+        
+        * {
+            margin: 0;                                      /* 重置所有外邊距 */
+            padding: 0;                                     /* 重置所有內邊距 */
+            box-sizing: border-box;                         /* 使用邊框盒模型 */
+        }
+        
+        body {
+            width: 100%;                                      /* 滿寬度 */
+            max-width: 400px;                                 /* 最大寬度限制 */
+            margin: 0 auto;                                   /* 水平居中 */
+            position: relative;                               /* 相對定位 */
+            overflow-x: hidden;                               /* 隱藏水平捲軸 */
+            -webkit-text-size-adjust: 100%;                   /* 防止字體縮放 */
+            padding: 0 3px;                                   /* 左右小內距 */
+            background-color: var(--primary-color);          /* 背景色 */
+            color: var(--text-color);                         /* 文字顏色 */
+            font-family: "Microsoft JhengHei", Arial, sans-serif; /* 字體設定 */
+            box-sizing: border-box;                           /* 邊框盒模型 */
+            height: 100vh;                                    /* 視窗滿高度 */
+            padding-top: 0;                                   /* 頂部無內距 */
+            -webkit-user-select: none;                        /* 禁止選取（iOS） */
+            -moz-user-select: none;                           /* 禁止選取（Firefox） */
+            user-select: none;                                /* 禁止選取 */
+        }
+        
+        /* ============================================
+         * Header 設計 - 沿用原本計算機的外觀
+         * ============================================ */
+        
+        .header-container {
+            position: fixed;                                  /* 固定在頂部 */
+            top: 0;                                          /* 頂部對齊 */
+            left: 50%;                                       /* 左側定位到中央 */
+            transform: translateX(-50%);                     /* 水平居中對齊 */
+            width: 100%;                                     /* 滿寬度 */
+            max-width: 400px;                               /* 最大寬度限制 */
+            height: 60px;                                    /* 固定高度 */
+            background-color: var(--primary-color);         /* 背景色 */
+            box-shadow: var(--shadow-sm);                   /* 陰影效果 */
+            z-index: 1100;                                  /* 最高層級 */
+            display: flex;                                   /* 彈性佈局 */
+            align-items: center;                             /* 垂直居中 */
+            justify-content: space-between;                  /* 兩端對齊 */
+            padding: 0 var(--spacing-lg);                   /* 左右內距 */
+            box-sizing: border-box;                          /* 邊框盒模型 */
+        }
+        
+        /* 主標題設計 */
+        .page-title {
+            color: var(--text-color);                        /* 白色文字 */
+            font-size: var(--font-size-xl);                 /* 大字體 */
+            margin: 0;                                       /* 移除邊距 */
+            border-bottom: 2px solid var(--accent-color);   /* 底部橘色邊框 */
+            padding-bottom: 5px;                            /* 底部內距 */
+            flex-shrink: 0;                                  /* 不縮小 */
+            font-weight: bold;                               /* 粗體 */
+        }
+        
+        /* ============================================
+        * 導航按鈕設計 - 參考檔案風格
+        * ============================================ */
+
+        /* 導航按鈕容器 */
+        .nav-buttons {
+            display: flex;                                   /* 彈性佈局 */
+            gap: var(--spacing-md);                         /* 按鈕間距 */
+            align-items: center;                             /* 垂直居中 */
+        }
+
+        /* 導航按鈕樣式 */
+        .nav-btn {
+            background-color: var(--secondary-color);       /* 次要背景色 */
+            color: var(--text-color);                       /* 白色文字 */
+            border: none;                                    /* 無邊框 */
+            border-radius: var(--border-radius-sm);         /* 小圓角 */
+            padding: 6px 12px;                              /* 內距設定 */
+            font-size: var(--font-size-sm);                /* 小字體 */
+            cursor: pointer;                                 /* 指標樣式 */
+            transition: background-color var(--transition-fast); /* 背景色動畫 */
+            font-family: inherit;                            /* 繼承字體 */
+            font-weight: normal;                             /* 正常字重 */
+        }
+
+        /* 導航按鈕懸停效果 */
+        .nav-btn:hover {
+            background-color: var(--hover-color);           /* 懸停背景 */
+        }
+
+        /* 導航按鈕激活狀態 */
+        .nav-btn.active {
+            background-color: var(--accent-color);          /* 橘色背景 */
+            color: #333333;                                 /* 深色文字 */
+            font-weight: bold;                              /* 粗體 */
+        }
+        
+        /* ============================================
+         * iframe 內容區域設計
+         * ============================================ */
+        
+        .content-container {
+            position: fixed;                                 /* 固定定位 */
+            top: 60px;                                       /* 在header下方 */
+            left: 50%;                                       /* 左側定位到中央 */
+            transform: translateX(-50%);                     /* 水平居中對齊 */
+            width: 100%;                                     /* 滿寬度 */
+            max-width: 400px;                               /* 最大寬度限制 */
+            height: calc(100vh - 60px);                     /* 剩餘高度 */
+            border: none;                                    /* 無邊框 */
+            overflow: hidden;                                /* 隱藏溢出 */
+        }
+        
+        /* iframe 樣式 */
+        .page-iframe {
+            width: 100%;                                     /* 滿寬度 */
+            height: 100%;                                    /* 滿高度 */
+            border: none;                                    /* 無邊框 */
+            background: var(--primary-color);               /* 背景色 */
+        }
+        
+        /* ============================================
+         * 載入動畫效果
+         * ============================================ */
+        
+        .loading-overlay {
+            position: fixed;                                 /* 固定定位 */
+            top: 60px;                                      /* 在導航下方 */
+            left: 0;                                         /* 左側對齊 */
+            width: 100%;                                     /* 滿寬度 */
+            height: calc(100vh - 110px);                     /* 剩餘高度 */
+            background: var(--primary-color);               /* 背景色 */
+            display: flex;                                   /* 彈性佈局 */
+            align-items: center;                             /* 垂直居中 */
+            justify-content: center;                         /* 水平居中 */
+            z-index: 998;                                    /* 在iframe上方 */
+        }
+        
+        .loading-text {
+            color: var(--accent-color);                      /* 橘色文字 */
+            font-size: var(--font-size-lg);                 /* 大字體 */
+            font-weight: bold;                               /* 粗體 */
+        }
+        
+        /* 隱藏載入覆蓋層 */
+        .loading-overlay.hidden {
+            display: none;                                   /* 隱藏 */
+        }
+        
+        /* ============================================
+         * 響應式設計 - 適配不同螢幕尺寸
+         * ============================================ */
+        
+        /* 針對較小的螢幕調整 */
+        @media screen and (max-width: 380px) {
+            .nav-button {
+                font-size: 14px;                            /* 較小字體 */
+            }
+            
+            .page-title {
+                font-size: 20px;                            /* 較小標題 */
+            }
+        }
+        
+        /* 針對觸控設備優化 */
+        @media (hover: none) {
+            .nav-button:hover {
+                background: none;                            /* 取消懸停效果 */
+                color: var(--text-color);                    /* 保持原色 */
+            }
+            
+            .nav-button:active {
+                background: var(--hover-color);             /* 點擊效果 */
+                color: var(--accent-color);                  /* 橘色文字 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+    * 頁面標題區域 - Header
+    * ============================================ -->
+    <div class="header-container">
+        <h1 class="page-title">小朋友</h1>
+        <div class="nav-buttons">
+            <button class="nav-btn active" data-page="calculator">計算</button>
+            <button class="nav-btn" data-page="check">支票</button>
+            <button class="nav-btn" data-page="invoice">發票</button>
+            <button class="nav-btn" data-page="gas">加油</button>
+        </div>
+    </div>
+    
+    <!-- ============================================
+     * 主要內容區域 - iframe
+     * ============================================ -->
+    <div class="content-container">
+        <!-- 載入動畫覆蓋層 -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-text">載入中...</div>
+        </div>
+        
+        <!-- 內容顯示iframe -->
+        <iframe class="page-iframe" id="pageIframe" src="pages/calculator.html"></iframe>
+    </div>
+    
+    <!-- ============================================
+     * JavaScript 功能程式碼
+     * ============================================ -->
+    <script>
+        /**
+         * 小朋友工具 - 主要功能控制程式
+         * 處理頁面切換、iframe載入、PWA註冊等功能
+         */
+        
+        // ============================================
+        // 全域變數定義
+        // ============================================
+        
+        let currentPage = 'calculator';                     // 目前顯示的頁面
+        const pageMapping = {                               // 頁面對應關係
+            'calculator': 'pages/calculator.html',         // 計算機頁面
+            'check': 'pages/check.html',                   // 支票頁面
+            'invoice': 'pages/invoice.html',               // 發票頁面
+            'gas': 'pages/gas.html'                        // 加油頁面
+        };
+        
+        // ============================================
+        // 頁面載入完成後初始化
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('小朋友工具 - 頁面初始化開始');
+            
+            // 初始化導航功能
+            initializeNavigation();
+            
+            // 初始化iframe載入監聽
+            initializeIframeLoading();
+            
+            // 註冊Service Worker (PWA功能)
+            registerServiceWorker();
+            
+            console.log('小朋友工具 - 頁面初始化完成');
+        });
+        
+        // ============================================
+        // 導航功能初始化
+        // ============================================
+        
+        function initializeNavigation() {
+            const navButtons = document.querySelectorAll('.nav-btn');  // 更改選擇器為新的類別名稱
+            
+            // 為每個導航按鈕綁定點擊事件
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetPage = this.getAttribute('data-page');
+                    switchPage(targetPage);
+                });
+            });
+        }
+        
+        // ============================================
+        // 頁面切換功能
+        // ============================================
+        
+        function switchPage(pageName) {
+            console.log(`頁面切換: ${currentPage} -> ${pageName}`);
+            
+            // 檢查頁面是否存在
+            if (!pageMapping[pageName]) {
+                console.error(`頁面不存在: ${pageName}`);
+                return;
+            }
+            
+            // 更新目前頁面
+            currentPage = pageName;
+            
+            // 更新導航按鈕狀態
+            updateNavigationState(pageName);
+            
+            // 載入新頁面
+            loadPageInIframe(pageName);
+        }
+        
+        // ============================================
+        // 更新導航按鈕狀態
+        // ============================================
+        
+        function updateNavigationState(activePage) {
+            const navButtons = document.querySelectorAll('.nav-btn');  // 更改選擇器為新的類別名稱
+            
+            // 移除所有active狀態
+            navButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // 添加新的active狀態
+            const activeButton = document.querySelector(`[data-page="${activePage}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+        
+        // ============================================
+        // iframe載入功能
+        // ============================================
+        
+        function loadPageInIframe(pageName) {
+            const iframe = document.getElementById('pageIframe');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const pageUrl = pageMapping[pageName];
+            
+            console.log(`載入頁面: ${pageUrl}`);
+            
+            // 顯示載入動畫
+            loadingOverlay.classList.remove('hidden');
+            
+            // 載入新頁面
+            iframe.src = pageUrl;
+        }
+        
+        // ============================================
+        // iframe載入監聽初始化
+        // ============================================
+        
+        function initializeIframeLoading() {
+            const iframe = document.getElementById('pageIframe');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            // iframe載入完成事件
+            iframe.addEventListener('load', function() {
+                console.log('iframe頁面載入完成');
+                // 隱藏載入動畫
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                }, 300);
+            });
+            
+            // iframe載入錯誤事件
+            iframe.addEventListener('error', function() {
+                console.error('iframe頁面載入失敗');
+                loadingOverlay.classList.add('hidden');
+            });
+        }
+        
+        // ============================================
+        // PWA Service Worker註冊
+        // ============================================
+        
+        function registerServiceWorker() {
+            // 檢查瀏覽器是否支援Service Worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('sw.js')
+                        .then(function(registration) {
+                            console.log('Service Worker 註冊成功:', registration.scope);
+                        })
+                        .catch(function(error) {
+                            console.log('Service Worker 註冊失敗:', error);
+                        });
+                });
+            }
+        }
+        
+        // ============================================
+        // 防止右鍵選單和長按選取 (行動裝置優化)
+        // ============================================
+        
+        // 禁止右鍵選單
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        // 禁止文字選取 (觸控裝置)
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+        
+        // 禁止拖拽
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+        
+        console.log('小朋友工具 - JavaScript載入完成');
+    </script>
+</body>
+</html>
