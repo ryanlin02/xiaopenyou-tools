@@ -106,6 +106,188 @@
         }
 
         /* ============================================
+        * 固定頂部利率顯示header樣式
+        * 說明：永遠固定在網頁最頂部的利率顯示區域樣式定義
+        * 包含佣後和稅佣後利率的顯示格式和動畫效果
+        * ============================================ */
+
+        /* 固定頂部的利率顯示容器 - 主要容器樣式 */
+        .fixed-rate-header {
+            position: fixed;                              /* 固定定位，不隨頁面滾動 */
+            top: 0;                                       /* 貼齊瀏覽器窗口頂部 */
+            left: 0;                                      /* 貼齊瀏覽器窗口左側 */
+            right: 0;                                     /* 貼齊瀏覽器窗口右側 */
+            width: 100%;                                  /* 占滿整個寬度 */
+            max-width: 400px;                             /* 與body的max-width保持一致 */
+            margin: 0 auto;                               /* 水平居中對齊 */
+            background-color: var(--primary-color);      /* 使用主題背景色（深色背景） */
+            border-bottom: 3px solid var(--accent-color); /* 底部邊框使用強調色（橘色） */
+            padding: 12px 10px;                           /* 內部間距：上下12px，左右10px */
+            display: flex;                                /* 使用彈性布局排列內部元素 */
+            align-items: center;                          /* 垂直居中對齊 */
+            justify-content: center;                      /* 水平居中對齊 */
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);   /* 向下的陰影效果，增加層次感 */
+            z-index: 1500;                                /* 層級設定，確保在所有內容之上 */
+            transition: all 0.3s ease;                    /* 平滑過渡效果，用於顏色變化等動畫 */
+            animation: headerSlideDown 0.6s ease-out;     /* 載入時從上方滑入的動畫效果 */
+        }
+
+        /* header載入時的滑入動畫定義 */
+        @keyframes headerSlideDown {
+            /* 動畫開始狀態：在螢幕上方且透明 */
+            from {
+                transform: translateY(-100%);             /* 位置在上方100%的距離外 */
+                opacity: 0;                               /* 完全透明 */
+            }
+            /* 動畫結束狀態：正常位置且不透明 */
+            to {
+                transform: translateY(0);                 /* 移動到正常位置 */
+                opacity: 1;                               /* 完全不透明 */
+            }
+        }
+
+        /* header中的利率顯示項目容器 - 單個利率顯示區域的樣式 */
+        .rate-header-item {
+            display: flex;                                /* 使用彈性布局 */
+            align-items: center;                          /* 垂直居中對齊 */
+            gap: 6px;                                     /* 內部元素之間的間距 */
+            transition: transform 0.2s ease;              /* 懸停效果的過渡動畫 */
+        }
+
+        /* 利率項目的懸停效果 - 滑鼠懸停時的視覺回饋 */
+        .rate-header-item:hover {
+            transform: scale(1.02);                       /* 輕微放大效果 */
+        }
+
+        /* header中的標題文字樣式 - "佣後"和"稣佣後"標籤的樣式 */
+        .rate-header-label {
+            font-size: 20px;                              /* 文字大小，比原footer稍大 */
+            color: var(--accent-color);                   /* 使用強調色（橘色） */
+            font-weight: bold;                            /* 粗體文字，增加視覺重量 */
+            white-space: nowrap;                          /* 防止文字換行 */
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);   /* 文字陰影，增加立體感 */
+            letter-spacing: 1px;                          /* 字母間距，讓文字更清晰 */
+        }
+
+        /* header中的利率數值輸入框樣式 - 顯示利率數值的輸入框 */
+        .rate-header-input {
+            width: 75px;                                  /* 固定寬度，比footer稍寬 */
+            padding: 6px 8px;                             /* 內部間距，讓數字顯示更舒適 */
+            background-color: var(--input-bg);            /* 使用輸入框背景色（深色） */
+            color: var(--text-color);                     /* 使用文字顏色（白色或主題色） */
+            border: 2px solid var(--border-color);        /* 邊框，比原footer稍粗 */
+            border-radius: 6px;                           /* 圓角效果，比原footer稍大 */
+            font-size: 20px;                              /* 文字大小，比原footer稍大 */
+            text-align: right;                            /* 文字靠右對齊（數字顯示習慣） */
+            font-weight: bold;                            /* 粗體文字，讓數字更突出 */
+            cursor: default;                              /* 預設游標（因為是唯讀欄位） */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* 內陰影，增加凹陷效果 */
+            transition: all 0.3s ease;                    /* 所有屬性的過渡動畫 */
+            font-family: 'Consolas', monospace;           /* 等寬字體，數字對齊更整齊 */
+        }
+
+        /* 利率輸入框的焦點效果（雖然是唯讀，但提供視覺回饋） */
+        .rate-header-input:focus {
+            outline: none;                                /* 移除預設的焦點外框 */
+            border-color: var(--accent-color);            /* 邊框變為強調色 */
+            box-shadow: 0 0 8px rgba(var(--accent-color-rgb), 0.4); /* 發光效果 */
+        }
+
+        /* header中的百分比符號樣式 - "%"符號的顯示樣式 */
+        .rate-header-percent {
+            font-size: 20px;                              /* 文字大小，與數值框匹配 */
+            color: var(--text-color);                     /* 使用主題文字顏色 */
+            margin-left: -10px;                           /* 左側負間距，讓%符號更靠近數字 */
+            font-weight: bold;                            /* 粗體效果，與其他文字保持一致 */
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);   /* 文字陰影，增加立體感 */
+        }
+
+        /* 兩個利率顯示之間的分隔線樣式 - 佣後和稅佣後之間的視覺分隔 */
+        .rate-header-separator {
+            width: 35px;                                  /* 分隔線寬度，比footer稍寬 */
+            height: 3px;                                  /* 分隔線高度，比footer稍高 */
+            background: linear-gradient(90deg,             /* 漸變分隔線，增加視覺效果 */
+                transparent,                              /* 左側透明 */
+                var(--accent-color),                      /* 中間使用強調色 */
+                transparent);                             /* 右側透明 */
+            margin: 0 20px;                               /* 左右間距，為分隔線留出空間 */
+            border-radius: 2px;                           /* 圓角效果，讓分隔線更柔和 */
+            opacity: 0.8;                                 /* 透明度，讓分隔線不會太突兀 */
+            animation: separatorPulse 3s infinite;        /* 脈動動畫，吸引注意力 */
+        }
+
+        /* 分隔線的脈動動畫定義 - 讓分隔線有呼吸般的效果 */
+        @keyframes separatorPulse {
+            0%, 100% {                                    /* 動畫開始和結束狀態 */
+                opacity: 0.6;                             /* 較淡的透明度 */
+                transform: scaleX(0.9);                   /* 水平方向稍微縮小 */
+            }
+            50% {                                         /* 動畫中間狀態 */
+                opacity: 1;                               /* 完全不透明 */
+                transform: scaleX(1);                     /* 正常大小 */
+            }
+        }
+
+        /* 警告樣式 - 當利率數值有問題時的視覺提示 */
+        .rate-header-input.warning-text {
+            color: var(--error-color) !important;         /* 強制使用錯誤色文字（紅色） */
+            background-color: rgba(var(--error-color-rgb), 0.15); /* 淡紅色背景提示 */
+            border-color: var(--error-color) !important;  /* 紅色邊框 */
+            animation: warningPulse 1s infinite;          /* 警告脈動動畫 */
+            box-shadow: 0 0 10px rgba(var(--error-color-rgb), 0.3); /* 紅色發光效果 */
+        }
+
+        /* 警告狀態的脈動動畫定義 - 讓有問題的數值持續閃爍提醒 */
+        @keyframes warningPulse {
+            0%, 100% {                                    /* 動畫開始和結束狀態 */
+                border-color: var(--error-color);         /* 紅色邊框 */
+                box-shadow: 0 0 5px rgba(var(--error-color-rgb), 0.3); /* 較弱的發光 */
+            }
+            50% {                                         /* 動畫中間狀態 */
+                border-color: var(--accent-color);        /* 邊框變為強調色 */
+                box-shadow: 0 0 15px rgba(var(--error-color-rgb), 0.6); /* 較強的發光 */
+            }
+        }
+
+        /* 響應式設計 - 針對不同螢幕大小的適配 */
+        @media screen and (max-width: 360px) {
+            /* 在較小的螢幕上調整header樣式 */
+            .fixed-rate-header {
+                padding: 10px 8px;                        /* 減少內邊距以節省空間 */
+            }
+            
+            .rate-header-label {
+                font-size: 18px;                          /* 減小標籤文字大小 */
+                letter-spacing: 0.5px;                    /* 減少字母間距 */
+            }
+            
+            .rate-header-input {
+                width: 65px;                              /* 減小輸入框寬度 */
+                font-size: 18px;                          /* 減小文字大小 */
+                padding: 5px 6px;                         /* 減少內邊距 */
+            }
+            
+            .rate-header-percent {
+                font-size: 18px;                          /* 減小百分比符號大小 */
+            }
+            
+            .rate-header-separator {
+                width: 25px;                              /* 減小分隔線寬度 */
+                margin: 0 15px;                           /* 減少左右間距 */
+            }
+        }
+
+        /* 印刷樣式 - 如果頁面被印刷，確保header正確顯示 */
+        @media print {
+            .fixed-rate-header {
+                position: relative !important;            /* 印刷時改為相對定位 */
+                top: auto !important;                     /* 取消頂部固定 */
+                box-shadow: none;                         /* 移除陰影效果 */
+                animation: none;                          /* 移除動畫效果 */
+            }
+        }
+
+        /* ============================================
         * 2. 基礎元素樣式
         * ============================================ */
 
@@ -123,7 +305,7 @@
             font-family: "Microsoft JhengHei", Arial, sans-serif; /* 設定字體 */
             box-sizing: border-box;               /* 盒模型計算包含邊框和內邊距 */
 
-            padding-top: 5px;                       /* 為固定header預留空間 */
+            padding-top: 70px;                       /* 為固定header預留空間 */
 
         }
 
@@ -271,22 +453,22 @@
             position: relative;                    /* 相對定位 */
             height: auto;                          /* 自動高度 */
             margin: 3px 0;                         /* 上下邊距 */
-            z-index: 1000;                         /* 層級 */
-            margin-top: 10px;                      /* 增加頂部邊距 */
+            z-index: 1400;                         /* 層級，確保在header下方但高於其他內容 */
+            margin-top: 5px;                       /* 減少頂部間距，因為header已經提供了足夠空間 */
         }
 
         /* 固定頂部的時間顯示 */
         .sticky-header {
             position: -webkit-sticky !important;   /* Safari支持 */
             position: sticky !important;           /* 黏性定位 */
-            top: 0;                                /* 貼齊頂部 */
+            top: 65px;                                /* 設定在固定header下方 */
             background: var(--secondary-color);    /* 使用次背景色 */
             padding: 8px;                          /* 內邊距 */
             border-radius: 4px;                    /* 圓角 */
             box-shadow: 0 2px 4px var(--shadow-color); /* 陰影效果 */
             animation: fadeIn 0.8s ease-out;       /* 淡入動畫 */
             transition: all 0.3s ease;             /* 過渡效果 */
-            z-index: 999;                          /* 層級 */
+            z-index: 1400;                            /* 層級設定，低於header但高於其他內容 */
             width: calc(100% - 16px);              /* 寬度考慮內邊距 */
             margin: 0 auto;                        /* 居中 */
         }
@@ -2399,98 +2581,6 @@
             padding: 15px;
         }
 
-        /* ============================================
-        * 底部固定利率顯示欄
-        * ============================================ */
-
-        /* 固定底部的利率顯示容器 */
-        .fixed-rate-footer {
-            position: fixed;                              /* 固定定位 */
-            bottom: 0;                                    /* 貼齊底部 */
-            left: 0;                                      /* 貼齊左側 */
-            right: 0;                                     /* 貼齊右側 */
-            background-color: var(--primary-color);     /* 使用次要背景色 */
-            border-top: 2px solid var(--accent-color);    /* 頂部邊框使用強調色 */
-            padding: 8px 10px 18px 10px;                   /* 內部間距 */
-            display: flex;                                /* 使用彈性布局 */
-            align-items: center;                          /* 垂直居中 */
-            justify-content: center;                      /* 水平居中 */
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);  /* 向上的陰影效果 */
-            z-index: 900;                                 /* 層級設定，低於彈出視窗 */
-            transition: all 0.3s ease;                    /* 平滑過渡效果 */
-        }
-
-        /* footer 中的利率顯示項目 */
-        .rate-display-item {
-            display: flex;                                /* 使用彈性布局 */
-            align-items: center;                          /* 垂直居中 */
-            gap: 4px;                                     /* 項目間距 */
-        }
-
-        /* footer 中的標題文字 - 佣後和稅佣後的標題 */
-        .rate-footer-label {
-            font-size: 18px;                              /* 文字大小 - 從16px增加到18px */
-            color: var(--accent-color);                   /* 使用強調色（橘色） */
-            font-weight: normal;                            /* 粗體文字 - 從normal改為bold讓文字更明顯 */
-            white-space: nowrap;                          /* 防止文字換行 */
-        }
-
-        /* footer 中的利率輸入框 - 顯示佣後和稅佣後利率的數值框 */
-        .rate-footer-input {
-            width: 70px;                                  /* 固定寬度 - 從60px增加到70px以容納較大的文字 */
-            padding: 5px 7px;                             /* 內部間距 - 稍微增加讓數字顯示更舒適 */
-            background-color: var(--input-bg);            /* 使用輸入框背景色（深色背景） */
-            color: var(--text-color);                     /* 使用文字顏色（白色或主題色） */
-            border: 1px solid var(--border-color);        /* 邊框顏色 */
-            border-radius: 4px;                           /* 圓角效果 */
-            font-size: 18px;                              /* 文字大小 - 從16px增加到18px */
-            text-align: right;                            /* 文字靠右對齊（數字通常靠右） */
-            font-weight: normal;                            /* 粗體文字 - 從normal改為bold讓數字更明顯 */
-            cursor: default;                              /* 預設游標（因為這是唯讀欄位） */
-        }
-
-        /* footer 中的百分比符號 - %符號的樣式 */
-        .rate-footer-percent {
-            font-size: 18px;                              /* 文字大小 - 從16px增加到18px配合數字大小 */
-            color: var(--text-color);                     /* 使用主題文字顏色 */
-            margin-left: -12px;                           /* 左側負間距 - 稍微調整以配合較大的輸入框 */
-            font-weight: normal;                            /* 新增粗體效果讓%符號更明顯 */
-        }
-
-        /* 兩個利率顯示之間的分隔器 - 佣後和稅佣後之間的垂直分隔線 */
-        .rate-footer-separator {
-            width: 30px;                                  /* 分隔器寬度 - 稍微增加寬度 */
-            height: 2px;                                  /* 高度 - 從1px增加到2px讓分隔線更明顯 */
-            background-color: var(--border-color);        /* 使用邊框顏色（通常是灰色） */
-            margin: 0 18px;                               /* 左右間距 - 稍微增加以配合較大的元素 */
-            opacity: 0.7;                                 /* 新增透明度讓分隔線不會太突兀 */
-        }
-
-        /* 調整主要內容的底部間距 */
-        body {
-            padding-bottom: 20px;  /* 為 footer 預留空間 */
-        }
-
-        /* 隱藏 footer 的樣式類別 */
-        .fixed-rate-footer.hidden {
-            display: none !important;                     /* 強制隱藏 */
-        }
-
-        /* 加油卡計算器 iframe 響應式樣式 */
-        @media screen and (max-height: 700px) {
-            /* 在較矮的手機螢幕上減少 iframe 高度 */
-            #gasPriceIframe {
-                height: 300px !important;
-            }
-        }
-
-        @media screen and (min-height: 800px) {
-            /* 在較高的手機螢幕上增加 iframe 高度 */
-            #gasPriceIframe {
-                height: 500px !important;
-            }
-        }
-
         /* iframe 載入動畫 */
         #gasIframeLoader {
             animation: pulse 1.5s infinite;
@@ -2616,6 +2706,44 @@
 
 </head>
 <body>
+
+    <!-- ============================================
+    * 固定頂部利率顯示header
+    * 說明：永遠固定在網頁最頂部的利率顯示區域，包含佣後和稅佣後利率
+    * 即使滑動網頁內容，這個區域始終保持在螢幕頂部可見
+    * ============================================ -->
+    <div id="fixedRateHeader" class="fixed-rate-header">
+        
+        <!-- 佣後利率顯示區域 -->
+        <div class="rate-header-item">
+            <!-- 佣後利率標籤文字 -->
+            <span class="rate-header-label">佣後</span>
+            <!-- 佣後利率數值輸入框（唯讀） -->
+            <input type="text" 
+                id="headerAfterCommissionOnlyRate" 
+                class="rate-header-input" 
+                readonly>
+            <!-- 百分比符號 -->
+            <span class="rate-header-percent">%</span>
+        </div>
+        
+        <!-- 兩個利率顯示之間的分隔線 -->
+        <div class="rate-header-separator"></div>
+        
+        <!-- 稅佣後利率顯示區域 -->
+        <div class="rate-header-item">
+            <!-- 稅佣後利率標籤文字 -->
+            <span class="rate-header-label">稅佣後</span>
+            <!-- 稅佣後利率數值輸入框（唯讀） -->
+            <input type="text" 
+                id="headerAfterCommissionRate" 
+                class="rate-header-input" 
+                readonly>
+            <!-- 百分比符號 -->
+            <span class="rate-header-percent">%</span>
+        </div>
+        
+    </div>
 	
     <div class="time-display-wrapper">
         <div id="timeDisplay" class="sticky-header">
@@ -2957,34 +3085,6 @@
     </div>
 
     <div class="footer-spacing"></div>
-
-    <!-- 固定底部利率顯示欄 -->
-    <div id="fixedRateFooter" class="fixed-rate-footer">
-        <!-- 佣後利率顯示 -->
-        <div class="rate-display-item">
-            <span class="rate-footer-label">佣後</span>
-            <input type="text" 
-                id="footerAfterCommissionOnlyRate" 
-                class="rate-footer-input" 
-                readonly 
-                disabled>
-            <span class="rate-footer-percent">%</span>
-        </div>
-        
-        <!-- 分隔器 -->
-        <div class="rate-footer-separator"></div>
-        
-        <!-- 稅佣後利率顯示 -->
-        <div class="rate-display-item">
-            <span class="rate-footer-label">稅佣後</span>
-            <input type="text" 
-                id="footerAfterCommissionRate" 
-                class="rate-footer-input" 
-                readonly 
-                disabled>
-            <span class="rate-footer-percent">%</span>
-        </div>
-    </div>
 
     <!-- 加入動畫樣式 -->
     <style>
@@ -3843,33 +3943,47 @@
             }
         });
 
-        // 更新底部 footer 的利率顯示
-        const footerAfterCommissionOnlyRate = document.getElementById('footerAfterCommissionOnlyRate');
-        const footerAfterCommissionRate = document.getElementById('footerAfterCommissionRate');
-        
-        if (footerAfterCommissionOnlyRate) {
-            // 從佣後利率輸入框取得值
+        // ============================================
+        // 更新頂部固定header的利率顯示
+        // 說明：將計算結果同步顯示到頂部固定的header區域
+        // 包含數值更新和警告樣式的同步處理
+        // ============================================
+
+        // 取得頂部header中的兩個利率顯示輸入框元素
+        const headerAfterCommissionOnlyRate = document.getElementById('headerAfterCommissionOnlyRate');
+        const headerAfterCommissionRate = document.getElementById('headerAfterCommissionRate');
+
+        // 更新佣後利率到header顯示區域
+        if (headerAfterCommissionOnlyRate) {
+            // 從主要計算區域的佣後利率輸入框取得當前計算結果
             const afterCommissionOnlyValue = document.getElementById('afterCommissionOnlyRate').value;
-            footerAfterCommissionOnlyRate.value = afterCommissionOnlyValue;
+            // 將計算結果同步到header的佣後利率顯示框
+            headerAfterCommissionOnlyRate.value = afterCommissionOnlyValue;
             
-            // 如果有警告樣式，也套用到 footer
+            // 同步警告樣式處理：如果主要區域有警告樣式，header也要顯示警告
             if (document.getElementById('afterCommissionOnlyRate').classList.contains('warning-text')) {
-                footerAfterCommissionOnlyRate.classList.add('warning-text');
+                // 主要區域有警告（通常是利率過低），header也要顯示警告樣式
+                headerAfterCommissionOnlyRate.classList.add('warning-text');
             } else {
-                footerAfterCommissionOnlyRate.classList.remove('warning-text');
+                // 主要區域沒有警告，移除header的警告樣式
+                headerAfterCommissionOnlyRate.classList.remove('warning-text');
             }
         }
-        
-        if (footerAfterCommissionRate) {
-            // 從稅佣後利率輸入框取得值
+
+        // 更新稅佣後利率到header顯示區域
+        if (headerAfterCommissionRate) {
+            // 從主要計算區域的稅佣後利率輸入框取得當前計算結果
             const afterCommissionValue = document.getElementById('afterCommissionRate').value;
-            footerAfterCommissionRate.value = afterCommissionValue;
+            // 將計算結果同步到header的稅佣後利率顯示框
+            headerAfterCommissionRate.value = afterCommissionValue;
             
-            // 如果有警告樣式，也套用到 footer
+            // 同步警告樣式處理：如果主要區域有警告樣式，header也要顯示警告
             if (document.getElementById('afterCommissionRate').classList.contains('warning-text')) {
-                footerAfterCommissionRate.classList.add('warning-text');
+                // 主要區域有警告（通常是利率過低或計算錯誤），header也要顯示警告樣式
+                headerAfterCommissionRate.classList.add('warning-text');
             } else {
-                footerAfterCommissionRate.classList.remove('warning-text');
+                // 主要區域沒有警告，移除header的警告樣式
+                headerAfterCommissionRate.classList.remove('warning-text');
             }
         }
 
@@ -4970,18 +5084,30 @@
         // 顯示提示訊息
         showToast('已清空所有欄位');
 
-        // 清空 footer 顯示
-        const footerAfterCommissionOnlyRate = document.getElementById('footerAfterCommissionOnlyRate');
-        const footerAfterCommissionRate = document.getElementById('footerAfterCommissionRate');
-        
-        if (footerAfterCommissionOnlyRate) {
-            footerAfterCommissionOnlyRate.value = '';
-            footerAfterCommissionOnlyRate.classList.remove('warning-text');
+        // ============================================
+        // 清空頂部header的利率顯示
+        // 說明：當清除所有欄位時，同時清空header中的利率顯示
+        // 並移除任何警告樣式，讓header回到初始狀態
+        // ============================================
+
+        // 取得頂部header中的兩個利率顯示輸入框元素
+        const headerAfterCommissionOnlyRate = document.getElementById('headerAfterCommissionOnlyRate');
+        const headerAfterCommissionRate = document.getElementById('headerAfterCommissionRate');
+
+        // 清空佣後利率顯示
+        if (headerAfterCommissionOnlyRate) {
+            // 清空佣後利率的數值顯示
+            headerAfterCommissionOnlyRate.value = '';
+            // 移除任何警告樣式，讓顯示回到正常狀態
+            headerAfterCommissionOnlyRate.classList.remove('warning-text');
         }
-        
-        if (footerAfterCommissionRate) {
-            footerAfterCommissionRate.value = '';
-            footerAfterCommissionRate.classList.remove('warning-text');
+
+        // 清空稅佣後利率顯示
+        if (headerAfterCommissionRate) {
+            // 清空稅佣後利率的數值顯示
+            headerAfterCommissionRate.value = '';
+            // 移除任何警告樣式，讓顯示回到正常狀態
+            headerAfterCommissionRate.classList.remove('warning-text');
         }
 
         // 清除自動保存的數據
