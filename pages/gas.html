@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=400, user-scalable=no">
+    <title>小朋友工具 - 加油頁面</title>
+    
+    <style>
+        /* ============================================
+         * CSS 變數定義 - 與主題保持一致的設計
+         * ============================================ */
+        
+        :root {
+            /* 主題色彩 - 沿用暗夜橘焰主題 */
+            --primary-color: #333333;                      /* 主要背景色 */
+            --secondary-color: #4a4a4a;                    /* 次要背景色 */
+            --text-color: #ffffff;                         /* 文字顏色 */
+            --text-muted: #999999;                         /* 淡化文字顏色 */
+            --shadow-color: rgba(0, 0, 0, 0.3);           /* 陰影顏色 */
+            
+            /* 橘色強調色系 */
+            --accent-color: #ff9c33;                       /* 強調色（橘色） */
+            --accent-color-light: rgba(255, 156, 51, 0.2); /* 淡強調色 */
+            
+            /* 字體大小 */
+            --font-size-lg: 18px;                          /* 大字體 */
+            --font-size-xl: 24px;                          /* 特大字體 */
+            --font-size-xxl: 32px;                         /* 超大字體 */
+        }
+        
+        /* ============================================
+         * 基本頁面設定
+         * ============================================ */
+        
+        * {
+            margin: 0;                                      /* 重置所有外邊距 */
+            padding: 0;                                     /* 重置所有內邊距 */
+            box-sizing: border-box;                         /* 使用邊框盒模型 */
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Microsoft JhengHei', sans-serif; /* 字體設定 */
+            background: var(--primary-color);                /* 背景色 */
+            color: var(--text-color);                         /* 文字顏色 */
+            font-size: var(--font-size-lg);                  /* 基礎字體大小 */
+            height: 100vh;                                    /* 視窗滿高度 */
+            display: flex;                                    /* 彈性佈局 */
+            align-items: center;                              /* 垂直居中 */
+            justify-content: center;                          /* 水平居中 */
+            overflow: hidden;                                 /* 隱藏捲軸 */
+        }
+        
+        /* ============================================
+         * 主要內容容器
+         * ============================================ */
+        
+        .container {
+            text-align: center;                               /* 文字居中 */
+            background: var(--secondary-color);              /* 背景色 */
+            border-radius: 12px;                             /* 圓角 */
+            padding: 40px 30px;                              /* 內邊距 */
+            box-shadow: 0 8px 24px var(--shadow-color);      /* 陰影效果 */
+            border: 2px solid var(--accent-color);           /* 橘色邊框 */
+            max-width: 350px;                                /* 最大寬度 */
+            width: 90%;                                       /* 響應式寬度 */
+        }
+        
+        /* ============================================
+         * 圖標設計
+         * ============================================ */
+        
+        .icon {
+            font-size: var(--font-size-xxl);                 /* 超大字體 */
+            color: var(--accent-color);                       /* 橘色 */
+            margin-bottom: 20px;                              /* 底部間距 */
+            display: block;                                   /* 區塊顯示 */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);       /* 文字陰影 */
+        }
+        
+        /* ============================================
+         * 標題設計
+         * ============================================ */
+        
+        .title {
+            font-size: var(--font-size-xl);                  /* 特大字體 */
+            color: var(--accent-color);                       /* 橘色 */
+            font-weight: bold;                                /* 粗體 */
+            margin-bottom: 15px;                              /* 底部間距 */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);       /* 文字陰影 */
+        }
+        
+        /* ============================================
+         * 描述文字設計
+         * ============================================ */
+        
+        .description {
+            color: var(--text-muted);                         /* 淡化文字 */
+            font-size: var(--font-size-lg);                  /* 大字體 */
+            line-height: 1.5;                                /* 行高 */
+            margin-bottom: 20px;                              /* 底部間距 */
+        }
+        
+        /* ============================================
+         * 進度指示器
+         * ============================================ */
+        
+        .progress-dots {
+            display: flex;                                    /* 彈性佈局 */
+            justify-content: center;                          /* 水平居中 */
+            gap: 8px;                                         /* 間距 */
+            margin-top: 10px;                                /* 頂部間距 */
+        }
+        
+        .dot {
+            width: 8px;                                       /* 寬度 */
+            height: 8px;                                      /* 高度 */
+            border-radius: 50%;                               /* 圓形 */
+            background: var(--accent-color);                  /* 橘色背景 */
+            opacity: 0.6;                                     /* 透明度 */
+            animation: bounce 1.8s infinite ease-in-out;     /* 彈跳動畫效果 */
+        }
+        
+        /* 為每個點設定不同的動畫延遲 */
+        .dot:nth-child(1) { animation-delay: 0.2s; }
+        .dot:nth-child(2) { animation-delay: 0.4s; }
+        .dot:nth-child(3) { animation-delay: 0.6s; }
+        
+        /* ============================================
+         * 動畫定義
+         * ============================================ */
+        
+        /* 彈跳動畫 */
+        @keyframes bounce {
+            0%, 100% {
+                opacity: 0.6;                                 /* 開始和結束透明度 */
+                transform: translateY(0) scale(1);            /* 原始位置和大小 */
+            }
+            50% {
+                opacity: 1;                                   /* 中間透明度 */
+                transform: translateY(-10px) scale(1.4);      /* 向上移動並放大 */
+            }
+        }
+        
+        /* 容器旋轉淡入動畫 */
+        .container {
+            animation: rotateIn 1s ease-out;                 /* 旋轉淡入動畫 */
+        }
+        
+        @keyframes rotateIn {
+            from {
+                opacity: 0;                                   /* 開始透明 */
+                transform: rotate(-10deg) scale(0.9);         /* 開始旋轉並縮小 */
+            }
+            to {
+                opacity: 1;                                   /* 結束不透明 */
+                transform: rotate(0deg) scale(1);             /* 回到正常狀態 */
+            }
+        }
+        
+        /* ============================================
+         * 響應式設計
+         * ============================================ */
+        
+        @media screen and (max-width: 380px) {
+            .container {
+                padding: 30px 20px;                          /* 較小內邊距 */
+            }
+            
+            .title {
+                font-size: 20px;                             /* 較小標題 */
+            }
+            
+            .icon {
+                font-size: 28px;                             /* 較小圖標 */
+            }
+            
+            .description {
+                font-size: 16px;                             /* 較小描述文字 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+     * 主要內容區域
+     * ============================================ -->
+    <div class="container">
+        <!-- 加油圖標 -->
+        <div class="icon">⛽</div>
+        
+        <!-- 標題 -->
+        <h1 class="title">加油功能</h1>
+        
+        <!-- 描述文字 -->
+        <p class="description">
+            加油相關功能正在開發中<br>
+            敬請期待...
+        </p>
+        
+        <!-- 進度指示器 -->
+        <div class="progress-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    
+    <!-- ============================================
+     * JavaScript 程式碼
+     * ============================================ -->
+    <script>
+        /**
+         * 加油頁面 - 佔位頁面功能
+         * 提供簡單的視覺效果和用戶體驗
+         */
+        
+        // ============================================
+        // 頁面載入完成後執行
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('加油頁面 - 佔位頁面載入完成');
+            
+            // 為頁面添加一些互動效果
+            addInteractiveEffects();
+        });
+        
+        // ============================================
+        // 添加互動效果
+        // ============================================
+        
+        function addInteractiveEffects() {
+            const container = document.querySelector('.container');
+            const icon = document.querySelector('.icon');
+            
+            // 容器點擊效果
+            if (container) {
+                container.addEventListener('click', function() {
+                    // 添加點擊動畫效果
+                    this.style.transform = 'scale(0.96) rotate(-1deg)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1) rotate(0deg)';
+                    }, 180);
+                });
+            }
+            
+            // 圖標懸停效果（僅限非觸控設備）
+            if (icon && window.matchMedia('(hover: hover)').matches) {
+                icon.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2) rotate(10deg)';
+                });
+                
+                icon.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                });
+            }
+        }
+        
+        // ============================================
+        // 防止右鍵選單（行動裝置優化）
+        // ============================================
+        
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+        
+        console.log('加油頁面 - JavaScript載入完成');
+    </script>
+</body>
+</html>
