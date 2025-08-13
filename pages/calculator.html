@@ -1481,17 +1481,14 @@
             background-color: var(--secondary-color);        /* 次要背景色 */
         }
 
-        /* 貸款比較頁面的特殊標題樣式 */
-        #multiLoanComparisonModal .modal-header {
-            min-height: 56px; /* 確保有足夠高度容納按鈕 */
-            padding: 12px 15px; /* 調整內距 */
-        }
-
-        /* 模態框標題樣式 - 頂部標題文字 */
+        /* 比較介面標題樣式 - 採用與歷史紀錄標題一致的設計 */
         .modal-header h3 {
             margin: 0;                                       /* 移除外部間距 */
-            color: var(--accent-color);                      /* 強調色文字 */
-            font-size: 18px;                                 /* 文字大小 */
+            color: var(--accent-color);                      /* 強調色文字，與歷史紀錄標題一致 */
+            font-size: 20px;                                 /* 修改：與歷史紀錄標題相同的文字大小 */
+            text-shadow: 0 1px 2px var(--shadow-color);      /* 新增：與歷史紀錄標題一致的文字陰影 */
+            flex: 1;                                         /* 新增：佔用剩餘空間，用於居中顯示 */
+            text-align: center;                              /* 新增：文字居中對齊 */
         }
 
         /* 模態框內容區域樣式 - 顯示主要內容的區域 */
@@ -2096,143 +2093,6 @@
             color: var(--accent-color);                      /* 強調色文字 */
         }
 
-        /* 添加到样式表的.history-item相关部分之后 */
-        .checkbox-date-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .history-item-checkbox {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            opacity: 0.8;
-            transition: all 0.2s ease;
-            margin: 0;
-            flex-shrink: 0;
-        }
-
-        .history-item-checkbox:checked {
-            accent-color: var(--accent-color);
-        }
-
-        .history-item-checkbox:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .compare-selected-btn {
-            background: rgba(var(--accent-color-rgb), 0.15);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            font-size: 14px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .compare-selected-btn:hover:not(:disabled) {
-            background-color: var(--accent-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 3px 5px rgba(var(--accent-color-rgb), 0.4);
-        }
-
-        .compare-selected-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: rgba(150, 150, 150, 0.15);
-            border: 1px solid #999;
-            color: #999;
-        }
-
-        .comparison-highlight {
-            /* border-left: 3px solid #33b5e5 !important; 移除：左側邊框 */
-            background: linear-gradient(90deg, rgba(51, 181, 229, 0.15), transparent) !important; /* 修改：使用背景漸變替代 */
-            border: 2px solid #33b5e5 !important;            /* 新增：使用全圍邊框 */
-        }
-
-        /* 全螢幕比較貸款樣式 */
-        #multiLoanComparisonModal {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            max-width: 100% !important;
-            max-height: 100% !important;
-            background-color: var(--primary-color) !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        #multiLoanComparisonModal .modal-container {
-            width: 100% !important;
-            height: 100% !important;
-            max-width: 100% !important;
-            max-height: 100% !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        #multiLoanComparisonModal .modal-header {
-            flex-shrink: 0;
-            position: sticky;
-            top: 0;
-            background-color: var(--secondary-color);
-            z-index: 100;
-            box-shadow: 0 2px 4px var(--shadow-color);
-        }
-
-        #multiLoanComparisonModal .modal-content {
-            flex: 1;
-            overflow-y: auto;
-            background-color: var(--primary-color);
-            padding-bottom: 20px; /* 底部留一點空間 */
-        }
-
-        /* 貸款選擇對話框全螢幕樣式 */
-        #loanSelectionModal {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            max-width: 100% !important;
-            max-height: 100% !important;
-            background-color: var(--primary-color) !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        #loanSelectionModal .modal-container {
-            width: 100% !important;
-            height: 100% !important;
-            max-width: 100% !important;
-            max-height: 100% !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        #loanSelectionModal .modal-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-        }
-
-        /* iframe 載入動畫 */
-        #gasIframeLoader {
-            animation: pulse 1.5s infinite;
-        }
-
         /* 合併的每年/每月利息欄位的特殊樣式 */
         .combined-interest-row {
             display: flex !important;
@@ -2313,6 +2173,58 @@
         .million-interest-row .label:first-child,
         .ten-thousand-interest-row .label:first-child {
             width: 76px !important;          /* 稍微縮小標籤寬度（原本是75px） */
+        }
+
+        /* 新增：統一的回上頁按鈕樣式 - 用於比較介面和其他需要返回功能的地方 */
+        .back-to-previous-btn {
+            position: absolute;                                 /* 絕對定位 */
+            left: 15px;                                        /* 左側距離 */
+            top: 50%;                                          /* 垂直居中 */
+            transform: translateY(-50%);                       /* 精確垂直居中 */
+            background: rgba(255, 255, 255, 0.1);             /* 半透明白色背景 */
+            border: 1px solid rgba(255, 255, 255, 0.2);       /* 半透明邊框 */
+            color: var(--text-color);                         /* 主題文字顏色 */
+            padding: 6px 12px;                                /* 內邊距 */
+            border-radius: 6px;                               /* 圓角 */
+            font-size: 14px;                                  /* 文字大小 */
+            cursor: pointer;                                  /* 滑鼠指標變為手型 */
+            transition: all 0.3s ease;                        /* 過渡效果 */
+            display: flex;                                    /* 彈性佈局 */
+            align-items: center;                              /* 垂直居中 */
+            gap: 4px;                                         /* 圖示與文字間距 */
+        }
+
+        /* 回上頁按鈕懸停效果 */
+        .back-to-previous-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);       /* 懸停時背景加深 */
+            border-color: var(--accent-color);                /* 懸停時邊框變為強調色 */
+        }
+
+        /* 新增：共用的全螢幕介面標題頭部樣式 - 用於歷史紀錄和比較介面 */
+        .fullscreen-header {
+            display: flex;                                       /* 彈性佈局 */
+            justify-content: space-between;                      /* 兩端對齊 */
+            align-items: center;                                 /* 垂直居中 */
+            padding: 22px 15px 5px 15px;                        /* 統一內邊距 */
+            background-color: var(--primary-color);              /* 主背景色 */
+            position: sticky;                                    /* 粘性定位 */
+            top: 0;                                             /* 貼齊頂部 */
+            z-index: 1600;                                      /* 統一層級 */
+            border-bottom: 2px solid var(--accent-color);        /* 底部橘色邊框 */
+            box-shadow: 0 2px 10px var(--shadow-color);          /* 陰影效果 */
+            margin-top: 0;                                       /* 確保貼齊頂部 */
+            flex-shrink: 0;                                      /* 防止縮放 */
+        }
+
+        /* 共用標題頭部中的標題文字樣式 */
+        .fullscreen-header h2,
+        .fullscreen-header h3 {
+            margin: 0;                                          /* 移除外部間距 */
+            color: var(--accent-color);                         /* 強調色文字 */
+            font-size: 20px;                                    /* 統一文字大小 */
+            text-shadow: 0 1px 2px var(--shadow-color);         /* 文字陰影 */
+            flex: 1;                                            /* 佔用剩餘空間 */
+            text-align: center;                                 /* 文字居中 */
         }
 
     </style>
@@ -2632,9 +2544,6 @@
                 <h2>歷史記錄</h2>
             </div>
             <div class="header-right">
-                <!-- 比較按鈕：選擇多個貸款記錄進行比較 -->
-                <button id="compareSelectedBtn" class="compare-selected-btn" onclick="compareSelectedLoans()" disabled>比較</button>
-                <!-- 全部刪除按鈕：清空所有歷史記錄 -->
                 <button class="delete-all-btn" onclick="confirmDeleteAll()">全刪</button>
             </div>
             <!-- 關閉按鈕 -->
@@ -3971,330 +3880,6 @@
         showToast('貸款計算結果已保存！');
     }
 
-    // 顯示多貸款比較視圖
-    function showMultiLoanComparison(loans) {
-        vibrate();
-        
-        // 確保至少有2個貸款方案
-        if (loans.length < 2) {
-            showToast('至少需要2個貸款方案進行比較');
-            return;
-        }
-        
-        // 關閉歷史記錄面板
-        document.getElementById('historyPanel').style.display = 'none';
-        
-        // 生成表格HTML（已移除分頁標籤，直接顯示表格）
-        let tableHTML = `
-        <!-- 直接顯示比較表格，不需要分頁 -->
-        <div class="comparison-tab-content">
-            <table class="comparison-table">
-                <tr>
-                    <th>項目</th>
-                    ${loans.map((loan, index) => `<th>${loan.id === 'current' ? '目前計算' : '方案 ' + (index + 1)}</th>`).join('')}
-                </tr>
-                <tr>
-                    <td>日期</td>
-                    ${loans.map(loan => `<td>${loan.id === 'current' ? '目前計算' : formatDate(loan.date)}</td>`).join('')}
-                </tr>
-                <tr>
-                    <td>期數</td>
-                    ${loans.map(loan => `<td>${loan.period}</td>`).join('')}
-                </tr>
-                <tr>
-                    <td>稅前利率</td>
-                    ${loans.map(loan => `<td>${loan.rate}%</td>`).join('')}
-                </tr>
-                <tr>
-                    <td>本金</td>
-                    ${loans.map(loan => `<td>${formatNumberWithCommas(loan.principal)}</td>`).join('')}
-                </tr>
-                <tr>
-                    <td>期繳</td>
-                    ${loans.map(loan => `<td>${formatNumberWithCommas(loan.payment)}</td>`).join('')}
-                </tr>
-                <tr>
-                    <td>總利息</td>
-                    ${loans.map(loan => `<td>${formatNumberWithCommas(loan.totalInterest)}</td>`).join('')}
-                </tr>
-                <tr>
-                    <td>稅後利率</td>
-                    ${loans.map(loan => `<td>${loan.afterTaxRate}%</td>`).join('')}
-                </tr>
-                <tr>
-                    <td>推廣費</td>
-                    ${loans.map(loan => `<td>${formatNumberWithCommas(loan.commission)}</td>`).join('')}
-                </tr>
-                <tr class="highlight-row">
-                    <td>稅佣後利率</td>
-                    ${loans.map(loan => `<td>${loan.afterCommissionRate}%</td>`).join('')}
-                </tr>
-                <tr class="highlight-row">
-                    <td>總還款</td>
-                    ${loans.map(loan => {
-                        const totalPayment = parseFloat(loan.payment) * parseFloat(loan.period);
-                        /* 修改為只顯示整數，不顯示小數 */
-                        return `<td>${formatNumberWithCommas(Math.round(totalPayment))}</td>`;
-                    }).join('')}
-                </tr>
-
-                <!-- 新增備註比較欄位 -->
-                <tr>
-                    <td style="vertical-align: top;">備註</td>
-                    ${loans.map(loan => {
-                        /* 顯示備註內容，如果沒有備註則顯示"無" */
-                        const noteContent = loan.note || '無';
-                        return `<td style="
-                            font-size: 13px;
-                            line-height: 1.4;
-                            padding: 10px;
-                            vertical-align: top;
-                        ">${noteContent}</td>`;
-                    }).join('')}
-                </tr>
-
-            </table>
-        </div>
-        `;
-        
-        // 創建模態框
-        const modalHTML = `
-        <!-- 貸款方案比較頁面標題區域 - 新增回上頁按鈕 -->
-        <div class="modal-header" style="position: relative;">
-            <!-- 左側：回上頁按鈕（修改為直接返回歷史記錄頁面） -->
-            <button onclick="backToHistoryPanel()" style="
-                position: absolute;
-                left: 15px;
-                top: 50%;
-                transform: translateY(-50%);
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                color: var(--text-color);
-                padding: 6px 12px;
-                border-radius: 6px;
-                font-size: 14px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                display: flex;
-                align-items: center;
-                gap: 4px;
-            " onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.2)'; this.style.borderColor='var(--accent-color)';" 
-            onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.1)'; this.style.borderColor='rgba(255, 255, 255, 0.2)';">
-                <span style="font-size: 16px;">←</span>
-                <span>回上頁</span>
-            </button>
-            
-            <!-- 中間：標題 -->
-            <h3 style="margin: 0; flex: 1; text-align: center;">貸款方案比較</h3>
-            
-            <!-- 右側：關閉按鈕 -->
-            <button class="close-btn" onclick="closeCustomModal('multiLoanComparisonModal')">×</button>
-        </div>
-        <div class="modal-content" style="padding: 10px; flex: 1; overflow-y: auto; background-color: var(--primary-color);">
-            ${tableHTML}
-        </div>
-        `;
-        
-        // 創建並顯示全螢幕模態框
-        const modalOverlay = document.createElement('div');
-        modalOverlay.className = 'modal-overlay';
-        modalOverlay.id = 'multiLoanComparisonModal';
-        modalOverlay.style.cssText = 'display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--primary-color); z-index: 9999;';
-        modalOverlay.innerHTML = `<div class="modal-container" style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; margin: 0; border-radius: 0; display: flex; flex-direction: column;">${modalHTML}</div>`;
-
-        // 添加到網頁
-        document.body.appendChild(modalOverlay);
-
-        // 點擊背景關閉（移除此功能以確保全螢幕）
-        // modalOverlay.addEventListener('click', function(event) {
-        //     if (event.target === this) {
-        //         closeCustomModal('multiLoanComparisonModal');
-        //     }
-        // });
-
-        vibrate();
-        
-        // 添加樣式
-        const style = document.createElement('style');
-        style.textContent = `
-            
-            .comparison-tab-content {
-                padding: 10px 0;
-            }
-            
-            /* 比較表格樣式 - 與整體設計風格統一 */
-            .comparison-table {
-                width: 100%;
-                border-collapse: separate;
-                border-spacing: 0;
-                font-size: 14px;
-                background: var(--secondary-color);
-                border-radius: 12px;
-                overflow: hidden;
-                box-shadow: 0 4px 12px var(--shadow-color);
-            }
-
-            /* 表格標題和單元格樣式 */
-            .comparison-table th, 
-            .comparison-table td {
-                padding: 10px 10px 10px 10px;
-                text-align: center;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            /* 表格標題樣式 - 深色背景 */
-            .comparison-table th {
-                background: linear-gradient(135deg, 
-                    rgba(var(--accent-color-rgb), 0.2) 0%, 
-                    rgba(var(--accent-color-rgb), 0.1) 100%);
-                color: var(--text-color);
-                font-weight: 600;
-                position: sticky;
-                top: 0;
-                z-index: 10;
-                font-size: 15px;
-            }
-
-            /* 第一列（項目名稱）特殊樣式 */
-            .comparison-table td:first-child {
-                text-align: left;
-                font-weight: 600;
-                color: var(--accent-color);
-                background: rgba(255, 255, 255, 0.03);
-                padding-left: 15px;
-            }
-
-            /* 表格列懸停效果 */
-            .comparison-table tr:hover td {
-                background-color: rgba(255, 255, 255, 0.05);
-                transition: background-color 0.2s ease;
-            }
-
-            /* 強調列樣式 - 用於重要數據 */
-            .highlight-row td {
-                background-color: rgba(var(--accent-color-rgb), 0.08);
-                font-weight: 600;
-            }
-
-            /* 最後一列無底部邊框 */
-            .comparison-table tr:last-child td {
-                border-bottom: none;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // 顯示貸款比較模態框
-    function showLoanComparisonModal(loan1, loan2) {
-        // 創建比較模態框的HTML
-        const modalHTML = `
-        <div class="modal-header">
-            <h3>貸款方案比較</h3>
-            <button class="close-btn" onclick="closeLoanComparisonModal()">×</button>
-        </div>
-        <div class="modal-content" style="flex: 1; overflow-y: auto;">
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">項目</th>
-                    <th style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">方案1</th>
-                    <th style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">方案2</th>
-                    <th style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">差異</th>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">期數</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan1.period}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.period}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.period - loan1.period}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">稅前利率</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan1.rate}%</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.rate}%</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${(parseFloat(loan2.rate) - parseFloat(loan1.rate)).toFixed(4)}%</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">本金</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan1.principal)}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.principal)}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.principal - loan1.principal)}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">期繳</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan1.payment)}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.payment)}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.payment - loan1.payment)}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">總利息</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan1.totalInterest)}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.totalInterest)}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.totalInterest - loan1.totalInterest)}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">稅後利率</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan1.afterTaxRate}%</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.afterTaxRate}%</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${(parseFloat(loan2.afterTaxRate) - parseFloat(loan1.afterTaxRate)).toFixed(4)}%</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">推廣</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan1.commission)}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.commission)}</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${formatNumberWithCommas(loan2.commission - loan1.commission)}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">稅佣後利率</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan1.afterCommissionRate}%</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${loan2.afterCommissionRate}%</td>
-                    <td style="text-align: right; padding: 8px; border-bottom: 1px solid var(--border-color);">${(parseFloat(loan2.afterCommissionRate) - parseFloat(loan1.afterCommissionRate)).toFixed(4)}%</td>
-                </tr>
-            </table>
-            
-            <div style="margin-top: 20px; padding: 15px; background-color: var(--secondary-color); border-radius: 8px;">
-                <h4 style="margin-top: 0; color: var(--accent-color);">方案比較摘要</h4>
-                <p>總成本差異: ${formatNumberWithCommas(Math.round((parseFloat(loan2.totalInterest) + parseFloat(loan2.commission)) - (parseFloat(loan1.totalInterest) + parseFloat(loan1.commission))))} 元</p>
-                <p>月付款差異: ${formatNumberWithCommas(Math.round(loan2.payment - loan1.payment))} 元/月</p>
-                <p>實際利率差異: ${(parseFloat(loan2.afterCommissionRate) - parseFloat(loan1.afterCommissionRate)).toFixed(4)}%</p>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="modal-btn modal-btn-secondary" onclick="clearComparisonData()">清除比較</button>
-            <button class="modal-btn modal-btn-primary" onclick="closeLoanComparisonModal()">關閉</button>
-        </div>
-        `;
-        
-        // 創建比較模態框
-        const modalOverlay = document.createElement('div');
-        modalOverlay.className = 'modal-overlay';
-        modalOverlay.id = 'loanComparisonModal';
-        modalOverlay.style.display = 'flex';
-        modalOverlay.innerHTML = `<div class="modal-container">${modalHTML}</div>`;
-        
-        // 添加到網頁
-        document.body.appendChild(modalOverlay);
-        
-        // 添加背景點擊關閉功能
-        modalOverlay.addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeLoanComparisonModal();
-            }
-        });
-        
-        // 添加震動反饋
-        vibrate();
-    }
-
-    // 關閉貸款比較模態框
-    function closeLoanComparisonModal() {
-        const modal = document.getElementById('loanComparisonModal');
-        if (modal) {
-            document.body.removeChild(modal);
-        }
-        
-        // 添加震動反饋
-        vibrate();
-    }
-
     // 顯示/隱藏歷史記錄面板
     function toggleHistoryPanel() {
         const panel = document.getElementById('historyPanel');
@@ -4337,11 +3922,11 @@
             html += `
                 <div class="history-item" data-loan-id="${loan.id}">
                     <div class="history-item-header">
-                        <div class="checkbox-date-container">
-                            <input type="checkbox" class="history-item-checkbox" data-loan-id="${loan.id}" onchange="updateCompareButton()">
+                        <!-- <div class="checkbox-date-container"> 移除：勾選框容器 -->
+                            <!-- <input type="checkbox" class="history-item-checkbox" data-loan-id="${loan.id}" onchange="updateCompareButton()"> 移除：比較用勾選框 -->
                             <div class="history-date">${formatDate(loan.date)}</div>
-                        </div>
-                        <div class="history-header-rate">稅佣後利率： ${parseFloat(loan.afterCommissionRate).toFixed(4)}%</div>
+                        <!-- </div> 移除：勾選框容器結束 -->
+                        <div class="history-header-rate">稅佣後利率: ${parseFloat(loan.afterCommissionRate).toFixed(4)}%</div>
                     </div>
                     
                     <div class="history-details">
@@ -4380,40 +3965,6 @@
         html += '</div>';
         
         historyContent.innerHTML = html;
-    }
-
-    // 更新比較按鈕狀態
-    function updateCompareButton() {
-        const checkboxes = document.querySelectorAll('.history-item-checkbox:checked');
-        const compareButton = document.getElementById('compareSelectedBtn');
-        
-        // 如果有2個或以上選中的項目，啟用比較按鈕
-        if (checkboxes.length >= 2) {
-            compareButton.disabled = false;
-        } else {
-            compareButton.disabled = true;
-        }
-    }
-
-    // 比較選中的貸款
-    function compareSelectedLoans() {
-        const checkboxes = document.querySelectorAll('.history-item-checkbox:checked');
-        if (checkboxes.length < 2) {
-            showToast('請至少選擇2個貸款方案進行比較');
-            return;
-        }
-        
-        // 獲取所有選中的貸款ID
-        const selectedIds = Array.from(checkboxes).map(checkbox => 
-            parseInt(checkbox.getAttribute('data-loan-id'))
-        );
-        
-        // 從歷史記錄中獲取選中的貸款數據
-        const loanHistory = JSON.parse(localStorage.getItem('loanHistory') || '[]');
-        const selectedLoans = loanHistory.filter(loan => selectedIds.includes(loan.id));
-        
-        // 顯示比較視圖
-        showMultiLoanComparison(selectedLoans);
     }
 
     function openNoteEditor(loanId, existingNote = '') {
@@ -5206,51 +4757,6 @@
             document.body.removeChild(modal);
         }
         vibrate();
-    }
-
-    // ============================================
-    // 從貸款比較頁面返回歷史記錄頁面
-    // 說明：關閉比較頁面並重新顯示歷史記錄面板
-    // ============================================
-    function backToHistoryPanel() {
-        // 觸發震動反饋
-        vibrate();
-        
-        // 關閉當前的比較頁面
-        closeCustomModal('multiLoanComparisonModal');
-        
-        // 延遲一點時間後顯示歷史記錄頁面，確保動畫流暢
-        setTimeout(() => {
-            // 顯示歷史記錄面板
-            const historyPanel = document.getElementById('historyPanel');
-            if (historyPanel) {
-                historyPanel.style.display = 'block';
-                // 重新載入歷史記錄數據
-                loadHistoryData();
-            } else {
-                // 如果找不到歷史記錄面板，顯示錯誤提示
-                showToast('無法返回歷史記錄頁面');
-            }
-        }, 300); // 300毫秒的延遲，確保關閉動畫完成
-    }
-
-    // 关闭子选单
-    function closeSubmenu(submenuId) {
-        const submenu = document.getElementById(submenuId);
-        if (submenu) {
-            const submenuContent = submenu.querySelector('.submenu-content');
-            
-            // 添加关闭动画
-            submenuContent.classList.add('submenu-closing');
-            
-            // 动画结束后隐藏子选单
-            setTimeout(function() {
-                submenu.style.display = 'none';
-                submenuContent.classList.remove('submenu-closing');
-            }, 200); // 与动画时长相匹配
-            
-            vibrate(); // 使用现有的震动函数
-        }
     }
 
     // 通用的模態框顯示函數
