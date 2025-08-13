@@ -46,9 +46,9 @@
             --input-padding-lr: 5px;              /* 輸入框左右內邊距 */
             
             /* 動畫時間 */
-            --transition-fast: 0.2s;              /* 快速過渡動畫 */
-            --transition-normal: 0.3s;            /* 標準過渡動畫 */
-            --transition-slow: 0.5s;              /* 慢速過渡動畫 */
+            --transition-fast: 0.1s;              /* 快速過渡動畫 */
+            --transition-normal: 0.2s;            /* 標準過渡動畫 */
+            --transition-slow: 0.3s;              /* 慢速過渡動畫 */
             
             /* 陰影效果 */
             --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);    /* 淺層陰影 */
@@ -127,9 +127,9 @@
             align-items: center;                          /* 垂直居中對齊 */
             justify-content: center;                      /* 水平居中對齊 */
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);   /* 向下的陰影效果，增加層次感 */
-            z-index: 2000;                                /* 層級設定，確保在所有內容之上 */
+            z-index: 100;                                /* 層級設定，確保在所有內容之上 */
             transition: all 0.3s ease;                    /* 平滑過渡效果，用於顏色變化等動畫 */
-            animation: headerSlideDown 0.6s ease-out;     /* 載入時從上方滑入的動畫效果 */
+            animation: headerSlideDown 0.5s ease-out;     /* 載入時從上方滑入的動畫效果 */
         }
 
         /* header載入時的滑入動畫定義 */
@@ -305,31 +305,30 @@
             padding: 3px;
             border-radius: 4px;
             box-shadow: 0 4px 8px var(--shadow-color);
-            /* 移除 transition 以去除動畫效果 */
             position: relative;
             transform-origin: left;
-            /* 移除 will-change 因為不再需要動畫優化 */
+            z-index: 1;                           /* 新增：設定較低的層級，不阻擋按鍵 */
         }
 
         /* ============================================
         * 現代化可編輯欄位設計
         * ============================================ */
 
-        /* 可編輯欄位的現代化設計 - 採用簡潔的左側邊框 + 微妙背景效果 */
+        /* 可編輯欄位的現代化設計 - 移除左側橘色邊框，採用簡潔設計 */
         .editable-field {
             position: relative;                                    /* 相對定位，為內部元素提供定位基準 */
-            border-left: 3px solid var(--accent-color);           /* 左側3像素寬的實心邊框，使用主題強調色 */
-            background: linear-gradient(135deg,                    /* 135度角的漸變背景 */
-                rgba(var(--accent-color-rgb), 0.03) 0%,           /* 起始：極淡的主題色（透明度3%） */
-                rgba(var(--accent-color-rgb), 0.01) 100%);        /* 結束：更淡的主題色（透明度1%） */
+            /* border-left: 3px solid var(--accent-color); 移除：左側橘色邊框 */
+            background: rgba(var(--secondary-color), 0.3);        /* 修改：使用簡單的半透明次要背景色 */
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);   /* 使用現代化的緩動函數，提供流暢的過渡效果 */
             box-shadow: 0 0 0 0 rgba(var(--accent-color-rgb), 0); /* 初始時無陰影，用於懸停動畫 */
+            border-radius: 4px;                                   /* 新增：添加圓角效果，保持與其他元素一致 */
         }
 
-        /* 聚焦狀態 - 簡化版本 */
+        /* 聚焦狀態 - 移除左側邊框，使用背景色變化表示聚焦 */
         .editable-field:focus-within {
-            border-left-width: 4px;                /* 保留邊框加寬表示聚焦 */
-            /* 已移除背景漸變、陰影和位移效果以提升效能 */
+            /* border-left-width: 4px; 移除：左側邊框加寬效果 */
+            background: rgba(var(--accent-color-rgb), 0.1);       /* 新增：聚焦時使用橘色半透明背景 */
+            transform: scale(1.01);                               /* 新增：聚焦時輕微放大效果 */
         }
 
         /* 確保內部元素保持正常的定位和顯示 */
@@ -383,7 +382,7 @@
             font-size: var(--label-font-size);   /* 使用變數控制字體大小 */
         }
 
-        /* 輸入框與按鍵的視覺分組 */
+        /* 輸入框與按鈕的視覺分組 */
         .input-button-group {
             border: 1px solid var(--border-color); /* 添加邊框 */
             border-radius: 8px;                    /* 圓角 */
@@ -394,6 +393,7 @@
             position: relative;                     /* 相對定位 */
             overflow: hidden;                       /* 隱藏溢出內容 */
             transition: all 0.3s ease-in-out;       /* 過渡效果 */
+            z-index: 5;                            /* 新增：確保輸入按鍵組在適當層級 */
         }
 
         /* 分組內的行容器 */
@@ -403,6 +403,9 @@
             margin: 2px 0;                        /* 上下邊距 */
             padding-top: 1px;                     /* 上部內邊距 */
             padding-bottom: 1px;                  /* 下部內邊距 */
+            overflow: visible;                    /* 新增：確保不會裁切按鍵內容 */
+            position: relative;                   /* 新增：設定相對定位 */
+            z-index: 1;                          /* 新增：設定較低層級，不覆蓋按鍵 */
         }
 
         /* 按鍵容器樣式調整 - 已移除動畫效果 */
@@ -411,9 +414,10 @@
             padding-top: 0;
             padding-bottom: 2px;
             border-top: none;
-            /* 確保沒有 transition 屬性 */
             max-height: 100px;
             opacity: 1;
+            z-index: 10;                              /* 新增：確保按鍵容器在其他元素之上 */
+            position: relative;                       /* 新增：設定相對定位以使z-index生效 */
         }
         
         /* 當滑鼠懸停在按鍵組上時的效果 */
@@ -422,21 +426,12 @@
             border-radius: 4px;                          /* 圓角 */
         }
 
-        /* 隱藏狀態的按鈕組 */
-        .input-button-group div[id$="Buttons"] {
-            max-height: 0;                         /* 高度為0 */
-            opacity: 0;                            /* 完全透明 */
-            padding: 0;                            /* 移除內邊距 */
-            margin: 0;                             /* 移除邊距 */
-            overflow: hidden;                      /* 隱藏溢出內容 */
-        }
-
         /* 時間顯示包裝容器 */
         .time-display-wrapper {
             position: relative;                    /* 相對定位 */
             height: auto;                          /* 自動高度 */
             margin: 3px 0;                         /* 上下邊距 */
-            z-index: 1400;                         /* 層級，確保在header下方但高於其他內容 */
+            z-index: 90;                         /* 層級，確保在header下方但高於其他內容 */
             margin-top: 5px;                       /* 減少頂部間距，因為header已經提供了足夠空間 */
         }
 
@@ -449,9 +444,9 @@
             padding: 8px;                          /* 內邊距 */
             border-radius: 4px;                    /* 圓角 */
             box-shadow: 0 2px 4px var(--shadow-color); /* 陰影效果 */
-            animation: fadeIn 0.8s ease-out;       /* 淡入動畫 */
+            animation: fadeIn 0.5s ease-out;       /* 淡入動畫 */
             transition: all 0.3s ease;             /* 過渡效果 */
-            z-index: 1000;                            /* 層級設定，低於header但高於其他內容 */
+            z-index: 80;                            /* 層級設定，低於header但高於其他內容 */
             width: calc(100% - 16px);              /* 寬度考慮內邊距 */
             margin: 0 auto;                        /* 居中 */
         }
@@ -472,7 +467,7 @@
             padding: 8px;                           /* 內邊距 */
             border-radius: 4px;                     /* 圓角 */
             box-shadow: 0 2px 4px var(--shadow-color); /* 陰影 */
-            animation: fadeIn 0.8s ease-out;        /* 淡入動畫 */
+            animation: fadeIn 0.5s ease-out;        /* 淡入動畫 */
             transition: all 0.3s ease;              /* 過渡效果 */
             position: relative;                     /* 相對定位 */
             overflow: hidden;                       /* 隱藏溢出內容 */
@@ -562,13 +557,14 @@
             font-size: 16px;                     /* 保持原始字體大小 */
         }
 
-        /* 強調重要欄位 */
+        /* 強調重要欄位 - 移除左側橘色邊框，使用其他方式強調 */
         .emphasized-row {
-            border-left: 3px solid var(--accent-color); /* 左側邊框 */
-            background: linear-gradient(90deg, var(--accent-color-light), transparent); /* 漸變背景 */
-            transform: scale(1.01);                /* 稍微放大 */
+            /* border-left: 3px solid var(--accent-color); 移除：左側橘色邊框 */
+            background: linear-gradient(90deg, var(--accent-color-light), transparent); /* 保留：漸變背景作為強調效果 */
+            transform: scale(1.02);                /* 修改：稍微增加放大效果補償移除的邊框 */
             transition: all 0.3s ease;             /* 過渡效果 */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* 陰影效果 */
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); /* 修改：增強陰影效果作為強調 */
+            border: 2px solid var(--accent-color);  /* 新增：使用全圍邊框取代左側邊框 */
         }
 
         /* 強調欄位標籤 */
@@ -823,7 +819,7 @@
         /* 將組內的按鍵輕微突出顯示 - 增加視覺層次感 */
         .input-button-group div[id$="Buttons"] button {
             position: relative;                    /* 相對定位 */
-            z-index: 2;                           /* 提高層級 */
+            z-index: 20;                           /* 提高層級 */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* 輕微陰影 */
         }
 
@@ -1108,7 +1104,7 @@
             }
         }
 
-        /* 歷史記錄面板樣式 - 顯示保存的貸款記錄 */
+        /* 歷史紀錄面板樣式 - 顯示保存的貸款紀錄 */
         .history-panel {
             display: none;                                        /* 初始隱藏 */
             position: fixed;                                      /* 固定定位 */
@@ -1117,22 +1113,22 @@
             width: 100%;                                         /* 寬度100% */
             height: 100%;                                        /* 高度100% */
             background-color: rgba(var(--primary-color-rgb), 0.95); /* 半透明背景 */
-            z-index: 3000;                                       /* 提高層級，高於header */
+            z-index: 1500;                                       /* 修改：降低層級，確保不會覆蓋備註編輯視窗 */
             overflow-y: auto;                                    /* 垂直滾動 */
-            animation: fadeIn 0.3s ease-out;                     /* 淡入動畫 */
+            animation: fadeIn 0.1s ease-out;                     /* 淡入動畫 */
             padding-top: 0;                                      /* 移除頂部內邊距 */
         }
 
-        /* 歷史記錄面板頭部樣式 - 包含標題和按鈕的頂部區域 */
+        /* 歷史紀錄面板頭部樣式 - 包含標題和按鈕的頂部區域 */
         .history-header {
-            display: flex;                                       /* 彈性布局 */
+            display: flex;                                       /* 彈性佈局 */
             justify-content: space-between;                      /* 兩端對齊 */
             align-items: center;                                 /* 垂直居中 */
             padding: 22px 15px 5px 15px;                                       /* 內部間距 */
             background-color: var(--primary-color);              /* 主背景色 */
             position: sticky;                                    /* 粘性定位 */
             top: 0;                                             /* 貼齊頂部 */
-            z-index: 5000;                                      /* 提高層級 */
+            z-index: 1600;                                      /* 修改：降低層級，確保不覆蓋備註編輯視窗 */
             border-bottom: 2px solid var(--accent-color);        /* 底部邊框 */
             box-shadow: 0 2px 10px var(--shadow_color);          /* 陰影效果 */
             margin-top: 0;                                       /* 確保貼齊頂部 */
@@ -1184,28 +1180,29 @@
             padding-top: 20px;                                  /* 增加頂部間距 */
         }
 
-        /* 歷史記錄列表樣式 - 所有歷史記錄項目的容器 */
+        /* 歷史紀錄列表樣式 - 採用主畫面容器的設計風格 */
         .history-list {
-            display: flex;                                      /* 彈性布局 */
+            display: flex;                                      /* 彈性佈局 */
             flex-direction: column;                             /* 垂直排列 */
-            gap: 10px;                                          /* 項目間距 */
-            padding: 3px;                                       /* 內部間距 */
-            margin-bottom: 10px;                                /* 底部外部間距 */
+            gap: 4px;                                           /* 修改：與主畫面一致的項目間距 */
+            padding: 3px;                                       /* 內部間距，與主畫面一致 */
+            margin-bottom: 4px;                                 /* 修改：與主畫面一致的底部間距 */
         }
 
-        /* 歷史記錄項目樣式 - 單個歷史記錄的卡片 */
+        /* 歷史紀錄項目樣式 - 移除左側橘色邊框，保持簡潔設計 */
         .history-item {
-            background-color: var(--secondary-color);           /* 次要背景色 */
-            padding: 8px;                                       /* 內部間距 */
-            border-radius: 8px;                                 /* 圓角效果 */
+            background-color: var(--secondary-color);           /* 次要背景色，與主畫面一致 */
+            padding: 3px;                                       /* 修改：與主畫面row樣式一致的內邊距 */
+            border-radius: 4px;                                 /* 修改：與主畫面一致的圓角效果 */
             position: relative;                                 /* 相對定位 */
             transition: all 0.3s ease;                          /* 過渡效果 */
-            border-left: 3px solid var(--accent-color);         /* 左側邊框 */
-            display: flex;                                      /* 彈性布局 */
+            display: flex;                                      /* 彈性佈局 */
             flex-direction: column;                             /* 垂直排列 */
-            gap: 6px;                                           /* 項目間距 */
-            box-shadow: 0 2px 4px var(--shadow-color);          /* 陰影效果 */
-            margin-bottom: 10px;                                /* 底部外部間距 */
+            gap: 4px;                                           /* 修改：減少項目間距，與主畫面一致 */
+            box-shadow: 0 4px 8px var(--shadow-color);          /* 修改：與主畫面一致的陰影效果 */
+            margin: 4px 0;                                      /* 修改：與主畫面row一致的上下邊距 */
+            transform-origin: left;                             /* 新增：與主畫面一致的變形原點 */
+            border: 1px solid rgba(var(--accent-color-rgb), 0.2); /* 新增：淡色全圍邊框作為替代 */
         }
 
         /* 歷史記錄項目懸停效果 - 移除右移效果 */
@@ -1214,13 +1211,16 @@
             box-shadow: 0 5px 15px var(--shadow-color);         /* 增強陰影 */
         }
 
-        /* 歷史記錄項目頭部區域 - 顯示日期和稅佣後利率 */
+        /* 歷史紀錄項目頭部區域 - 採用主畫面行容器的設計風格 */
         .history-item-header {
-            display: flex;                                      /* 彈性布局 */
+            display: flex;                                      /* 彈性佈局 */
             justify-content: space-between;                     /* 兩端對齊 */
             align-items: center;                                /* 垂直居中 */
             width: 100%;                                        /* 寬度100% */
-            padding-bottom: 2px;                                /* 底部內部間距 */
+            padding: 2px 4px;                                   /* 修改：採用與主畫面類似的內邊距 */
+            background: rgba(255, 255, 255, 0.02);             /* 新增：淡色背景，增加層次感 */
+            border-radius: 2px;                                 /* 新增：小圓角效果 */
+            margin-bottom: 2px;                                 /* 修改：與下方內容的間距 */
         }
 
         /* 歷史記錄日期樣式 - 顯示記錄保存的日期 */
@@ -1234,43 +1234,49 @@
 
         /* 稅佣後利率樣式 - 在歷史記錄頭部顯示的利率 */
         .history-header-rate {
-            font-weight: bold;                                  /* 文字粗細 */
+            font-weight: normal;                                  /* 文字粗細 */
             color: var(--text-color);                           /* 文字顏色 */
             font-size: 16px;                                    /* 文字大小 */
             background-color: var(--accent-color-light);        /* 淡色強調背景 */
-            padding: 2px 6px;                                   /* 內部間距 */
+            padding: 2px 6px;
+            margin: 0px 5px 0px 5px;                                   /* 內部間距 */
             border-radius: 4px;                                 /* 圓角效果 */
         }
 
-        /* 歷史詳情顯示區 - 顯示貸款參數的網格布局 */
+        /* 歷史詳情顯示區 - 採用主畫面的網格設計風格 */
         .history-details {
-            display: grid;                                      /* 網格布局 */
+            display: grid;                                      /* 網格佈局 */
             grid-template-columns: repeat(2, 1fr);              /* 兩列等寬 */
-            gap: 6px;                                           /* 網格間距 */
-            background-color: rgba(var(--primary-color-rgb), 0.15); /* 半透明背景 */
-            padding: 6px;                                       /* 內部間距 */
-            border-radius: 4px;                                 /* 圓角效果 */
+            gap: 4px;                                           /* 修改：與主畫面一致的間距 */
+            background-color: rgba(var(--primary-color-rgb), 0.08); /* 修改：降低背景透明度，更接近主畫面風格 */
+            padding: 4px;                                       /* 修改：與主畫面一致的內邊距 */
+            border-radius: 4px;                                 /* 保持：與主畫面一致的圓角效果 */
+            border: 1px solid rgba(255, 255, 255, 0.05);       /* 新增：淡色邊框，增加層次感 */
         }
 
-        /* 歷史詳情項目樣式 - 單個參數的顯示 */
+        /* 歷史詳情項目樣式 - 採用主畫面標籤與數值的設計風格 */
         .history-detail-item {
-            display: flex;                                      /* 彈性布局 */
+            display: flex;                                      /* 彈性佈局 */
             flex-direction: column;                             /* 垂直排列 */
             gap: 1px;                                           /* 項目間距 */
+            padding: 2px;                                       /* 新增：小內邊距，增加舒適感 */
+            border-radius: 2px;                                 /* 新增：小圓角效果 */
+            background: rgba(255, 255, 255, 0.02);             /* 新增：極淡背景色，增加層次 */
         }
 
         /* 詳情標籤樣式 - 參數名稱的顯示 */
         .detail-label {
-            font-size: 12px;                                    /* 文字大小 */
+            font-size: 16px;                                    /* 文字大小 */
             color: var(--text-muted);                           /* 淡色文字 */
         }
 
-        /* 詳情數值樣式 - 參數值的顯示 */
+        /* 詳情數值樣式 - 採用主畫面數值顯示的風格 */
         .detail-value {
-            font-size: 18px;                                    /* 文字大小 */
-            font-weight: bold;                                  /* 文字粗細 */
+            font-size: 14px;                                    /* 修改：與主畫面輸入框文字大小一致 */
+            font-weight: normal;                                  /* 文字粗細 */
             color: var(--text-color);                           /* 文字顏色 */
-            line-height: 1.2;                                   /* 行高 */
+            line-height: 1;                                   /* 行高 */
+            text-align: right;                                  /* 新增：數值右對齊，與主畫面一致 */
         }
 
         /* 移動設備適配 - 調整小屏幕下的顯示效果 */
@@ -1313,18 +1319,20 @@
             margin-top: 3px;                                    /* 頂部外部間距 */
         }
 
-        /* 刪除按鈕和詳情按鈕共用樣式 - 操作按鈕的基本樣式 */
+        /* 刪除按鍵和詳情按鍵共用樣式 - 採用主畫面按鍵的設計風格 */
         .delete-btn, .detail-btn {
-            padding: 6px 12px;                                  /* 內部間距 */
-            border-radius: 4px;                                 /* 圓角效果 */
-            font-size: 13px;                                    /* 文字大小 */
-            font-weight: bold;                                  /* 文字粗細 */
-            transition: all 0.25s ease;                         /* 過渡效果 */
-            display: flex;                                      /* 彈性布局 */
+            padding: 3px 8px;                                   /* 修改：與主畫面按鍵一致的內邊距 */
+            border-radius: 4px;                                 /* 圓角效果，與主畫面一致 */
+            font-size: 15px;                                    /* 修改：與主畫面按鍵一致的文字大小 */
+            font-weight: normal;                                /* 修改：與主畫面按鍵一致的文字粗細 */
+            transition: all 0.3s ease;                          /* 修改：與主畫面一致的過渡效果 */
+            display: flex;                                      /* 彈性佈局 */
             align-items: center;                                /* 垂直居中 */
             justify-content: center;                            /* 水平居中 */
-            border: none;                                       /* 無邊框 */
-            min-width: 70px;                                    /* 最小寬度 */
+            border: 1px solid var(--border-color);             /* 修改：添加與主畫面一致的邊框 */
+            min-width: 60px;                                    /* 修改：調整最小寬度 */
+            cursor: pointer;                                    /* 新增：滑鼠指標變為手型 */
+            margin: 0 2px;                                      /* 新增：與主畫面按鍵一致的左右間距 */
         }
 
         /* 刪除按鈕樣式 - 用紅色系表示刪除操作 */
@@ -1443,7 +1451,7 @@
             z-index: 2000;                                   /* 層級 */
             justify-content: center;                         /* 水平居中 */
             align-items: center;                             /* 垂直居中 */
-            animation: fadeIn 0.3s ease-out;                 /* 淡入動畫 */
+            animation: fadeIn 0.1s ease-out;                 /* 淡入動畫 */
         }
 
         /* 模態框容器樣式 - 顯示內容的中心區域 */
@@ -1453,7 +1461,7 @@
             width: 90%;                                      /* 容器寬度 */
             max-width: 350px;                                /* 最大寬度 */
             box-shadow: 0 10px 25px rgba(var(--shadow-color)); /* 陰影效果 */
-            animation: modalSlideIn 0.3s ease-out;           /* 滑入動畫 */
+            animation: modalSlideIn 0.1s ease-out;           /* 滑入動畫 */
             overflow: hidden;                                /* 隱藏溢出內容 */
         }
 
@@ -1564,7 +1572,7 @@
             max-width: 350px;                                /* 最大寬度 */
             box-shadow: 0 10px 25px var(--shadow-color);     /* 陰影效果 */
             overflow: hidden;                                /* 隱藏溢出內容 */
-            animation: modalSlideIn 0.3s ease-out;           /* 滑入動畫 */
+            animation: modalSlideIn 0.1s ease-out;           /* 滑入動畫 */
         }
 
         /* 計算器顯示區域 - 顯示計算輸入與結果的區域 */
@@ -1873,24 +1881,13 @@
             background-color: rgba(var(--error-color-rgb), 0.9); /* 半透明錯誤色背景 */
         }
 
-        /* 添加箭頭旋轉動畫 - 控制展開/收起指示器 */
-        #toggleIcon {
-            display: inline-block;                          /* 行內塊顯示 */
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 平滑過渡效果 */
-        }
-
-        /* 按鈕組的轉換效果 - 控制按鈕組的展開/收起 */
-        .input-button-group div[id$="Buttons"] {
-            max-height: 100px;                              /* 最大高度 */
-            opacity: 1;                                     /* 完全不透明 */
-        }
-
-        /* 歷史記錄備註容器 - 包含備註的區域 */
+        /* 歷史紀錄備註容器 - 採用主畫面容器的設計風格 */
         .history-note-container {
-            background-color: rgba(var(--primary-color-rgb), 0.1); /* 半透明背景 */
-            border-radius: 4px;                             /* 圓角效果 */
-            margin: 6px 0;                                  /* 上下外部間距 */
-            padding: 6px;                                   /* 內部間距 */
+            background-color: rgba(var(--primary-color-rgb), 0.05); /* 修改：降低背景透明度，更接近主畫面 */
+            border-radius: 4px;                             /* 圓角效果，與主畫面一致 */
+            margin: 4px 0;                                  /* 修改：與主畫面一致的上下間距 */
+            padding: 3px;                                   /* 修改：與主畫面一致的內邊距 */
+            border: 1px solid rgba(255, 255, 255, 0.03);   /* 新增：極淡邊框，增加層次感 */
         }
 
         /* 歷史記錄項目底部 - 包含備註和按鈕的底部區域 */
@@ -1948,7 +1945,7 @@
             width: 100%;                                    /* 寬度100% */
             height: 100%;                                   /* 高度100% */
             background-color: rgba(var(--primary-color-rgb), 0.7); /* 半透明背景 */
-            z-index: 2000;                                  /* 層級 */
+            z-index: 2500;                                  /* 修改：提高層級，確保高於歷史紀錄面板 */
             justify-content: center;                        /* 水平居中 */
             align-items: flex-start;                        /* 頂部對齊 */
             padding-top: 160px;                             /* 頂部內部間距 */
@@ -2094,11 +2091,6 @@
             color: var(--error-color) !important;            /* 強制使用錯誤色文字 */
         }
 
-        /* 歷史記錄項目左側邊框 - 應用主題變量 */
-        .history-item {
-            border-left: 3px solid var(--accent-color);      /* 強調色左側邊框 */
-        }
-
         /* 歷史記錄日期文字顏色 - 應用主題變量 */
         .history-date {
             color: var(--accent-color);                      /* 強調色文字 */
@@ -2159,277 +2151,9 @@
         }
 
         .comparison-highlight {
-            border-left: 3px solid #33b5e5 !important;
-            background: linear-gradient(90deg, rgba(51, 181, 229, 0.1), transparent) !important;
-        }
-
-        /* 提示視窗的背景遮罩 */
-        .install-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        /* 提示視窗 */
-        .install-modal {
-            width: 90%;
-            max-width: 350px;
-            background-color: var(--secondary-color);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            border: 3px solid #ff0000; /* 紅色外框 */
-        }
-
-        /* 提示視窗標題 */
-        .install-modal-title {
-            background-color: #ff0000; /* 紅色背景 */
-            color: white;
-            padding: 12px 15px;
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-            margin: 0;
-        }
-
-        /* 提示視窗內容 */
-        .install-modal-content {
-            padding: 15px;
-            color: var(--text-color);
-            font-size: 13px;
-            line-height: 1.4;
-            text-align: center;
-        }
-
-        /* 提示視窗按鈕區域 */
-        .install-modal-buttons {
-            display: flex;
-            padding: 10px 15px 15px;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        /* 提示視窗按鈕 */
-        .install-modal-btn {
-            padding: 10px 15px;
-            border-radius: 5px;
-            border: none;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 120px;
-            text-align: center;
-        }
-
-        /* 確認按鈕 */
-        .install-btn-confirm {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        /* 取消按鈕 */
-        .install-btn-cancel {
-            background-color: #666;
-            color: white;
-        }
-
-        /* 安裝提示區域 */
-        .install-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--secondary-color);
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 9998;
-        }
-
-        /* 安裝提示文字 */
-        .install-banner-text {
-            flex: 1;
-            font-size: 14px;
-            color: var(--text-color);
-        }
-
-        /* 安裝按鈕 */
-        .install-banner-btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        /* 關閉安裝提示按鈕 */
-        .install-banner-close {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 24px;
-            line-height: 1;
-            padding: 0;
-            margin-right: 5px;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        /* 中文國字大寫欄位樣式 */
-        .chinese-amount-row {
-            margin: 4px 0;
-            display: flex;
-            align-items: center;
-            background: var(--secondary-color);
-            padding: 3px;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px var(--shadow-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            transform-origin: left;
-            will-change: transform;
-        }
-
-        /* 中文大寫欄位懸停效果 - 移除右移效果 */
-        .chinese-amount-row:hover {
-            /* transform: translateX(5px); 已移除右移效果 */
-            box-shadow: 0 6px 12px var(--shadow-color); /* 增強陰影 */
-        }
-
-        .chinese-amount-result {
-            width: 100%;
-            padding: 6px 8px;
-            margin-bottom: 0;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 18px;
-            position: relative;
-            overflow: hidden;
-            box-sizing: border-box;
-            min-height: 42px;
-            max-height: 76px;
-            overflow-y: auto;
-            overflow-x: auto;
-            white-space: normal;
-            word-wrap: break-word;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-            font-family: "Microsoft JhengHei", Arial, sans-serif;
-            display: block;
-            text-align: right;
-            line-height: 1.2;
-            flex: 1;                              /* 讓輸入框佔用剩餘空間 */
-        }
-
-        .chinese-amount-result::after {
-            content: attr(data-placeholder);
-            opacity: 0.5;
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            color: #888888;
-            font-size: 16px;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-
-        .chinese-amount-result:not(:empty)::after {
-            display: none;
-        }
-
-        /* 專門為中文國字大寫添加的樣式 */
-        .financial-digit {
-            color: #FFBE7A;
-            display: inline;
-        }
-
-        /* 總繳款中文國字大寫欄位樣式 */
-        .total-payment-chinese-row {
-            margin: 4px 0;
-            display: flex;
-            align-items: center;
-            background: var(--secondary-color);
-            padding: 3px;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px var(--shadow-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            transform-origin: left;
-            will-change: transform;
-        }
-
-        /* 總繳款中文大寫欄位懸停效果 - 移除右移效果 */
-        .total-payment-chinese-row:hover {
-            /* transform: translateX(5px); 已移除右移效果 */
-            box-shadow: 0 6px 12px var(--shadow-color); /* 增強陰影 */
-        }
-
-        .total-payment-chinese-result {
-            width: 100%;
-            padding: 6px 8px;
-            margin-bottom: 0;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 18px;
-            position: relative;
-            overflow: hidden;
-            box-sizing: border-box;
-            min-height: 42px;
-            max-height: 76px;
-            overflow-y: auto;
-            overflow-x: auto;
-            white-space: normal;
-            word-wrap: break-word;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-            font-family: "Microsoft JhengHei", Arial, sans-serif;
-            display: block;
-            text-align: right;
-            line-height: 1.2;
-            flex: 1;                              /* 讓輸入框佔用剩餘空間 */
-        }
-
-        .total-payment-chinese-result::after {
-            content: attr(data-placeholder);
-            opacity: 0.5;
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            color: #888888;
-            font-size: 16px;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-
-        .total-payment-chinese-result:not(:empty)::after {
-            display: none;
-        }
-
-        /* 中文大寫欄位的特殊標籤樣式 - 讓發票和總繳的標籤靠左對齊 */
-        .chinese-amount-row .label,
-        .total-payment-chinese-row .label {
-            margin-right: 3px;                  /* 標籤右側的間距 */
-            text-align: left;                   /* 文字靠左對齊 */
-            width: 35px;                        /* 縮小標籤寬度，讓輸入框有更多空間 */
-            flex-shrink: 0;                     /* 防止標籤被壓縮 */
+            /* border-left: 3px solid #33b5e5 !important; 移除：左側邊框 */
+            background: linear-gradient(90deg, rgba(51, 181, 229, 0.15), transparent) !important; /* 修改：使用背景漸變替代 */
+            border: 2px solid #33b5e5 !important;            /* 新增：使用全圍邊框 */
         }
 
         /* 全螢幕比較貸款樣式 */
@@ -2589,38 +2313,6 @@
         .million-interest-row .label:first-child,
         .ten-thousand-interest-row .label:first-child {
             width: 76px !important;          /* 稍微縮小標籤寬度（原本是75px） */
-        }
-
-        /* ============================================
-        * 顯示模式切換按鈕樣式
-        * ============================================ */
-
-        /* 模式圖標基礎樣式 */
-        .mode-icon {
-            font-size: 20px;                    /* 圖標大小 */
-            line-height: 1;                     /* 行高 */
-            display: inline-block;              /* 行內塊顯示 */
-            transition: none;                   /* 無過渡效果 */
-        }
-
-        /* 圓形圖標 - 完整模式 */
-        .mode-circle {
-            font-size: 18px;                    /* 圓形稍小一點 */
-        }
-
-        /* 正方形圖標 - 計算模式 */
-        .mode-square {
-            font-size: 16px;                    /* 正方形適中大小 */
-        }
-
-        /* 三角形圖標 - 精簡模式 */
-        .mode-triangle {
-            font-size: 18px;                    /* 三角形稍小一點 */
-        }
-
-        /* 隱藏元素樣式 - 簡化版本 */
-        .mode-hidden {
-            display: none !important;           /* 強制隱藏 */
         }
 
     </style>
@@ -2908,33 +2600,6 @@
         <input type="text" id="fundingCost" class="readonly" readonly>
         <span class="helper-text">稅佣後預估</span>
     </div>
-
-    <div class="divider-flow"></div>
-
-    <!-- 新增：客戶發票、營業稅、未稅金額欄位 -->
-    <div class="row">
-        <span class="label">客戶發票</span>
-        <input type="text" id="customerInvoice" class="readonly" readonly>
-    </div>
-    <div class="row">
-        <span class="label">營業稅</span>
-        <input type="text" id="businessTax" class="readonly" readonly>
-    </div>
-    <div class="row">
-        <span class="label">未稅金額</span>
-        <input type="text" id="untaxedAmount" class="readonly" readonly>
-    </div>
-
-    <div class="row chinese-amount-row">
-        <span class="label">發票</span>
-        <div class="result chinese-amount-result" id="chineseAmount" data-placeholder="客戶發票金額的國字大寫"></div>
-    </div>
-
-    <div class="row total-payment-chinese-row">
-        <span class="label">總繳</span>
-        <div class="result total-payment-chinese-result" id="totalPaymentChinese" data-placeholder="總繳款金額的國字大寫"></div>
-    </div>
-    
 
     <!-- 按鈕區域重新組織 -->
     <div class="divider-flow"></div>
@@ -3902,60 +3567,6 @@
             fundingCostInput.classList.remove('warning-text');
         }
 
-        // 新增：自動更新三個新欄位
-        const principalValue = principal;
-        const customerInvoiceField = document.getElementById('customerInvoice');
-        const businessTaxField = document.getElementById('businessTax');
-        const untaxedAmountField = document.getElementById('untaxedAmount');
-        if (principalValue > 0) {
-            // 客戶發票 = 本金
-            customerInvoiceField.value = formatNumberWithCommas(Math.round(principalValue));
-            // 營業稅 = 客戶發票 / 21，四捨五入至整數
-            const businessTax = Math.round(principalValue / 21);
-            businessTaxField.value = formatNumberWithCommas(businessTax);
-            // 未稅金額 = 客戶發票 - 營業稅，顯示正整數
-            const untaxedAmount = Math.max(0, Math.round(principalValue - businessTax));
-            untaxedAmountField.value = formatNumberWithCommas(untaxedAmount);
-        } else {
-            customerInvoiceField.value = '';
-            businessTaxField.value = '';
-            untaxedAmountField.value = '';
-        }
-
-        // 新增：更新中文國字大寫欄位
-        const chineseAmountField = document.getElementById('chineseAmount');
-        if (principalValue > 0) {
-            try {
-                // 轉換客戶發票金額為中文國字大寫
-                const chineseAmount = arabicToChineseNumber(principalValue, 'financial') + ' 元整';
-                chineseAmountField.innerHTML = chineseAmount; // 使用 innerHTML 以支持HTML標籤
-            } catch (error) {
-                console.error('中文轉換錯誤:', error);
-                chineseAmountField.textContent = '轉換錯誤';
-            }
-        } else {
-            chineseAmountField.innerHTML = ''; // 清空顯示
-        }
-
-        // 新增：更新總繳款中文國字大寫欄位
-        const totalPaymentChineseField = document.getElementById('totalPaymentChinese');
-        if (hasAllRequiredValues) {
-            try {
-                // 計算總繳款
-                const totalPaymentValue = payment * period;
-                const roundedTotalPayment = Math.round(totalPaymentValue);
-                
-                // 轉換總繳款為中文國字大寫
-                const totalPaymentChinese = arabicToChineseNumber(roundedTotalPayment, 'financial') + ' 元整';
-                totalPaymentChineseField.innerHTML = totalPaymentChinese; // 使用 innerHTML 以支持HTML標籤
-            } catch (error) {
-                console.error('總繳款中文轉換錯誤:', error);
-                totalPaymentChineseField.textContent = '轉換錯誤';
-            }
-        } else {
-            totalPaymentChineseField.innerHTML = ''; // 清空顯示
-        }
-
         // 在更新值之前保存舊值
         const oldValues = {};
         const fieldsToTrack = ['totalInterest', 'afterTaxRate', 'spread'];
@@ -4730,7 +4341,7 @@
                             <input type="checkbox" class="history-item-checkbox" data-loan-id="${loan.id}" onchange="updateCompareButton()">
                             <div class="history-date">${formatDate(loan.date)}</div>
                         </div>
-                        <div class="history-header-rate">稅佣後利率: ${parseFloat(loan.afterCommissionRate).toFixed(4)}%</div>
+                        <div class="history-header-rate">稅佣後利率： ${parseFloat(loan.afterCommissionRate).toFixed(4)}%</div>
                     </div>
                     
                     <div class="history-details">
@@ -5087,7 +4698,7 @@
         // 震動效果
         vibrate();
         
-        // 將資金成本設為預設值 2.2165
+        // 將資金成本設為預設值 2.1904
         document.getElementById('monthlyCost').value = '2.1904';
         
         // 更新所有相關計算
@@ -5111,12 +4722,6 @@
             'annualMillionInterest', 'monthlyMillionInterest',
             'annualTenThousandInterest', 'monthlyTenThousandInterest',
             'spread', 'fundingCost', 'monthlyInterest', 'yearlyInterest',
-            'customerInvoice',             // 客戶發票
-            'businessTax',                 // 營業稅
-            'untaxedAmount',               // 未稅金額
-            'chineseAmount',               // 中文國字大寫
-            'totalPaymentChinese'          // 總繳大寫 
-
         ];
         
         // 清空每個欄位
@@ -5139,7 +4744,7 @@
         // 將資金成本重置為預設值，而不是清空
         const monthlyCostElement = document.getElementById('monthlyCost');
         if (monthlyCostElement) {
-            monthlyCostElement.value = '2.2165';
+            monthlyCostElement.value = '2.1904';
         }
         
         // 顯示提示訊息
@@ -5677,102 +5282,6 @@
             document.body.removeChild(modal);
         }
         vibrate();
-    }
-
-    // 阿拉伯數字轉中文國字大寫函數
-    function arabicToChineseNumber(num, format) {
-        if (!num || num === '0' || num === 0) {
-            return format === 'financial' ? '<span class="financial-digit">零</span>' : '零';
-        }
-        
-        // 分割整數和小數部分
-        const parts = num.toString().split('.');
-        const integerPart = parts[0];
-        const decimalPart = parts.length > 1 ? parts[1] : '';
-        
-        // 根據格式選擇對應的字符
-        let digits, units;
-        if (format === 'traditional') {
-            digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
-            units = ['', '十', '百', '千', '萬', '十', '百', '千', '億', '十', '百', '千', '兆'];
-        } else if (format === 'financial') {
-            digits = ['零', '壹', '貳', '參', '肆', '伍', '陸', '柒', '捌', '玖'];
-            units = ['', '拾', '佰', '仟', '萬', '拾', '佰', '仟', '億', '拾', '佰', '仟', '兆'];
-        }
-        
-        // 處理整數部分
-        let intResult = '';
-        if (integerPart === '0') {
-            intResult = format === 'financial' ? '<span class="financial-digit">零</span>' : digits[0];
-        } else {
-            const len = integerPart.length;
-            
-            // 特殊處理10-19的數字
-            if (format !== 'financial' && len === 2 && integerPart.charAt(0) === '1') {
-                intResult = units[1];
-                if (integerPart.charAt(1) !== '0') {
-                    intResult += digits[parseInt(integerPart.charAt(1))];
-                }
-            } else {
-                // 新增變量來追蹤上一個處理過的字符是否為零，以及是否已經添加了單位
-                let lastWasZero = false;
-                let hasAddedUnit = false;
-                
-                for (let i = 0; i < len; i++) {
-                    const digit = parseInt(integerPart.charAt(i));
-                    const pos = len - i - 1;
-                    
-                    if (digit !== 0) {
-                        // 非零數字直接轉換並加上單位
-                        lastWasZero = false;
-                        hasAddedUnit = false;
-                        
-                        // 在 financial 格式中為數字添加特殊標籤
-                        if (format === 'financial') {
-                            intResult += `<span class="financial-digit">${digits[digit]}</span>${units[pos]}`;
-                        } else {
-                            intResult += digits[digit] + units[pos];
-                        }
-                    } else {
-                        // 處理零的特殊規則
-                        if (pos === 4 || pos === 8) {
-                            // 萬位或億位的零，需要加上對應的單位，但不需要加上"零"字
-                            if (intResult.length > 0) {
-                                // 確保沒有連續加入同一單位
-                                if (!intResult.endsWith(units[4]) && !intResult.endsWith(units[8])) {
-                                    intResult += units[pos];
-                                    hasAddedUnit = true;
-                                }
-                            }
-                        } else if (i < len - 1 && integerPart.charAt(i + 1) !== '0' && !lastWasZero) {
-                            // 當前數字是0，下一個不是0，且上一個不是0，加上零
-                            if (format === 'financial') {
-                                intResult += `<span class="financial-digit">${digits[0]}</span>`;
-                            } else {
-                                intResult += digits[0];
-                            }
-                            lastWasZero = true;
-                        }
-                    }
-                }
-            }
-        }
-        
-        // 處理小數部分
-        let decResult = '';
-        if (decimalPart) {
-            decResult = '點';
-            for (let i = 0; i < decimalPart.length; i++) {
-                if (format === 'financial') {
-                    decResult += `<span class="financial-digit">${digits[parseInt(decimalPart.charAt(i))]}</span>`;
-                } else {
-                    decResult += digits[parseInt(decimalPart.charAt(i))];
-                }
-            }
-        }
-        
-        // 組合結果
-        return intResult + decResult;
     }
 </script>
 	
